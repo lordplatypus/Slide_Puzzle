@@ -4,11 +4,12 @@
 #include "Scene.h"
 #include "LoadImage.h"
 #include "MusicPlayer.h"
+#include "Camera.h"
 
 class Game
 {
 public:
-    Game();
+    Game(Camera* camera);
     ~Game();
     //Update Game
     void Update(float delta_time);
@@ -20,6 +21,7 @@ public:
     void ChangeScene(const std::string& newScene);
     //End a scene
     void EndScene();
+    Camera* GetCamera();
     //Play Mmusic
     void PlayMusic(const int musicID, const bool loop);
     //Called on program shutdown, delete scenes here
@@ -33,6 +35,7 @@ private:
     std::unordered_map<std::string, Scene*> scenes_;
     //Current loaded scene
     Scene* scene_ {nullptr};
+    Camera* camera_{nullptr};
     //load images
     LoadImage loadImage_;
     //load music

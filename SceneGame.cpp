@@ -10,7 +10,8 @@ SceneGame::~SceneGame()
 
 void SceneGame::Init()
 {
-    
+    //game_->GetCamera()->SetCameraViewSize(1920, 1080);
+    //game_->GetCamera()->SetTarget(sf::Vector2f(1920/2, 1080/2));
 }
 
 void SceneGame::Update(float delta_time)
