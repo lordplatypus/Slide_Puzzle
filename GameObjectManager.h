@@ -18,8 +18,10 @@ public:
     void Collision();
     //Remove "dead" gameobjects
     void Remove();
-    //Find a specific gameobject by name
-    GameObject* Find(const std::string& name) const;
+    //Find a specific gameobject by tag
+    GameObject* Find(const std::string& tag) const;
+    //Find a specific gameobject by ID
+    GameObject* Find(const int ID) const;
     //Delete all gameobjects, call when scene ends
     void Clear();
 

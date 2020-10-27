@@ -54,11 +54,23 @@ void GameObjectManager::Remove()
     }
 }
 
-GameObject* GameObjectManager::Find(const std::string& name) const
+GameObject* GameObjectManager::Find(const std::string& tag) const
 {
     for (auto gameObject : gameObjects_)
     {
-        if (gameObject->GetTag() == name)
+        if (gameObject->GetTag() == tag)
+        {
+            return gameObject;
+        }
+    }
+    return nullptr;
+}
+
+GameObject* GameObjectManager::Find(const int ID) const
+{
+    for (auto gameObject : gameObjects_)
+    {
+        if (gameObject->GetID() == ID)
         {
             return gameObject;
         }
