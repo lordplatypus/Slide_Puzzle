@@ -17,6 +17,8 @@ public:
     virtual void Draw() = 0;
     //Add gameobject to the list of gameobjects
     virtual void AddGameObject(GameObject* gameObject) = 0;
+    //Call "SetWin()" in the "Game" class, also trigger win screen/animation/transition/etc here
+    virtual void OnWin() = 0;
     //Change to a different scene
     virtual void ChangeScene(const std::string& sceneName) = 0;
     //This is called when switching to a different scene, delete unneeded pointers and sprites here

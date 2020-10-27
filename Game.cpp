@@ -69,3 +69,16 @@ void Game::Clear()
     }
     scenes_.clear();
 }
+
+
+//For MiniGames
+
+void Game::SetWin(const bool win)
+{
+    win_ = win;
+}
+
+bool Game::GetWin() const
+{
+    return win_;
+}

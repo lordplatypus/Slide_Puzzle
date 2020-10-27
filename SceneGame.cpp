@@ -10,6 +10,7 @@ SceneGame::~SceneGame()
 
 void SceneGame::Init()
 {
+    game_->SetWin(false);
     //game_->GetCamera()->SetCameraViewSize(1920, 1080);
     //game_->GetCamera()->SetTarget(sf::Vector2f(1920/2, 1080/2));
 }
@@ -29,6 +30,11 @@ void SceneGame::Draw()
 void SceneGame::AddGameObject(GameObject* gameObject)
 {
     gom_.Add(gameObject); //add gameobject to the list of gameobjects
+}
+
+void SceneGame::OnWin()
+{
+    game_->SetWin(true);
 }
 
 void SceneGame::ChangeScene(const std::string& sceneName)

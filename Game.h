@@ -27,6 +27,12 @@ public:
     //Called on program shutdown, delete scenes here
     void Clear();
 
+    //For MiniGames
+    //need to save win status so that the minigame scene has access to the info
+    void SetWin(const bool win);
+    //but this must be reset everytime manually before starting the next minigame
+    bool GetWin() const;
+
     Game(const Game& other) = delete;
     Game& operator = (const Game& other) = delete;
 
@@ -40,6 +46,9 @@ private:
     LoadImage loadImage_;
     //load music
     MusicPlayer musicPlayer_;
+
+    //Win status
+    bool win_{false};
 };
 
 #endif
