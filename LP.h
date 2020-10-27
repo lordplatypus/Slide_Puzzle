@@ -31,6 +31,7 @@ public:
     static void DrawSprite(const int key);
     static void DrawSprite(const int key, sf::Vector2f position);
     static void SetSpriteColor(const int key, const int red, const int green, const int blue, const int alpha);
+    static void SetSpritePosition(const int key, const sf::Vector2f position);
     static void SetSpriteRotation(const int key, const float angle);
     static void SetSpriteOrigin(const int key, const sf::Vector2f newOrigin);
     static void SetSpriteOriginCenter(const int key);

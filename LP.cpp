@@ -147,6 +147,11 @@ void LP::SetSpriteColor(const int key, const int red, const int green, const int
     spriteMap[key].setColor(Color(red, green, blue, alpha));
 }
 
+void LP::SetSpritePosition(const int key, const sf::Vector2f position)
+{
+    spriteMap[key].setPosition(position);
+}
+
 void LP::SetSpriteRotation(const int key, const float angle)
 {
     spriteMap[key].setRotation(angle);
