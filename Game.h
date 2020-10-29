@@ -2,8 +2,7 @@
 #define GAME_H_
 #include <unordered_map>
 #include "Scene.h"
-#include "LoadImage.h"
-#include "MusicPlayer.h"
+#include "LoadAssets.h"
 #include "Camera.h"
 
 class Game
@@ -22,8 +21,6 @@ public:
     //End a scene
     void EndScene();
     Camera* GetCamera();
-    //Play Mmusic
-    void PlayMusic(const int musicID, const bool loop);
     //Called on program shutdown, delete scenes here
     void Clear();
 
@@ -42,10 +39,8 @@ private:
     //Current loaded scene
     Scene* scene_ {nullptr};
     Camera* camera_{nullptr};
-    //load images
-    LoadImage loadImage_;
-    //load music
-    MusicPlayer musicPlayer_;
+    //load assets
+    LoadAssets loadAssets_;
 
     //Win status
     bool win_{false};

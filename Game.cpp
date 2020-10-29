@@ -8,7 +8,7 @@ static SceneNull nullScene;
 
 Game::Game(Camera* camera) : scene_{&nullScene}, camera_{camera}
 {
-    loadImage_.Load();
+    loadAssets_.Load();
 
     AddScene("Game", new SceneGame(this));
 
@@ -52,11 +52,6 @@ void Game::EndScene()
 Camera* Game::GetCamera()
 {
     return camera_;
-}
-
-void Game::PlayMusic(const int musicID, const bool loop)
-{
-    musicPlayer_.PlayMusic(musicID, loop);
 }
 
 void Game::Clear()
