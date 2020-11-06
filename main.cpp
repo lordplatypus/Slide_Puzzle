@@ -30,7 +30,7 @@ int main()
             {
                 isRunning = false;
             }
-            else if (event.key.code == sf::Keyboard::Escape)
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             {
                 isRunning = false;
             }

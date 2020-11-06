@@ -18,6 +18,8 @@ public:
 
     //This is called when colliding with another gameobject, write reaction logic here
     virtual void ReactOnCollision(GameObject& other);
+    //This is called if "Iteraction" is used instead of "Collision" - meaning that if 2 objects DON'T collide this is called
+    virtual void ReactOnMissedCollision(GameObject& other);
     //Marks the gameobject as "dead" so that it can be removed
     virtual void Kill();
 
@@ -42,6 +44,16 @@ public:
     bool IsCollision(GameObject& other);
     //If collision occured, call "ReactOnCollision" for this gameobject and "other"
     void OnCollision(GameObject& other);
+    //called by "Interaction"
+    void OnMissedCollision(GameObject& other);
+    //Called by "OneWayCollision"
+    void OnOneWayCollision(GameObject& other);
+    //Called by "OneWayInteraction"
+    void OnMissedOneWayCollision(GameObject& other);
+    //See if the object is included in collision calculations
+    bool GetActive() const;
+    //Set whether or not an object is "active" in collision calculations
+    void SetActive(const bool isActive);
 
     //Data
     //Store position
@@ -68,6 +80,7 @@ private:
     int top_{0}; //Top edge of the hitbox
     int bottom_{0}; //Bottom edge of the hitbox
     sf::Vector2f prevPosition_{0.0f, 0.0f}; //store prev position
+    bool isActive_{true}; //included in collision calculations?
 
 protected:
     Scene* scene_{nullptr}; //Gives access to the scene, Set this up in the gameobjects constructor

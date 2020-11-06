@@ -16,6 +16,9 @@ void GameObject::Draw()
 void GameObject::ReactOnCollision(GameObject& other)
 {}
 
+void GameObject::ReactOnMissedCollision(GameObject& other)
+{}
+
 void GameObject::StorePosition()
 {
     prevPosition_ = position_;
@@ -23,7 +26,7 @@ void GameObject::StorePosition()
 
 int GameObject::GetLeft() const
 {
-    return position_.x + left_;
+    return GetPosition().x + left_;
 }
 
 void GameObject::SetLeft(const int left)
@@ -33,7 +36,7 @@ void GameObject::SetLeft(const int left)
 
 int GameObject::GetRight() const
 {
-    return position_.x + right_;
+    return GetPosition().x + right_;
 }
 
 void GameObject::SetRight(const int right)
@@ -43,7 +46,7 @@ void GameObject::SetRight(const int right)
 
 int GameObject::GetTop() const
 {
-    return position_.y + top_;
+    return GetPosition().y + top_;
 }
 
 void GameObject::SetTop(const int top)
@@ -53,7 +56,7 @@ void GameObject::SetTop(const int top)
 
 int GameObject::GetBottom() const
 {
-    return position_.y + bottom_;
+    return GetPosition().y + bottom_;
 }
 
 void GameObject::SetBottom(const int bottom)
@@ -90,6 +93,32 @@ void GameObject::OnCollision(GameObject& other)
 {
     ReactOnCollision(other);
     other.ReactOnCollision(*this);
+}
+
+void GameObject::OnMissedCollision(GameObject& other)
+{
+    ReactOnMissedCollision(other);
+    other.ReactOnMissedCollision(*this);
+}
+
+void GameObject::OnOneWayCollision(GameObject& other)
+{
+    ReactOnCollision(other);
+}
+
+void GameObject::OnMissedOneWayCollision(GameObject& other)
+{
+    ReactOnMissedCollision(other);
+}
+
+bool GameObject::GetActive() const
+{
+    return isActive_;
+}
+
+void GameObject::SetActive(const bool isActive)
+{
+    isActive_ = isActive;
 }
 
 void GameObject::Kill()
