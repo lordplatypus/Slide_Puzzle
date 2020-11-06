@@ -17,6 +17,10 @@ public:
     virtual void Draw() = 0;
     //Add gameobject to the list of gameobjects
     virtual void AddGameObject(GameObject* gameObject) = 0;
+    //Find an object by either ID, Tag, or Name
+    virtual GameObject* FindGameObject(const std::string& string, const bool byTag = true, const bool byID = false) = 0;
+    //Move a gameobject to a new position within the list of GameObjects
+    virtual void ChangeGameObjectOrder(const std::string& name, const std::string& newPos) = 0;
     //Call "SetWin()" in the "Game" class, also trigger win screen/animation/transition/etc here
     virtual void OnWin() = 0;
     //Change to a different scene

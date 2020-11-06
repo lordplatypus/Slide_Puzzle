@@ -32,6 +32,25 @@ void SceneGame::AddGameObject(GameObject* gameObject)
     gom_.Add(gameObject); //add gameobject to the list of gameobjects
 }
 
+GameObject* SceneGame::FindGameObject(const std::string& string, const bool byTag, const bool byID)
+{
+    if (byID)
+    {
+        return gom_.Find(std::stoi(string));
+    }
+    else
+    {
+        if (byTag) return gom_.Find(string);
+        else return gom_.Find(string, false);
+    }
+    return nullptr;
+}
+
+void SceneGame::ChangeGameObjectOrder(const std::string& name, const std::string& newPos)
+{
+    gom_.ChangeListOrder(name, newPos);
+}
+
 void SceneGame::OnWin()
 {
     game_->SetWin(true);
