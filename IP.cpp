@@ -31,8 +31,6 @@ bool IP::PressLeft()
         pressedLeft_ = true;
         return true;
     }
-    
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) pressedLeft_ = false;
 
     return false;
 }
@@ -45,8 +43,6 @@ bool IP::PressRight()
         pressedRight_ = true;
         return true;
     }
-    
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) pressedRight_ = false;
 
     return false;
 }
@@ -59,8 +55,6 @@ bool IP::PressUp()
         pressedUp_ = true;
         return true;
     }
-    
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) pressedUp_ = false;
 
     return false;
 }
@@ -73,8 +67,6 @@ bool IP::PressDown()
         pressedDown_ = true;
         return true;
     }
-    
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) pressedDown_ = false;
 
     return false;
 }
@@ -87,8 +79,6 @@ bool IP::PressSpace()
         pressedSpace_ = true;
         return true;
     }
-    
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) pressedSpace_ = false;
 
     return false;
 }
@@ -101,8 +91,6 @@ bool IP::PressW()
         pressedW_ = true;
         return true;
     }
-    
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::W)) pressedW_ = false;
 
     return false;
 }
@@ -115,8 +103,6 @@ bool IP::PressA()
         pressedA_ = true;
         return true;
     }
-    
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A)) pressedA_ = false;
 
     return false;
 }
@@ -129,8 +115,6 @@ bool IP::PressS()
         pressedS_ = true;
         return true;
     }
-    
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S)) pressedS_ = false;
 
     return false;
 }
@@ -143,10 +127,47 @@ bool IP::PressD()
         pressedD_ = true;
         return true;
     }
-    
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D)) pressedD_ = false;
 
     return false;
+}
+
+bool pressedZ_{true};
+bool IP::PressZ()
+{
+    if (!pressedZ_ && sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+    {
+        pressedZ_ = true;
+        return true;
+    }
+
+    return false;
+}
+
+bool pressedX_{true};
+bool IP::PressX()
+{
+    if (!pressedX_ && sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+    {
+        pressedX_ = true;
+        return true;
+    }
+
+    return false;
+}
+
+void IP::Reset()
+{
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) pressedLeft_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) pressedRight_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) pressedUp_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) pressedDown_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) pressedSpace_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::W)) pressedW_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A)) pressedA_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S)) pressedS_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D)) pressedD_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) pressedZ_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X)) pressedX_ = false;
 }
 
 

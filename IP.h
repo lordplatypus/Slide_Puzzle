@@ -26,6 +26,11 @@ public:
     static bool PressA();
     static bool PressS();
     static bool PressD();
+    static bool PressZ();
+    static bool PressX();
+
+    //Reset bools used for single button presses
+    static void Reset();
 
     //Mouse Stuff
 

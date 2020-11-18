@@ -10,7 +10,13 @@ GameObject::~GameObject() {}
 void GameObject::Update(float delta_time)
 {}
 
+void GameObject::DelayedUpdate(float delta_time)
+{}
+
 void GameObject::Draw()
+{}
+
+void GameObject::DelayedDraw()
 {}
 
 void GameObject::ReactOnCollision(GameObject& other)

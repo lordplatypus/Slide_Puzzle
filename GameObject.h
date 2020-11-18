@@ -13,8 +13,12 @@ public:
 
     //Update
     virtual void Update(float delta_time);
+    //Delayed Update - use this if something sould be calculated after normal Update
+    virtual void DelayedUpdate(float delta_time);
     //Draw
     virtual void Draw();
+    //Delayed Updated - draw things after the normal Draw - helpful for UI
+    virtual void DelayedDraw();
 
     //This is called when colliding with another gameobject, write reaction logic here
     virtual void ReactOnCollision(GameObject& other);

@@ -22,11 +22,27 @@ void GameObjectManager::Update(float delta_time)
     }
 }
 
+void GameObjectManager::DelayedUpdate(float delta_time)
+{
+    for (auto gameObject : gameObjects_)
+    {
+        gameObject->DelayedUpdate(delta_time);
+    }
+}
+
 void GameObjectManager::Draw() const
 {
     for (auto gameObject : gameObjects_)
     {
         gameObject->Draw();
+    }
+}
+
+void GameObjectManager::DelayedDraw()
+{
+    for (auto gameObject : gameObjects_)
+    {
+        gameObject->DelayedDraw();
     }
 }
 

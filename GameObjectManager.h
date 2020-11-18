@@ -12,8 +12,12 @@ public:
     void Add(GameObject* gameObject);
     //Update all gameobjects in the list
     void Update(float delta_time);
+    //Same as Update, call after Update
+    void DelayedUpdate(float delta_time);
     //Draw all gameobjects in the list
     void Draw() const;
+    //Same as Draw, call after Draw
+    void DelayedDraw();
     //Checks ONLY collision between gameobjects
     void Collision();
     //Checks collision between gameobjects but starts from the last created object
