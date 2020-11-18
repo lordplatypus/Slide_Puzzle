@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <string>
+#include "IP.h"
 #include "Game.h"
 #include "SceneNull.h"
 #include "SceneGame.h"
@@ -24,6 +25,7 @@ Game::~Game()
 void Game::Update(float delta_time)
 {
     scene_->Update(delta_time);
+    IP::Reset();
 }
 
 void Game::Draw()
