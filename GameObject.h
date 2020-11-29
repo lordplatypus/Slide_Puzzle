@@ -28,6 +28,18 @@ public:
     virtual void Kill();
 
     //Hitbox
+    //Left edge of the hitbox
+    int GetLeft() const;
+    void SetLeft(const int left);
+    //Right edge of the hitbox
+    int GetRight() const;
+    void SetRight(const int right);
+    //Top edge of the hitbox
+    int GetTop() const;
+    void SetTop(const int top);
+    //Bottom edge of the hitbox
+    int GetBottom() const;
+    void SetBottom(const int bottom);
     sf::IntRect GetHitBox() const;
 
     //Collision
@@ -66,6 +78,10 @@ public:
     GameObject& operator = (const GameObject& other) = delete;
 
 private:
+    int left_{0}; //Left edge of the hitbox
+    int right_{0}; //Right edge of the hitbox
+    int top_{0}; //Top edge of the hitbox
+    int bottom_{0}; //Bottom edge of the hitbox
     sf::Vector2f prevPosition_{0.0f, 0.0f}; //store prev position
     bool isActive_{true}; //included in collision calculations?
 

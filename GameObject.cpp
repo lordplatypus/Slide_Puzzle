@@ -30,9 +30,49 @@ void GameObject::StorePosition()
     prevPosition_ = position_;
 }
 
+int GameObject::GetLeft() const
+{
+    return left_;
+}
+
+void GameObject::SetLeft(const int left)
+{
+    left_ = left;
+}
+
+int GameObject::GetRight() const
+{
+    return right_;
+}
+
+void GameObject::SetRight(const int right)
+{
+    right_ = right;
+}
+
+int GameObject::GetTop() const
+{
+    return top_;
+}
+
+void GameObject::SetTop(const int top)
+{
+    top_ = top;
+}
+
+int GameObject::GetBottom() const
+{
+    return bottom_;
+}
+
+void GameObject::SetBottom(const int bottom)
+{
+    bottom_ = bottom;
+}
+
 sf::IntRect GameObject::GetHitBox() const
 {
-    return sf::IntRect(position_.x, position_.y, imageWidth_, imageHeight_);
+    return sf::IntRect(GetPosition().x + GetLeft(), GetPosition().y + GetTop(), imageWidth_ - (GetRight() + GetLeft()), imageHeight_ - (GetBottom() + GetTop()));
 }
 
 bool GameObject::IsCollision(GameObject& other)
