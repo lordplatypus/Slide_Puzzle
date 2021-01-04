@@ -16,9 +16,9 @@ public:
     //Delayed Update - use this if something sould be calculated after normal Update
     virtual void DelayedUpdate(float delta_time);
     //Draw
-    virtual void Draw();
+    virtual void Draw(sf::RenderWindow& render_window) const;
     //Delayed Updated - draw things after the normal Draw - helpful for UI
-    virtual void DelayedDraw();
+    virtual void DelayedDraw(sf::RenderWindow& render_window) const;
 
     //This is called when colliding with another gameobject, write reaction logic here
     virtual void ReactOnCollision(GameObject& other);

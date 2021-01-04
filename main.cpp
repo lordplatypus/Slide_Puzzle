@@ -37,9 +37,8 @@ int main()
         }
         game.Update(deltaTime.GetDeltaTime());
         window.setView(*camera.GetCamera());
-        game.Draw(); //objects are added to the draw maps
         window.clear();
-        LP::Draw(&window); //actually draw objects
+        game.Draw(window);
         window.display();
     }
     return EXIT_SUCCESS;

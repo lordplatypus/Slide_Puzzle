@@ -22,9 +22,9 @@ void SceneGame::Update(float delta_time)
     gom_.Remove(); //remove "dead" gameobjects
 }
 
-void SceneGame::Draw()
+void SceneGame::Draw(sf::RenderWindow& render_window) const
 {
-    gom_.Draw(); //Draw all gameobjects
+    gom_.Draw(render_window); //Draw all gameobjects
 }
 
 void SceneGame::AddGameObject(GameObject* gameObject)
