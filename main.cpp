@@ -7,13 +7,15 @@
 int main()
 {
     bool isRunning = true;//bool for main game loop
-    sf::RenderWindow window(sf::VideoMode(1080, 720), "Game"); //game window
+    sf::RenderWindow window(sf::VideoMode(960, 540), "Game"); //game window
 
     DeltaTime deltaTime;
-    Camera camera;
-    camera.SetCameraViewSize(window.getSize().x, window.getSize().y);
-    camera.SetTarget(sf::Vector2f(camera.GetCameraViewSize().x/2, camera.GetCameraViewSize().y/2));
-    window.setView(*camera.GetCamera());
+    Camera camera{&window};
+    //camera.SetView("Main", window.getSize().x, window.getSize().y);
+    camera.SetView("Main", sf::FloatRect(0.0f, 0.0f, 960.0f, 540.0f));
+    camera.SetViewSize("Main", sf::FloatRect(0.5f, 0.0f, 0.5f, 0.5f));
+    camera.SetView("Test", sf::FloatRect(0.0f, 0.0f, 960.0f, 540.0f));
+    camera.SetViewSize("Test", sf::FloatRect(0.0f, 0.0f, 0.25f, 0.25f));
     Game game{&camera};
 
     while (isRunning)
@@ -23,8 +25,24 @@ int main()
         {//
             if (event.type == sf::Event::Resized)
             {
-                camera.SetCameraViewSize(sf::FloatRect(0, 0, event.size.width, event.size.height));
-                window.setView(*camera.GetCamera());   
+                sf::FloatRect viewport(0.f, 0.f, 1.f, 1.f);
+
+                float screenwidth = event.size.width / 960.f;
+                float screenheight = event.size.height / 540.f;
+
+                if(screenwidth > screenheight)
+                {
+                    viewport.width = screenheight / screenwidth;
+                    viewport.left = (1.f - viewport.width) / 2.f;
+                }
+                else if(screenwidth < screenheight)
+                {
+                    viewport.height = screenwidth / screenheight;
+                    viewport.top = (1.f - viewport.height) / 2.f;
+                }
+
+                //camera.SetCameraViewSize(viewport);
+                //camera.SetViewSize("Main", viewport);
             }
             else if (event.type == sf::Event::Closed)
             {
@@ -36,7 +54,6 @@ int main()
             }
         }
         game.Update(deltaTime.GetDeltaTime());
-        window.setView(*camera.GetCamera());
         window.clear();
         game.Draw(window);
         window.display();

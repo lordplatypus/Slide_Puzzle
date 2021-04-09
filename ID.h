@@ -5,7 +5,7 @@
 //Ex: texture keys, music keys
 enum
 {
-    
+    pic_texture_,
 };
 
 #endif

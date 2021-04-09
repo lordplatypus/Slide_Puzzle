@@ -2,6 +2,8 @@
 #include "LP.h"
 #include "ID.h"
 
+sf::Sprite pic;
+
 SceneGame::SceneGame(Game* game) : game_{game}
 {}
 
@@ -13,6 +15,12 @@ void SceneGame::Init()
     game_->SetWin(false);
     //game_->GetCamera()->SetCameraViewSize(1920, 1080);
     //game_->GetCamera()->SetTarget(sf::Vector2f(1920/2, 1080/2));
+
+    pic = LP::SetSprite(pic_texture_);
+    pic.scale(sf::Vector2f(.5f, .5f));
+    pic.setPosition(sf::Vector2f(0.0f, 0.0f));
+
+    //game_->GetCamera()->SetTarget(sf::Vector2f(0.0f, 0.0f));
 }
 
 void SceneGame::Update(float delta_time)
@@ -25,6 +33,11 @@ void SceneGame::Update(float delta_time)
 void SceneGame::Draw(sf::RenderWindow& render_window) const
 {
     gom_.Draw(render_window); //Draw all gameobjects
+
+    game_->GetCamera()->SetCurrentView("Main");
+    render_window.draw(pic);
+    game_->GetCamera()->SetCurrentView("Test");
+    render_window.draw(pic);
 }
 
 void SceneGame::AddGameObject(GameObject* gameObject)
