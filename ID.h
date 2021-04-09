@@ -8,4 +8,13 @@ enum
     pic_texture_,
 };
 
+
+//Layer group - order in which objects will be rendered (0 = back, 0 < front)
+enum
+{
+    layer_tilemap_,
+    layer_main_,
+    layer_UI_
+};
+
 #endif

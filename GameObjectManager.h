@@ -38,8 +38,10 @@ public:
     GameObject* Find(const std::string& string, const bool byTag = true) const;
     //Find a specific gameobject by ID
     GameObject* Find(const int ID) const;
+    //sort gameobjects by layer ID
+    void SortByLayers(); 
     //given the name of the object move it to a different spot within the gameobject list. for newPos use wither "begin" or "end"
-    void ChangeListOrder(const std::string& name, const std::string& newPos);  
+    void ChangeListOrder(const std::string& name, const std::string& newPos); 
     //Delete all gameobjects, call when scene ends
     void Clear();
 

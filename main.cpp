@@ -11,11 +11,8 @@ int main()
 
     DeltaTime deltaTime;
     Camera camera{&window};
-    //camera.SetView("Main", window.getSize().x, window.getSize().y);
-    camera.SetView("Main", sf::FloatRect(0.0f, 0.0f, 960.0f, 540.0f));
-    camera.SetViewSize("Main", sf::FloatRect(0.5f, 0.0f, 0.5f, 0.5f));
-    camera.SetView("Test", sf::FloatRect(0.0f, 0.0f, 960.0f, 540.0f));
-    camera.SetViewSize("Test", sf::FloatRect(0.0f, 0.0f, 0.25f, 0.25f));
+    camera.SetView("Main", window.getSize().x, window.getSize().y);
+    //camera.SetView("Main", sf::FloatRect(0.0f, 0.0f, 960.0f, 540.0f));
     Game game{&camera};
 
     while (isRunning)

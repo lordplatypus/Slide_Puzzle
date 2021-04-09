@@ -73,6 +73,8 @@ public:
     const std::string& GetName() const;
     //return ID
     int GetID() const;
+    //return Layer ID
+    int GetLayerID() const;
 
     GameObject(const GameObject& other) = delete;
     GameObject& operator = (const GameObject& other) = delete;
@@ -90,12 +92,13 @@ protected:
     sf::Vector2f position_{0.0f, 0.0f}; //gameobjects position
     sf::Vector2f velocity_{0.0f, 0.0f}; //gameobjects velocity
     bool isDead_{false}; //"Death" flag
-    int sprite_{0}; //Used to store sprite ID - Used for drawing/editing sprite
+    sf::Sprite sprite_; //Used to store sprite ID - Used for drawing/editing sprite
     int imageWidth_{0}; //sprite width - Set up in the constructor
     int imageHeight_{0}; //sprite height - Set up in the constructor
     std::string tag_{""}; //gameobject tag - Set up in the constructor
     std::string name_{""}; //gameobject name - Set up in the constructor
     int ID_{0}; //gameobject ID - Set up in the constructor
+    int layerID_{0}; //Layer ID - Set up in the constructor
 };
 
 #endif

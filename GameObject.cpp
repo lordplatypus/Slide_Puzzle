@@ -146,3 +146,8 @@ int GameObject::GetID() const
 {
     return ID_;
 }
+
+int GameObject::GetLayerID() const
+{
+    return layerID_;
+}
