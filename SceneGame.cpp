@@ -13,10 +13,10 @@ void SceneGame::Init()
 {
     game_->SetWin(false);
 
-    AddGameObject(new TestObject(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.1f, 0.1f), layer_UI_));
-    AddGameObject(new TestObject(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.25f, 0.25f), layer_main_));
-    AddGameObject(new TestObject(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.5f, 0.5f), layer_tilemap_));
-    gom_.SortByLayers();
+    AddGameObject(new TestObject(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.1f, 0.1f), layer_UI_, 2));
+    AddGameObject(new TestObject(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.25f, 0.25f), layer_main_, 1));
+    AddGameObject(new TestObject(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.5f, 0.5f), layer_tilemap_, 0));
+    //gom_.SortByLayers();
 }
 
 void SceneGame::Update(float delta_time)
@@ -24,6 +24,8 @@ void SceneGame::Update(float delta_time)
     gom_.Update(delta_time); //update all gameobjects
     gom_.Collision(); //check collision between gameobjects
     gom_.Remove(); //remove "dead" gameobjects
+
+    gom_.SortByLayers();
 }
 
 void SceneGame::Draw(sf::RenderWindow& render_window) const

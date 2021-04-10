@@ -22,6 +22,7 @@ void LoadAssets::LoadImage()
     // LP::SetFont("Path to Font");
     // LP::SetTexture(Texture Key, "Path to texture", texture width, texture height);
     LP::SetTexture(pic_texture_, "./pic.png", 1920, 1080);
+    LP::SetFont("./Blue Sky 8x8.ttf");
 }
 
 void LoadAssets::LoadSound()

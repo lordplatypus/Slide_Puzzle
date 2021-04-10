@@ -12,7 +12,6 @@ int main()
     DeltaTime deltaTime;
     Camera camera{&window};
     camera.SetView("Main", window.getSize().x, window.getSize().y);
-    //camera.SetView("Main", sf::FloatRect(0.0f, 0.0f, 960.0f, 540.0f));
     Game game{&camera};
 
     while (isRunning)
@@ -38,8 +37,7 @@ int main()
                     viewport.top = (1.f - viewport.height) / 2.f;
                 }
 
-                //camera.SetCameraViewSize(viewport);
-                //camera.SetViewSize("Main", viewport);
+                camera.SetViewSize("Main", viewport);
             }
             else if (event.type == sf::Event::Closed)
             {
