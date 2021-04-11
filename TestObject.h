@@ -5,7 +5,7 @@
 class TestObject : public GameObject
 {
 public:
-    TestObject(const sf::Vector2f& position, const sf::Vector2f& scale, int layerID, int ID);
+    TestObject(const sf::Vector2f& position, const sf::Vector2f& scale, int layerID, int ID, Scene* scene);
     ~TestObject() override;
     void Update(float delta_time) override;
     void Draw(sf::RenderWindow& render_window) const override;

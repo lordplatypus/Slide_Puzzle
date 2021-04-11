@@ -20,7 +20,6 @@ public:
     void ChangeScene(const std::string& newScene);
     //End a scene
     void EndScene();
-    Camera* GetCamera();
     //Called on program shutdown, delete scenes here
     void Clear();
 
@@ -38,7 +37,6 @@ private:
     std::unordered_map<std::string, Scene*> scenes_;
     //Current loaded scene
     Scene* scene_ {nullptr};
-    Camera* camera_{nullptr};
     //load assets
     LoadAssets loadAssets_;
 

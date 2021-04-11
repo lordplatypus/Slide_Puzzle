@@ -2,6 +2,7 @@
 #define GAMEOBJECT_MANAGER_H_
 #include <list>
 #include "GameObject.h"
+#include "Camera.h"
 
 class GameObjectManager
 {

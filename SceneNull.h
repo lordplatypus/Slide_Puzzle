@@ -11,7 +11,8 @@ public:
     virtual void Draw(sf::RenderWindow& render_window) const override {}
     virtual void AddGameObject(GameObject* gameObject) override {}
     virtual GameObject* FindGameObject(const std::string& string, const bool byTag = true, const bool byID = false) override {return nullptr;}
-    virtual void ChangeGameObjectOrder(const std::string& name, const std::string& newPos) override {}
+    virtual void SortGameObjects() override {}
+    virtual sf::View* FindView(const std::string& viewName) override {return nullptr;}
     virtual void OnWin() override {}
     virtual void ChangeScene(const std::string& sceneName) override {}
     virtual void End() override {}

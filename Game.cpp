@@ -7,11 +7,11 @@
 
 static SceneNull nullScene;
 
-Game::Game(Camera* camera) : scene_{&nullScene}, camera_{camera}
+Game::Game(Camera* camera) : scene_{&nullScene}
 {
     loadAssets_.Load();
 
-    AddScene("Game", new SceneGame(this));
+    AddScene("Game", new SceneGame(this, camera));
 
     scene_ = scenes_["Game"];
     scene_->Init();
@@ -49,11 +49,6 @@ void Game::EndScene()
 {
     scene_->End();
     scene_ = &nullScene;
-}
-
-Camera* Game::GetCamera()
-{
-    return camera_;
 }
 
 void Game::Clear()

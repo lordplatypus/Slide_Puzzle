@@ -3,7 +3,7 @@
 #include "ID.h"
 #include "TestObject.h"
 
-SceneGame::SceneGame(Game* game) : game_{game}
+SceneGame::SceneGame(Game* game, Camera* camera) : game_{game}, camera_{camera}
 {}
 
 SceneGame::~SceneGame()
@@ -13,10 +13,13 @@ void SceneGame::Init()
 {
     game_->SetWin(false);
 
-    AddGameObject(new TestObject(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.1f, 0.1f), layer_UI_, 2));
-    AddGameObject(new TestObject(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.25f, 0.25f), layer_main_, 1));
-    AddGameObject(new TestObject(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.5f, 0.5f), layer_tilemap_, 0));
-    //gom_.SortByLayers();
+    camera_->SetView("Main");
+    camera_->SetView("UI");
+
+    AddGameObject(new TestObject(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.1f, 0.1f), layer_UI_, 2, this));
+    AddGameObject(new TestObject(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.25f, 0.25f), layer_main_, 1, this));
+    //AddGameObject(new TestObject(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.5f, 0.5f), layer_tilemap_, 0));
+    SortGameObjects();
 }
 
 void SceneGame::Update(float delta_time)
@@ -24,8 +27,6 @@ void SceneGame::Update(float delta_time)
     gom_.Update(delta_time); //update all gameobjects
     gom_.Collision(); //check collision between gameobjects
     gom_.Remove(); //remove "dead" gameobjects
-
-    gom_.SortByLayers();
 }
 
 void SceneGame::Draw(sf::RenderWindow& render_window) const
@@ -52,9 +53,14 @@ GameObject* SceneGame::FindGameObject(const std::string& string, const bool byTa
     return nullptr;
 }
 
-void SceneGame::ChangeGameObjectOrder(const std::string& name, const std::string& newPos)
+void SceneGame::SortGameObjects()
 {
-    gom_.ChangeListOrder(name, newPos);
+    gom_.SortByLayers();
+}
+
+sf::View* SceneGame::FindView(const std::string& viewName)
+{
+    return camera_->GetView(viewName);
 }
 
 void SceneGame::OnWin()

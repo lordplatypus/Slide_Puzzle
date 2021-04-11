@@ -7,37 +7,42 @@
 int main()
 {
     bool isRunning = true;//bool for main game loop
-    sf::RenderWindow window(sf::VideoMode(960, 540), "Game"); //game window
+    Camera camera{sf::Vector2f(960.0f, 540.0f)};
+    sf::RenderWindow render_window(sf::VideoMode(camera.GetAspectRatio().x, camera.GetAspectRatio().y), "Game"); //game window
 
     DeltaTime deltaTime;
-    Camera camera{&window};
-    camera.SetView("Main", window.getSize().x, window.getSize().y);
+    // camera.SetView("Main", window.getSize().x, window.getSize().y);
+    // camera.SetView("UI", window.getSize().x, window.getSize().y);
     Game game{&camera};
 
     while (isRunning)
     {//main game loop
         sf::Event event; //events
-        while (window.pollEvent(event))
+        while (render_window.pollEvent(event))
         {//
             if (event.type == sf::Event::Resized)
             {
-                sf::FloatRect viewport(0.f, 0.f, 1.f, 1.f);
+                sf::FloatRect viewport(0.0f, 0.0f, 1.0f, 1.0f);
 
-                float screenwidth = event.size.width / 960.f;
-                float screenheight = event.size.height / 540.f;
+                float screenwidth = event.size.width / camera.GetAspectRatio().x;
+                float screenheight = event.size.height / camera.GetAspectRatio().y;
 
                 if(screenwidth > screenheight)
                 {
                     viewport.width = screenheight / screenwidth;
-                    viewport.left = (1.f - viewport.width) / 2.f;
+                    viewport.left = (1.0f - viewport.width) / 2.0f;
                 }
                 else if(screenwidth < screenheight)
                 {
                     viewport.height = screenwidth / screenheight;
-                    viewport.top = (1.f - viewport.height) / 2.f;
+                    viewport.top = (1.0f - viewport.height) / 2.0f;
                 }
 
-                camera.SetViewSize("Main", viewport);
+                for (auto view : camera.GetAllViews())
+                {
+                    view.second->setViewport(viewport);
+                    render_window.setView(*view.second);
+                }
             }
             else if (event.type == sf::Event::Closed)
             {
@@ -49,9 +54,9 @@ int main()
             }
         }
         game.Update(deltaTime.GetDeltaTime());
-        window.clear();
-        game.Draw(window);
-        window.display();
+        render_window.clear();
+        game.Draw(render_window);
+        render_window.display();
     }
     return EXIT_SUCCESS;
 }

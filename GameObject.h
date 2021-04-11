@@ -2,6 +2,7 @@
 #define GAME_OBJECT_H_
 #include <SFML/Graphics.hpp>
 #include "Scene.h"
+#include "Camera.h"
 
 class Scene;
 
