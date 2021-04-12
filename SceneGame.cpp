@@ -1,7 +1,9 @@
 #include "SceneGame.h"
 #include "LP.h"
 #include "ID.h"
-#include "TestObject.h"
+#include "ObjectMap.h"
+#include "ObjectChar.h"
+#include "ObjectUI.h"
 
 SceneGame::SceneGame(Game* game) : game_{game}
 {}
@@ -14,9 +16,19 @@ void SceneGame::Init()
     game_->SetWin(false);
 
     //TEST
-    AddGameObject(new TestObject(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.1f, 0.1f), layer_UI_, 2, this));
-    AddGameObject(new TestObject(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.25f, 0.25f), layer_main_, 1, this));
-    //AddGameObject(new TestObject(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.5f, 0.5f), layer_tilemap_, 0));
+    int count = 0;
+    AddGameObject(new ObjectUI(sf::Vector2f(960/2, 540-32), count, this));
+    count++;
+    AddGameObject(new ObjectChar(sf::Vector2f(16, 16), count, this));
+    for (int x = 0; x < 960; x += 64)
+    {
+        for (int y = 0; y < 540; y += 64)
+        {
+            count++;
+            AddGameObject(new ObjectMap(sf::Vector2f(x, y), count, this));   
+        }
+    }
+
     SortGameObjects();
 }
 
@@ -25,9 +37,6 @@ void SceneGame::Update(float delta_time)
     gom_.Update(delta_time); //update all gameobjects
     gom_.Collision(); //check collision between gameobjects
     gom_.Remove(); //remove "dead" gameobjects
-
-    //TEST
-    FindView("Main")->setCenter(FindGameObject("1", false, false, true)->GetPosition());
 }
 
 void SceneGame::Draw(sf::RenderWindow& render_window) const

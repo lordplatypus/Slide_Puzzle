@@ -13,6 +13,7 @@ int main()
     DeltaTime deltaTime;
     camera.SetView("Main");
     camera.SetView("UI");
+    render_window.setView(*camera.GetView("Main"));
     Game game{&camera};
 
     while (isRunning)
