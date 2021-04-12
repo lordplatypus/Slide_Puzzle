@@ -14,6 +14,8 @@ public:
     void Update(float delta_time);
     //Draw Game
     void Draw(sf::RenderWindow& render_window);
+    //Get Camera
+    Camera* GetCamera();
     //Add a Scene to the scene map
     void AddScene(const std::string& name, Scene* scene);
     //Switch to a different scene
@@ -37,6 +39,8 @@ private:
     std::unordered_map<std::string, Scene*> scenes_;
     //Current loaded scene
     Scene* scene_ {nullptr};
+    //Camera - view manager
+    Camera* camera_{nullptr};
     //load assets
     LoadAssets loadAssets_;
 

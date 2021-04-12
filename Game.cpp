@@ -7,11 +7,11 @@
 
 static SceneNull nullScene;
 
-Game::Game(Camera* camera) : scene_{&nullScene}
+Game::Game(Camera* camera) : camera_{camera}, scene_{&nullScene}
 {
     loadAssets_.Load();
 
-    AddScene("Game", new SceneGame(this, camera));
+    AddScene("Game", new SceneGame(this));
 
     scene_ = scenes_["Game"];
     scene_->Init();
@@ -31,6 +31,11 @@ void Game::Update(float delta_time)
 void Game::Draw(sf::RenderWindow& render_window)
 {
     scene_->Draw(render_window);
+}
+
+Camera* Game::GetCamera()
+{
+    return camera_;
 }
 
 void Game::AddScene(const std::string& name, Scene* scene)

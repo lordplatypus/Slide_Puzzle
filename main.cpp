@@ -11,8 +11,8 @@ int main()
     sf::RenderWindow render_window(sf::VideoMode(camera.GetAspectRatio().x, camera.GetAspectRatio().y), "Game"); //game window
 
     DeltaTime deltaTime;
-    // camera.SetView("Main", window.getSize().x, window.getSize().y);
-    // camera.SetView("UI", window.getSize().x, window.getSize().y);
+    camera.SetView("Main");
+    camera.SetView("UI");
     Game game{&camera};
 
     while (isRunning)

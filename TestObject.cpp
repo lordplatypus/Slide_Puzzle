@@ -65,7 +65,7 @@ void TestObject::Update(float delta_time)
         sprite_.setPosition(position_);
     }
 
-    scene_->FindView("Main")->setCenter(position_); //target
+    //scene_->FindView("Main")->setCenter(position_); //target
 }
 
 void TestObject::Draw(sf::RenderWindow& render_window) const

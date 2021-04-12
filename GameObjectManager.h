@@ -35,14 +35,10 @@ public:
     void OneWayReverseInteraction();
     //Remove "dead" gameobjects
     void Remove();
-    //Find a specific gameobject by tag
-    GameObject* Find(const std::string& string, const bool byTag = true) const;
-    //Find a specific gameobject by ID
-    GameObject* Find(const int ID) const;
+    //Find a GameObject
+    GameObject* Find(const std::string& string, const bool byName = true, const bool byTag = false, const bool byID = false);
     //sort gameobjects by layer ID
-    void SortByLayers(); 
-    //given the name of the object move it to a different spot within the gameobject list. for newPos use wither "begin" or "end"
-    void ChangeListOrder(const std::string& name, const std::string& newPos); 
+    void SortByLayers();
     //Delete all gameobjects, call when scene ends
     void Clear();
 
@@ -50,8 +46,11 @@ public:
     GameObjectManager& operator = (const GameObjectManager& other) = delete;
 
 private:
-    //called by the function with the same name, dosen't need to be called outside this class 
-    void ChangeListOrder(std::list<GameObject*>::iterator posInList, std::list<GameObject*>::iterator newPosInList);
+    GameObject* FindByName(const std::string& string) const;
+    //Find a specific gameobject by tag
+    GameObject* FindByTag(const std::string& string) const;
+    //Find a specific gameobject by ID
+    GameObject* FindByID(const int ID) const;
 
 private:
     std::list<GameObject*> gameObjects_; //list of GameObjects

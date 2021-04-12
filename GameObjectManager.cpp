@@ -50,7 +50,7 @@ void GameObjectManager::Collision()
 {
     for (auto i = gameObjects_.begin(); i != gameObjects_.end(); i++)
     {
-        if (!(*i)->GetActive()) continue;
+        if (!(*i)->GetActive()) continue; //skips if gameobject is not active
         for (auto j = next(i); j != gameObjects_.end(); j++)
         {
             if (!(*j)->GetActive()) continue;
@@ -172,17 +172,42 @@ void GameObjectManager::Remove()
     }
 }
 
-GameObject* GameObjectManager::Find(const std::string& string, const bool byTag) const
+GameObject* GameObjectManager::Find(const std::string& string, const bool byName, const bool byTag, const bool byID)
 {
-    for (auto gameObject : gameObjects_)
+    if (byName)
     {
-        if (byTag && gameObject->GetTag() == string) return gameObject;
-        else if (!byTag && gameObject->GetName() == string) return gameObject;
+        return FindByName(string);
+    }
+    else if (byTag)
+    {
+        return FindByTag(string);
+    }
+    else if (byID)
+    {
+        return FindByID(std::stoi(string));
     }
     return nullptr;
 }
 
-GameObject* GameObjectManager::Find(const int ID) const
+GameObject* GameObjectManager::FindByName(const std::string& string) const
+{
+    for (auto gameObject : gameObjects_)
+    {
+        if (gameObject->GetName() == string) return gameObject;
+    }
+    return nullptr;
+}
+
+GameObject* GameObjectManager::FindByTag(const std::string& string) const
+{
+    for (auto gameObject : gameObjects_)
+    {
+        if (gameObject->GetTag() == string) return gameObject;
+    }
+    return nullptr;
+}
+
+GameObject* GameObjectManager::FindByID(const int ID) const
 {
     for (auto gameObject : gameObjects_)
     {
@@ -197,23 +222,6 @@ GameObject* GameObjectManager::Find(const int ID) const
 void GameObjectManager::SortByLayers()
 {
     gameObjects_.sort( [](GameObject* a, GameObject* b) {return a->GetLayerID() < b->GetLayerID();} );
-}
-
-void GameObjectManager::ChangeListOrder(const std::string& name, const std::string& newPos)
-{
-    std::list<GameObject*>::iterator gameObjectPos;
-    for (auto i = gameObjects_.begin(); i != gameObjects_.end(); i++)
-    {
-        if ((*i)->GetName() == name) gameObjectPos = i;
-    }
-
-    if (newPos == "begin") ChangeListOrder(gameObjectPos, gameObjects_.begin());
-    else ChangeListOrder(gameObjectPos, gameObjects_.end());
-}
-
-void GameObjectManager::ChangeListOrder(std::list<GameObject*>::iterator posInList, std::list<GameObject*>::iterator newPosInList)
-{
-    gameObjects_.splice(newPosInList, gameObjects_, posInList);
 }
 
 void GameObjectManager::Clear()
