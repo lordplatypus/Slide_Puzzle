@@ -1,9 +1,6 @@
 #include "SceneGame.h"
 #include "LP.h"
 #include "ID.h"
-#include "ObjectMap.h"
-#include "ObjectChar.h"
-#include "ObjectUI.h"
 
 SceneGame::SceneGame(Game* game) : game_{game}
 {}
@@ -14,22 +11,6 @@ SceneGame::~SceneGame()
 void SceneGame::Init()
 {
     game_->SetWin(false);
-
-    //TEST
-    int count = 0;
-    AddGameObject(new ObjectUI(sf::Vector2f(960/2, 540-32), count, this));
-    count++;
-    AddGameObject(new ObjectChar(sf::Vector2f(16, 16), count, this));
-    for (int x = 0; x < 960; x += 64)
-    {
-        for (int y = 0; y < 540; y += 64)
-        {
-            count++;
-            AddGameObject(new ObjectMap(sf::Vector2f(x, y), count, this));   
-        }
-    }
-
-    SortGameObjects();
 }
 
 void SceneGame::Update(float delta_time)
