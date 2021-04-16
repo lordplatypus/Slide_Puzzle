@@ -154,24 +154,6 @@ bool IP::PressX()
     return false;
 }
 
-void IP::Reset()
-{
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) pressedLeft_ = false;
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) pressedRight_ = false;
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) pressedUp_ = false;
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) pressedDown_ = false;
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) pressedSpace_ = false;
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::W)) pressedW_ = false;
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A)) pressedA_ = false;
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S)) pressedS_ = false;
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D)) pressedD_ = false;
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) pressedZ_ = false;
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X)) pressedX_ = false;
-
-    if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) leftClicked_ = false;
-    if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) rightClicked_ = false;
-}
-
 
 //Mouse
 
@@ -212,4 +194,23 @@ sf::Vector2i IP::GetMousePosition()
 void IP::SetMousePosition(sf::Vector2i position)
 {
     sf::Mouse::setPosition(position);
+}
+
+
+void IP::Reset()
+{
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) pressedLeft_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) pressedRight_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) pressedUp_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) pressedDown_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) pressedSpace_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::W)) pressedW_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A)) pressedA_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S)) pressedS_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D)) pressedD_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) pressedZ_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X)) pressedX_ = false;
+
+    if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) leftClicked_ = false;
+    if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) rightClicked_ = false;
 }
