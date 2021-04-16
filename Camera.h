@@ -7,9 +7,11 @@ class Camera
 {
 public:
     Camera() = default;
-    Camera(const sf::Vector2f& aspectRatio);
+    Camera(sf::RenderWindow* renderWindow, const sf::Vector2f& aspectRatio);
     ~Camera();
 
+    //Get the render window
+    const sf::RenderWindow& GetRenderWindow() const;
     //Set the game aspect ratio
     void SetAspectRatio(const sf::Vector2f& aspectRatio);
     //Get the game aspect ratio
@@ -41,7 +43,7 @@ public:
     Camera& operator = (const Camera& other) = delete;
 
 private:
-    //sf::RenderWindow* window_{nullptr};
+    sf::RenderWindow* renderWindow_{nullptr};
     std::unordered_map<std::string, sf::View*> views_;
     sf::Vector2f aspectRatio_;
 };

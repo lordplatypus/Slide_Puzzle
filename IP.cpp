@@ -1,8 +1,6 @@
 #include "IP.h"
 
-sf::Window* window_;
-
-sf::Vector2f mousePosition_;
+Camera* camera_;
 
 IP::IP()
 {}
@@ -10,10 +8,11 @@ IP::IP()
 IP::~IP()
 {}
 
-void IP::SetWindow(sf::Window* window)
+void IP::SetCamera(Camera* camera)
 {
-    window_ = window;
+    camera_ = camera;
 }
+
 
 bool IP::GetButton(sf::Keyboard::Key buttonID)
 {
@@ -168,6 +167,9 @@ void IP::Reset()
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D)) pressedD_ = false;
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) pressedZ_ = false;
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X)) pressedX_ = false;
+
+    if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) leftClicked_ = false;
+    if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) rightClicked_ = false;
 }
 
 
@@ -186,8 +188,6 @@ bool IP::LeftClick()
         leftClicked_ = true;
         return true;
     }
-    
-    if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) leftClicked_ = false;
 
     return false;
 }
@@ -200,15 +200,13 @@ bool IP::RightClick()
         rightClicked_ = true;
         return true;
     }
-    
-    if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) rightClicked_ = false;
 
     return false;
 }
 
 sf::Vector2i IP::GetMousePosition()
 {
-    return sf::Mouse::getPosition(*window_);
+    return sf::Mouse::getPosition(camera_->GetRenderWindow());
 }
 
 void IP::SetMousePosition(sf::Vector2i position)

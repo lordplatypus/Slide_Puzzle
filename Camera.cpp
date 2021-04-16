@@ -2,12 +2,18 @@
 #include "Camera.h"
 
 //Camera::Camera(sf::RenderWindow* render_window) : window_{render_window} {}
-Camera::Camera(const sf::Vector2f& aspectRatio) : aspectRatio_{aspectRatio} 
+Camera::Camera(sf::RenderWindow* renderWindow, const sf::Vector2f& aspectRatio) : 
+               renderWindow_{renderWindow}, aspectRatio_{aspectRatio} 
 {}
 
 Camera::~Camera() 
 {
     Clear();
+}
+
+const sf::RenderWindow& Camera::GetRenderWindow() const
+{
+    return *renderWindow_;
 }
 
 void Camera::SetAspectRatio(const sf::Vector2f& aspectRatio)

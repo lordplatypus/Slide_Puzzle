@@ -2,14 +2,15 @@
 #define ID_H_
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include "Camera.h"
 
 class IP
 {
 public:
     IP();
     ~IP();
-    //Store "window" address, used to get mouse position
-    static void SetWindow(sf::Window* window);
+
+    static void SetCamera(Camera* camera);
 
     //Keyboard Stuff
 
@@ -29,9 +30,6 @@ public:
     static bool PressZ();
     static bool PressX();
 
-    //Reset bools used for single button presses
-    static void Reset();
-
     //Mouse Stuff
 
     static bool GetMouseClick(sf::Mouse::Button buttonID);
@@ -39,6 +37,10 @@ public:
     static bool RightClick();
     static sf::Vector2i GetMousePosition();
     static void SetMousePosition(sf::Vector2i position);
+
+
+    //Reset bools used for single button presses
+    static void Reset();
 };
 
 #endif

@@ -7,13 +7,15 @@
 int main()
 {
     bool isRunning = true;//bool for main game loop
-    Camera camera{sf::Vector2f(960.0f, 540.0f)};
-    sf::RenderWindow render_window(sf::VideoMode(camera.GetAspectRatio().x, camera.GetAspectRatio().y), "Game"); //game window
+    sf::RenderWindow render_window(sf::VideoMode(960.0f, 540.0f), "Game"); //game window
 
     DeltaTime deltaTime;
+
+    Camera camera(&render_window, sf::Vector2f(960.0f, 540.0f));
     camera.SetView("Main");
     camera.SetView("UI");
     render_window.setView(*camera.GetView("Main"));
+
     Game game{&camera};
 
     while (isRunning)
