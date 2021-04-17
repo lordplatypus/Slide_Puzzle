@@ -35,7 +35,7 @@ public:
     static bool GetMouseClick(sf::Mouse::Button buttonID);
     static bool LeftClick();
     static bool RightClick();
-    static sf::Vector2i GetMousePosition();
+    static sf::Vector2f GetMousePosition();
     static void SetMousePosition(sf::Vector2i position);
 
 

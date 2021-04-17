@@ -186,9 +186,12 @@ bool IP::RightClick()
     return false;
 }
 
-sf::Vector2i IP::GetMousePosition()
+sf::Vector2f IP::GetMousePosition()
 {
-    return sf::Mouse::getPosition(camera_->GetRenderWindow());
+    //Get mouse position (pixel coordinates)
+    sf::Vector2i mousePosition = sf::Mouse::getPosition(camera_->GetRenderWindow());
+    //return mouse position after converting it to world coordinates
+    return camera_->GetRenderWindow().mapPixelToCoords(mousePosition);
 }
 
 void IP::SetMousePosition(sf::Vector2i position)

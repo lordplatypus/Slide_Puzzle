@@ -13,7 +13,6 @@ int main()
 
     Camera camera(&render_window, sf::Vector2f(960.0f, 540.0f));
     camera.SetView("Main");
-    camera.SetView("UI");
     render_window.setView(*camera.GetView("Main"));
 
     Game game{&camera};
