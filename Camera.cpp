@@ -1,4 +1,3 @@
-
 #include "Camera.h"
 
 //Camera::Camera(sf::RenderWindow* render_window) : window_{render_window} {}
