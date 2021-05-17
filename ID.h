@@ -14,6 +14,7 @@ enum
 {
     layer_tilemap_,
     layer_main_,
+    layer_particle,
     layer_UI_
 };
 

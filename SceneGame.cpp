@@ -11,6 +11,7 @@ SceneGame::~SceneGame()
 void SceneGame::Init()
 {
     game_->SetWin(false);
+    //AddGameObject(new Object(position, &pm_, this)); Example
 }
 
 void SceneGame::Update(float delta_time)

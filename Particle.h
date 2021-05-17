@@ -1,8 +1,9 @@
 #ifndef PARTICLE_H_
 #define PARTICLE_H_
 #include <SFML/Graphics.hpp>
+#include "GameObject.h"
 
-class Particle
+class Particle : public GameObject
 {
 public:
     Particle(sf::Sprite sprite, float x, float y, float vx, float vy, float damp, float lifespan, float forceX, float forceY, float angle, float angularVelocity, 

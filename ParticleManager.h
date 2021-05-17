@@ -2,27 +2,15 @@
 #define PARTICLE_MANAGER_H_
 #include <vector>
 #include "Particle.h"
+#include "Scene.h"
 
 class ParticleManager
 {
 public:
     ParticleManager();
     ~ParticleManager();
-    void Update(float delta_time);
-    void Draw(sf::RenderWindow& render_window) const;
     
-    void Explosion(float x, float y);
-    void SquareExplosion(float x, float y);
-    void WhiteOut(float x, float y);
-    void FadeToBlack(float x, float y);
-    void FadeFromBlack(float x, float y);
-    void SmokeScreen(float x, float y);
-    void Sparkle(float x, float y);
-
-    void Clear();
-
-private:
-    std::vector<Particle*> particles;
+    void Explosion(const sf::Vector2f position, Scene* scene);
 };
 
 #endif

@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "Game.h"
 #include "GameObjectManager.h"
+#include "ParticleManager.h"
 
 class SceneGame : public Scene
 {
@@ -23,6 +24,7 @@ public:
 private:
     Game* game_{nullptr};
     GameObjectManager gom_;
+    ParticleManager pm_;
 };
 
 #endif
