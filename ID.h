@@ -5,7 +5,8 @@
 //Ex: texture keys, music keys, render layer keys
 enum
 {
-    pic_texture_,
+    image_texture_,
+    test_texture_,
 };
 
 

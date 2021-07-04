@@ -1,15 +1,18 @@
-#ifndef SCENE_GAME_H_
-#define SCENE_GAME_H_
+#ifndef SCENE_OPTIONS_H_
+#define SCENE_OPTIONS_H_
 #include "Scene.h"
 #include "Game.h"
 #include "GameObjectManager.h"
 #include "ParticleManager.h"
+#include "SceneGame.h"
+#include "Button.h"
+#include "Counter.h"
 
-class SceneGame : public Scene
+class SceneOptions : public Scene
 {
 public:
-    SceneGame(Game* game);
-    ~SceneGame();
+    SceneOptions(Game* game);
+    ~SceneOptions();
     virtual void Init() override;
     virtual void Update(float delta_time) override;
     virtual void Draw(sf::RenderWindow& render_window) const override;
@@ -21,13 +24,29 @@ public:
     virtual void ChangeScene(const std::string& sceneName) override;
     virtual void End() override;
 
+    void MainMenu();
+    void ImageMenu();
+    void RowMenu();
+    void ColumnMenu();
+    void RedMenu();
+    void GreenMenu();
+    void BlueMenu();
+
 private:
     Game* game_{nullptr};
     GameObjectManager gom_;
     ParticleManager pm_;
 
-    int rows_ = 4;
-    int columns_ = 4;
+    enum State{Main, Image, Row, Column, Red, Green, Blue};
+    State state_{Main};
+
+    int selectedOption_{0};
+    int temp_{0};
+
+    std::vector<Button*> buttons_;
+    std::vector<Counter*> counters_;
+
+    Button* imagePath_{nullptr};
 };
 
 #endif

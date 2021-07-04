@@ -29,6 +29,8 @@ public:
     static bool PressD();
     static bool PressZ();
     static bool PressX();
+    static bool PressEnter();
+    static bool PressBackspace();
 
     //Mouse Stuff
 

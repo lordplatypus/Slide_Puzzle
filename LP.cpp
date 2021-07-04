@@ -5,9 +5,14 @@ std::unordered_map<int, sf::Texture> LP::textureMap_;
 sf::Font LP::font_;
 
 //SPRITE
-void LP::SetTexture(const int textureKey, const std::string& filePath, int width, int height)
+bool LP::SetTexture(const int textureKey, const std::string& filePath)
 {
-    textureMap_[textureKey].loadFromFile(filePath, sf::IntRect(0, 0, width, height));
+    return textureMap_[textureKey].loadFromFile(filePath);
+}
+
+bool LP::SetTexture(const int textureKey, const std::string& filePath, int width, int height)
+{
+    return textureMap_[textureKey].loadFromFile(filePath, sf::IntRect(0, 0, width, height));
 }
 
 sf::Sprite LP::SetSprite(const int textureKey, const sf::Vector2f& position)
@@ -23,7 +28,7 @@ sf::Sprite LP::SetSprite(const int textureKey, const int cellWidth, const int ce
     sf::Sprite temp;
     temp.setTexture(textureMap_[textureKey]);
     sf::Vector2u textureSize = temp.getTexture()->getSize();
-    temp.setTextureRect(sf::IntRect(cellID % (textureSize.x / cellWidth) * cellWidth, cellID / (textureSize.x / cellWidth) * cellWidth, cellWidth, cellHeight));
+    temp.setTextureRect(sf::IntRect(cellID % (textureSize.x / cellWidth) * cellWidth, cellID / (textureSize.x / cellWidth) * cellHeight, cellWidth, cellHeight));
     temp.setPosition(position);
     return temp;
 }

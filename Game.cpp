@@ -4,16 +4,18 @@
 #include "Game.h"
 #include "SceneNull.h"
 #include "SceneGame.h"
+#include "SceneOptions.h"
 
 static SceneNull nullScene;
 
-Game::Game(Camera* camera) : camera_{camera}, scene_{&nullScene}
+Game::Game(Camera* camera, TI* ti) : camera_{camera}, ti_{ti}, scene_{&nullScene}
 {
     loadAssets_.Load();
 
+    AddScene("Options", new SceneOptions(this));
     AddScene("Game", new SceneGame(this));
 
-    scene_ = scenes_["Game"];
+    scene_ = scenes_["Options"];
     scene_->Init();
 }
 
@@ -78,4 +80,20 @@ void Game::SetWin(const bool win)
 bool Game::GetWin() const
 {
     return win_;
+}
+
+
+Options* Game::GetOptions()
+{
+    return &options_;
+}
+
+TI* Game::GetTI()
+{
+    return ti_;
+}
+
+const bool Game::AddImage(const std::string& filePath)
+{
+    return loadAssets_.AddImage(filePath);
 }

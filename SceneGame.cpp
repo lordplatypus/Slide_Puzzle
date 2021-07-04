@@ -1,6 +1,9 @@
 #include "SceneGame.h"
 #include "LP.h"
 #include "ID.h"
+#include "IP.h"
+#include "PuzzleManager.h"
+#include "Hint.h"
 
 SceneGame::SceneGame(Game* game) : game_{game}
 {}
@@ -11,7 +14,9 @@ SceneGame::~SceneGame()
 void SceneGame::Init()
 {
     game_->SetWin(false);
-    //AddGameObject(new Object(position, &pm_, this)); Example
+
+    AddGameObject(new PuzzleManager(this, game_->GetOptions()->GetRowNum(), game_->GetOptions()->GetColumnNum()));
+    AddGameObject(new Hint(this));
 }
 
 void SceneGame::Update(float delta_time)
@@ -19,6 +24,8 @@ void SceneGame::Update(float delta_time)
     gom_.Update(delta_time); //update all gameobjects
     gom_.Collision(); //check collision between gameobjects
     gom_.Remove(); //remove "dead" gameobjects
+
+    if (IP::PressX()) ChangeScene("Options");
 }
 
 void SceneGame::Draw(sf::RenderWindow& render_window) const

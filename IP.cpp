@@ -154,6 +154,30 @@ bool IP::PressX()
     return false;
 }
 
+bool pressedEnter_{true};
+bool IP::PressEnter()
+{
+    if (!pressedEnter_ && sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+    {
+        pressedEnter_ = true;
+        return true;
+    }
+
+    return false;
+}
+
+bool pressedBackspace_{true};
+bool IP::PressBackspace()
+{
+    if (!pressedBackspace_ && sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace))
+    {
+        pressedBackspace_ = true;
+        return true;
+    }
+
+    return false;
+}
+
 
 //Mouse
 
@@ -213,6 +237,8 @@ void IP::Reset()
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D)) pressedD_ = false;
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) pressedZ_ = false;
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X)) pressedX_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) pressedEnter_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace)) pressedBackspace_ = false;
 
     if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) leftClicked_ = false;
     if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) rightClicked_ = false;

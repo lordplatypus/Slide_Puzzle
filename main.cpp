@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Game.h"
 #include "LP.h"
+#include "TI.h"
 
 int main()
 {
@@ -11,11 +12,13 @@ int main()
 
     DeltaTime deltaTime;
 
-    Camera camera(&render_window, sf::Vector2f(960.0f, 540.0f));
+    Camera camera(&render_window, sf::Vector2f(1920.0f, 1080.0f));
     camera.SetView("Main");
     render_window.setView(*camera.GetView("Main"));
 
-    Game game{&camera};
+    TI ti;
+
+    Game game{&camera, &ti};
 
     while (isRunning)
     {//main game loop
@@ -45,6 +48,10 @@ int main()
                     view.second->setViewport(viewport);
                     render_window.setView(*view.second);
                 }
+            }
+            else if (event.type == sf::Event::TextEntered && ti.GetActive())
+            {
+                if (event.text.unicode != '\b' && event.text.unicode != '\r') ti.AddToString(event.text.unicode);
             }
             else if (event.type == sf::Event::Closed)
             {

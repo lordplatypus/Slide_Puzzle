@@ -4,11 +4,13 @@
 #include "Scene.h"
 #include "LoadAssets.h"
 #include "Camera.h"
+#include "Options.h"
+#include "TI.h"
 
 class Game
 {
 public:
-    Game(Camera* camera);
+    Game(Camera* camera, TI* ti);
     ~Game();
     //Update Game
     void Update(float delta_time);
@@ -31,6 +33,10 @@ public:
     //but this must be reset everytime manually before starting the next minigame
     bool GetWin() const;
 
+    Options* GetOptions();
+    TI* GetTI();
+    const bool AddImage(const std::string& filePath);
+
     Game(const Game& other) = delete;
     Game& operator = (const Game& other) = delete;
 
@@ -46,6 +52,12 @@ private:
 
     //Win status
     bool win_{false};
+
+    //Options
+    Options options_;
+
+    //Text Input
+    TI* ti_{nullptr};
 };
 
 #endif

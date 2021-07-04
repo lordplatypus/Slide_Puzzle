@@ -7,6 +7,7 @@ public:
     LoadAssets();
     ~LoadAssets();
     void Load();
+    const bool AddImage(const std::string& filePath);
 
 private:
     void LoadImage();
