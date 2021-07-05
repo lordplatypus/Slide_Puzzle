@@ -4,7 +4,7 @@
 #include "IP.h"
 #include "Math.h"
 
-EmptyBox::EmptyBox(Scene* scene, const sf::Vector2f& position, const int ID, const int rowNum, const int columnNum)
+EmptyBox::EmptyBox(Scene* scene, const sf::Vector2f& position, const int ID, const int rowNum, const int columnNum, const sf::Vector2f& textureSize)
 {
     scene_ = scene;
     name_ = "EmptyBox";
@@ -13,8 +13,8 @@ EmptyBox::EmptyBox(Scene* scene, const sf::Vector2f& position, const int ID, con
     velocity_ = position_;
     layerID_ = layer_main_;
     ID_ = ID;
-    imageWidth_ = 1920.0f / columnNum;
-    imageHeight_ = 1080.0f / rowNum;
+    imageWidth_ = textureSize.x / columnNum;
+    imageHeight_ = textureSize.y / rowNum;
     SetActive(false);
 
     //Sprite set up
@@ -36,7 +36,7 @@ void EmptyBox::Update(float delta_time)
 void EmptyBox::Draw(sf::RenderWindow& render_window) const
 {
     //Set view (if using multiple views)
-    //render_window.setView(*scene_->FindView("Name Of View"));
+    render_window.setView(*scene_->FindView("Main"));
 
     //Draw sprite to render window
     render_window.draw(rect_);

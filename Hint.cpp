@@ -27,7 +27,7 @@ void Hint::Update(float delta_time)
 void Hint::Draw(sf::RenderWindow& render_window) const
 {
     //Set view (if using multiple views)
-    //render_window.setView(*scene_->FindView("Name Of View"));
+    render_window.setView(*scene_->FindView("Main"));
 
     //Draw sprite to render window
     if (IP::GetButton(sf::Keyboard::LControl)) render_window.draw(sprite_);

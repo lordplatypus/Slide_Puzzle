@@ -19,14 +19,14 @@ void LoadAssets::Load()
 
 const bool LoadAssets::AddImage(const std::string& filePath)
 {
-    return LP::SetTexture(image_texture_, filePath, 1920, 1080);
+    return LP::SetTexture(image_texture_, filePath);
 }
 
 void LoadAssets::LoadImage()
 {
     // LP::SetFont("Path to Font");
     // LP::SetTexture(Texture Key, "Path to texture", texture width, texture height);
-    LP::SetTexture(image_texture_, "./image.png", 1920, 1080);
+    LP::SetTexture(image_texture_, "./image.png");
     LP::SetFont("./Blue Sky 8x8.ttf");
 }
 

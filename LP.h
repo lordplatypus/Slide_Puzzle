@@ -11,6 +11,7 @@ public:
     //Sprite
     static bool SetTexture(const int textureKey, const std::string& filePath);
     static bool SetTexture(const int textureKey, const std::string& filePath, int width, int height);
+    static sf::Texture GetTexture(const int textureKey);
     static sf::Sprite SetSprite(const int textureKey, const sf::Vector2f& position = sf::Vector2f(0.0f, 0.0f));
     static sf::Sprite SetSprite(const int textureKey, const int cellWidth, const int cellHeight, const int cellID, const sf::Vector2f& position = sf::Vector2f(0.0f, 0.0f));
     static std::vector<sf::Sprite> SetMultiFrameSprite(const int textureKey, const int cellWidth, const int cellHeight, const int numOfColumns, const int numOfRows, const sf::Vector2f& position = sf::Vector2f(0.0f, 0.0f));

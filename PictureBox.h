@@ -5,7 +5,7 @@
 class PictureBox : public GameObject
 {
 public:
-    PictureBox(Scene* scene, const sf::Vector2f& position, const int ID, const int rowNum, const int columnNum);
+    PictureBox(Scene* scene, const sf::Vector2f& position, const int ID, const int rowNum, const int columnNum, const sf::Vector2f& textureSize);
     ~PictureBox() override;
     void Update(float delta_time) override;
     void Draw(sf::RenderWindow& render_window) const override;

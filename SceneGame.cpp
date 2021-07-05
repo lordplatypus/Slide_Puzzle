@@ -15,7 +15,20 @@ void SceneGame::Init()
 {
     game_->SetWin(false);
 
-    AddGameObject(new PuzzleManager(this, game_->GetOptions()->GetRowNum(), game_->GetOptions()->GetColumnNum()));
+    srand (time(NULL));
+
+    sf::Vector2f textureSize = sf::Vector2f(LP::GetTexture(image_texture_).getSize().x, LP::GetTexture(image_texture_).getSize().y);
+
+    if (textureSize.x < textureSize.x * 9 / 16) FindView("Main")->setSize(sf::Vector2f(textureSize.x, textureSize.x * 9 / 16));
+    else if (textureSize.y < textureSize.y * 16 / 9) FindView("Main")->setSize(sf::Vector2f(textureSize.y * 16 / 9, textureSize.y));
+    else
+    {
+        if (textureSize.x > textureSize.y) FindView("Main")->setSize(sf::Vector2f(textureSize.x * 16 / 9, textureSize.y));
+        else FindView("Main")->setSize(sf::Vector2f(textureSize.x, textureSize.y * 9 / 16));
+    }
+    FindView("Main")->setCenter(sf::Vector2f(textureSize.x / 2, textureSize.y / 2));
+
+    AddGameObject(new PuzzleManager(this, game_->GetOptions()->GetRowNum(), game_->GetOptions()->GetColumnNum(), textureSize));
     AddGameObject(new Hint(this));
 }
 

@@ -4,7 +4,7 @@
 #include "IP.h"
 #include "Math.h"
 
-PictureBox::PictureBox(Scene* scene, const sf::Vector2f& position, const int ID, const int rowNum, const int columnNum)
+PictureBox::PictureBox(Scene* scene, const sf::Vector2f& position, const int ID, const int rowNum, const int columnNum, const sf::Vector2f& textureSize)
 {
     scene_ = scene;
     name_ = "PictureBox";
@@ -14,8 +14,8 @@ PictureBox::PictureBox(Scene* scene, const sf::Vector2f& position, const int ID,
     layerID_ = layer_main_;
     ID_ = ID;
     SetActive(false);
-    imageWidth_ = 1920.0f / columnNum;
-    imageHeight_ = 1080.0f / rowNum;
+    imageWidth_ = textureSize.x / columnNum;
+    imageHeight_ = textureSize.y / rowNum;
 
     //Sprite set up
     sprite_ = LP::SetSprite(image_texture_, imageWidth_, imageHeight_, ID_, position_);
@@ -37,7 +37,7 @@ void PictureBox::Update(float delta_time)
 void PictureBox::Draw(sf::RenderWindow& render_window) const
 {
     //Set view (if using multiple views)
-    //render_window.setView(*scene_->FindView("Name Of View"));
+    render_window.setView(*scene_->FindView("Main"));
 
     //Draw sprite to render window
     render_window.draw(sprite_);

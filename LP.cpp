@@ -15,6 +15,11 @@ bool LP::SetTexture(const int textureKey, const std::string& filePath, int width
     return textureMap_[textureKey].loadFromFile(filePath, sf::IntRect(0, 0, width, height));
 }
 
+sf::Texture LP::GetTexture(const int textureKey)
+{
+    return textureMap_[textureKey];
+}
+
 sf::Sprite LP::SetSprite(const int textureKey, const sf::Vector2f& position)
 {
     sf::Sprite temp;
