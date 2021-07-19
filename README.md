@@ -1,3 +1,3 @@
-# Minigame_Base
+# Slide_Puzzle
 
-An empty base to make other games from. I continuously update this as I learn more or have a need for more functionality. I hope to make a library out of this.
+Takes a png image and breaks it up into squares, removes a square, and then randomizes the squares. Try to put the picture back in the right order by swapping the empty square with adjacent squares.
