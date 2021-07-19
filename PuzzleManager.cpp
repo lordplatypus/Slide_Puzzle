@@ -98,7 +98,7 @@ void PuzzleManager::Randomizer()
     //     pictureBox_[b]->SetPosition(tempPosition, tempID);
     // }
 
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 100 * rowNum_ * columnNum_; i++)
     {
         sf::Vector2f emptyPosition = emptyBox_->GetPosition();
 

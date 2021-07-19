@@ -16,7 +16,7 @@ public:
     void ClearString();
 
 private:
-    sf::String string_{"./image.png"};
+    sf::String string_{"image.png"};
     bool active_{false};
 };
 

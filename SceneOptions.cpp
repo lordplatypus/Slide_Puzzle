@@ -31,6 +31,9 @@ void SceneOptions::Init()
 
     imagePath_ = new Button(sf::Vector2f(256.0f, 32.0f), game_->GetTI()->GetString());
     imagePath_->SetActive(false);
+
+    FindView("Main")->setSize(sf::Vector2f(1920.0f, 1080.0f));
+    FindView("Main")->setCenter(sf::Vector2f(1920.0f / 2, 1080.0f / 2));
 }
 
 void SceneOptions::Update(float delta_time)
@@ -40,7 +43,7 @@ void SceneOptions::Update(float delta_time)
     gom_.Remove(); //remove "dead" gameobjects
 
     if (state_ == Main) MainMenu();
-    else if (state_ == Image) ImageMenu();
+    else if (state_ == Image) ImageMenu(delta_time);
     else if (state_ == Row) RowMenu();
     else if (state_ == Column) ColumnMenu();
     else if (state_ == Red) RedMenu();
@@ -53,11 +56,11 @@ void SceneOptions::Draw(sf::RenderWindow& render_window) const
     gom_.Draw(render_window); //Regular draw - Draw GameObjects in order based on position in the list
     gom_.DelayedDraw(render_window); //draw things after Regular draw is finished, helpful for UI or things that should always be drawn last
 
-    // for (auto button : buttons_) button->Draw(render_window);
-    // for (auto counter : counters_) counter->Draw(render_window);
+    render_window.setView(*game_->GetCamera()->GetView("Main"));
+
     for (int i = 0; i < buttons_.size(); i++) buttons_[i]->Draw(render_window);
     for (int i = 0; i < counters_.size(); i++) counters_[i]->Draw(render_window);
-    imagePath_->Draw(render_window);
+    if (editingFilePath_) imagePath_->Draw(render_window);
 }
 
 void SceneOptions::AddGameObject(GameObject* gameObject)
@@ -93,6 +96,12 @@ void SceneOptions::ChangeScene(const std::string& sceneName)
 void SceneOptions::End()
 {
     gom_.Clear();
+
+    for (auto i : buttons_) delete i;
+    buttons_.clear();
+    for (auto i : counters_) delete i;
+    counters_.clear();
+    delete imagePath_;
 }
 
 void SceneOptions::MainMenu()
@@ -109,7 +118,7 @@ void SceneOptions::MainMenu()
         buttons_[selectedOption_]->SetActive(true);
         buttons_[selectedOption_ - 1]->SetActive(false);
     }
-    if (IP::PressZ())
+    if (IP::PressEnter())
     {
         if (selectedOption_ == 0) ChangeScene("Game");
         if (selectedOption_ == 1) 
@@ -145,32 +154,38 @@ void SceneOptions::MainMenu()
     }
 }
 
-void SceneOptions::ImageMenu()
+void SceneOptions::ImageMenu(float delta_time)
 {
-    if (IP::PressRight())
-    {
-       
-    }
-    if (IP::PressLeft())
-    {
-        
-    }
-    if (IP::PressZ())
+    if (!game_->GetTI()->GetActive())
     {
         game_->GetTI()->SetActive(true);
+        oldFilePath_ = game_->GetTI()->GetString();
     }
 
-    if (game_->GetTI()->GetActive())
+    if (IP::PressEnter())
     {
-        if (IP::PressEnter())
+        game_->GetTI()->SetActive(false);
+        imagePath_->SetActive(false);
+        if (!game_->AddImage("./" + game_->GetTI()->GetString())) game_->GetTI()->SetString(oldFilePath_);
+        editingFilePath_ = true;
+        state_ = Main;
+    }
+    if (IP::PressBackspace()) game_->GetTI()->Backspace();
+    imagePath_->SetString(game_->GetTI()->GetString());
+
+    editingFilePathCounter_ -= delta_time;
+    if (editingFilePathCounter_ <= 0.0f)
+    {
+        if (editingFilePath_) 
         {
-            game_->GetTI()->SetActive(false);
-            imagePath_->SetActive(false);
-            if (!game_->AddImage(game_->GetTI()->GetString())) game_->GetTI()->SetString("./image.png");
-            state_ = Main;
+            editingFilePath_ = false;
+            editingFilePathCounter_ = 0.1f;
         }
-        if (IP::PressBackspace()) game_->GetTI()->Backspace();
-        imagePath_->SetString(game_->GetTI()->GetString());
+        else 
+        {
+            editingFilePath_ = true;
+            editingFilePathCounter_ = 1.0f;
+        }
     }
 }
 
@@ -184,7 +199,7 @@ void SceneOptions::RowMenu()
     {
         counters_[0]->Decrement();
     }
-    if (IP::PressZ())
+    if (IP::PressEnter())
     {
         game_->GetOptions()->SetRowNum(counters_[0]->GetNum());
         counters_[0]->SetActive(false);
@@ -202,7 +217,7 @@ void SceneOptions::ColumnMenu()
     {
         counters_[1]->Decrement();
     }
-    if (IP::PressZ())
+    if (IP::PressEnter())
     {
         game_->GetOptions()->SetColumnNum(counters_[1]->GetNum());
         counters_[1]->SetActive(false);
@@ -220,7 +235,7 @@ void SceneOptions::RedMenu()
     {
         counters_[2]->Decrement();
     }
-    if (IP::PressZ())
+    if (IP::PressEnter())
     {
         game_->GetOptions()->SetRedNum(counters_[2]->GetNum());
         counters_[2]->SetActive(false);
@@ -238,7 +253,7 @@ void SceneOptions::GreenMenu()
     {
         counters_[3]->Decrement();
     }
-    if (IP::PressZ())
+    if (IP::PressEnter())
     {
         game_->GetOptions()->SetGreenNum(counters_[3]->GetNum());
         counters_[3]->SetActive(false);
@@ -256,7 +271,7 @@ void SceneOptions::BlueMenu()
     {
         counters_[4]->Decrement();
     }
-    if (IP::PressZ())
+    if (IP::PressEnter())
     {
         game_->GetOptions()->SetBlueNum(counters_[4]->GetNum());
         counters_[4]->SetActive(false);

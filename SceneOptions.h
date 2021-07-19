@@ -25,7 +25,7 @@ public:
     virtual void End() override;
 
     void MainMenu();
-    void ImageMenu();
+    void ImageMenu(float delta_time);
     void RowMenu();
     void ColumnMenu();
     void RedMenu();
@@ -47,6 +47,9 @@ private:
     std::vector<Counter*> counters_;
 
     Button* imagePath_{nullptr};
+    std::string oldFilePath_{""};
+    bool editingFilePath_{true};
+    float editingFilePathCounter_{0.0f};
 };
 
 #endif
