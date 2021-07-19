@@ -4,7 +4,7 @@
 #include "IP.h"
 #include "Math.h"
 
-EmptyBox::EmptyBox(Scene* scene, const sf::Vector2f& position, const int ID, const int rowNum, const int columnNum, const sf::Vector2f& textureSize)
+EmptyBox::EmptyBox(Scene* scene, const sf::Vector2f& position, const int ID, Options* options, const sf::Vector2f& textureSize)
 {
     scene_ = scene;
     name_ = "EmptyBox";
@@ -13,15 +13,15 @@ EmptyBox::EmptyBox(Scene* scene, const sf::Vector2f& position, const int ID, con
     velocity_ = position_;
     layerID_ = layer_main_;
     ID_ = ID;
-    imageWidth_ = textureSize.x / columnNum;
-    imageHeight_ = textureSize.y / rowNum;
+    imageWidth_ = textureSize.x / options->GetColumnNum();
+    imageHeight_ = textureSize.y / options->GetRowNum();
     SetActive(false);
 
     //Sprite set up
     //sprite_ = LP::SetSprite("texture id", position_);
     rect_.setSize(sf::Vector2f(imageWidth_, imageHeight_));
     rect_.setPosition(position_);
-    rect_.setFillColor(sf::Color::Black);
+    rect_.setFillColor(sf::Color(options->GetBoxRed(), options->GetBoxGreen(), options->GetBoxBlue(), options->GetBoxAlpha()));
 }
 
 EmptyBox::~EmptyBox()

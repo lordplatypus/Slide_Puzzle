@@ -26,8 +26,7 @@ private:
     GameObjectManager gom_;
     ParticleManager pm_;
 
-    int rows_ = 4;
-    int columns_ = 4;
+    sf::RectangleShape background_;
 };
 
 #endif

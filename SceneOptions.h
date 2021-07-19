@@ -25,19 +25,16 @@ public:
     virtual void End() override;
 
     void MainMenu();
-    void ImageMenu(float delta_time);
-    void RowMenu();
-    void ColumnMenu();
-    void RedMenu();
-    void GreenMenu();
-    void BlueMenu();
+
+    void SecondaryMenu();
+    void SetOption();
 
 private:
     Game* game_{nullptr};
     GameObjectManager gom_;
     ParticleManager pm_;
 
-    enum State{Main, Image, Row, Column, Red, Green, Blue};
+    enum State{Main, Secondary};
     State state_{Main};
 
     int selectedOption_{0};
@@ -48,8 +45,9 @@ private:
 
     Button* imagePath_{nullptr};
     std::string oldFilePath_{""};
-    bool editingFilePath_{true};
-    float editingFilePathCounter_{0.0f};
+
+    Button* randomEmptyBox_{nullptr};
+    bool random_{false};
 };
 
 #endif

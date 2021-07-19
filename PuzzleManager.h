@@ -3,11 +3,12 @@
 #include "GameObject.h"
 #include "PictureBox.h"
 #include "EmptyBox.h"
+#include "Options.h"
 
 class PuzzleManager : public GameObject
 {
 public:
-    PuzzleManager(Scene* scene, int rowNum, int columnNum, const sf::Vector2f& textureSize);
+    PuzzleManager(Scene* scene, Options* options, const sf::Vector2f& textureSize);
     ~PuzzleManager() override;
     void Update(float delta_time) override;
     //void Draw(sf::RenderWindow& render_window) const override;

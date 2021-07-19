@@ -2,26 +2,32 @@
 #include "IP.h"
 #include <math.h>
 
-PuzzleManager::PuzzleManager(Scene* scene, int rowNum, int columnNum, const sf::Vector2f& textureSize)
+PuzzleManager::PuzzleManager(Scene* scene, Options* options, const sf::Vector2f& textureSize)
 {
     scene_ = scene;
     SetActive(false);
-    rowNum_ = rowNum;
-    columnNum_ = columnNum;
+    rowNum_ = options->GetRowNum();
+    columnNum_ = options->GetColumnNum();
     textureSize_ = textureSize;
     width_ = textureSize_.x / columnNum_;
     height_ = textureSize_.y / rowNum_;
 
+    //this is to radomize the empty box, 1 / 1 is the default bottom right corner
+    int randomX = 1;
+    int randomY = 1;
+    if (options->GetRandomEmptyBoxPlacement())
+    {
+        randomX = rand() % columnNum_ + 1; //these can't be 0, hence the +1
+        randomY = rand() % rowNum_ + 1; //otherwise the empty box wouldn't be created
+    }
+
     int i = 0;
-    for (int y = 0; y < rowNum; y++)
+    for (int y = 0; y < rowNum_; y++)
     {
         for (int x = 0; x < columnNum_; x++)
         {
-            if (y == rowNum_ - 1 && x == columnNum_ - 1) emptyBox_ = new EmptyBox(scene_, sf::Vector2f(width_ * x, height_ * y), i, rowNum_, columnNum_, textureSize_);
-            else
-            {
-                pictureBox_.push_back(new PictureBox(scene_, sf::Vector2f(width_ * x, height_ * y), i, rowNum_, columnNum_, textureSize_));
-            }
+            if (y == rowNum_ - randomY && x == columnNum_ - randomX) emptyBox_ = new EmptyBox(scene_, sf::Vector2f(width_ * x, height_ * y), i, options, textureSize_);
+            else pictureBox_.push_back(new PictureBox(scene_, sf::Vector2f(width_ * x, height_ * y), i, options, textureSize_));
             i++;
         }
     }
@@ -88,16 +94,6 @@ void PuzzleManager::Input()
 
 void PuzzleManager::Randomizer()
 {
-    // for (int i = 0; i < 100; i++)
-    // {
-    //     int a = rand() % (rowNum_ * columnNum_ - 1);
-    //     int b = rand() % (rowNum_ * columnNum_ - 1);
-    //     sf::Vector2f tempPosition = pictureBox_[a]->GetPosition();
-    //     int tempID = pictureBox_[a]->GetID();
-    //     pictureBox_[a]->SetPosition(pictureBox_[b]->GetPosition(), pictureBox_[b]->GetID());
-    //     pictureBox_[b]->SetPosition(tempPosition, tempID);
-    // }
-
     for (int i = 0; i < 100 * rowNum_ * columnNum_; i++)
     {
         sf::Vector2f emptyPosition = emptyBox_->GetPosition();

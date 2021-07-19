@@ -4,7 +4,7 @@
 #include "IP.h"
 #include "Math.h"
 
-PictureBox::PictureBox(Scene* scene, const sf::Vector2f& position, const int ID, const int rowNum, const int columnNum, const sf::Vector2f& textureSize)
+PictureBox::PictureBox(Scene* scene, const sf::Vector2f& position, const int ID, Options* options, const sf::Vector2f& textureSize)
 {
     scene_ = scene;
     name_ = "PictureBox";
@@ -14,14 +14,14 @@ PictureBox::PictureBox(Scene* scene, const sf::Vector2f& position, const int ID,
     layerID_ = layer_main_;
     ID_ = ID;
     SetActive(false);
-    imageWidth_ = textureSize.x / columnNum;
-    imageHeight_ = textureSize.y / rowNum;
+    imageWidth_ = textureSize.x / options->GetColumnNum();
+    imageHeight_ = textureSize.y / options->GetRowNum();
 
     //Sprite set up
     sprite_ = LP::SetSprite(image_texture_, imageWidth_, imageHeight_, ID_, position_);
 
-    num_ = LP::SetText(std::to_string(ID_), position_ + numOffset_);
-    num_.setFillColor(sf::Color::Black);
+    num_ = LP::SetText(std::to_string(ID_), position_ + numOffset_, options->GetNumSize());
+    num_.setFillColor(sf::Color(options->GetNumRed(), options->GetNumGreen(), options->GetNumBlue(), options->GetNumAlpha()));
 }
 
 PictureBox::~PictureBox()

@@ -28,8 +28,15 @@ void SceneGame::Init()
     }
     FindView("Main")->setCenter(sf::Vector2f(textureSize.x / 2, textureSize.y / 2));
 
-    AddGameObject(new PuzzleManager(this, game_->GetOptions()->GetRowNum(), game_->GetOptions()->GetColumnNum(), textureSize));
+    AddGameObject(new PuzzleManager(this, game_->GetOptions(), textureSize));
     AddGameObject(new Hint(this));
+
+    background_.setSize(FindView("Main")->getSize());
+    if (textureSize.x < textureSize.x * 9 / 16) background_.setPosition(sf::Vector2f(0.0f, 0.0f - (FindView("Main")->getSize().y / 2 - textureSize.y / 2)));
+    else if (textureSize.y < textureSize.y * 16 / 9) background_.setPosition(sf::Vector2f(0.0f - (FindView("Main")->getSize().x / 2 - textureSize.x / 2), 0.0f));
+    else background_.setPosition(sf::Vector2f(0.0f, 0.0f));
+    background_.setFillColor(sf::Color(game_->GetOptions()->GetBackgroundRed(), game_->GetOptions()->GetBackgroundGreen(), 
+                                       game_->GetOptions()->GetBackgroundBlue(), game_->GetOptions()->GetBackgroundAlpha()));
 }
 
 void SceneGame::Update(float delta_time)
@@ -43,6 +50,7 @@ void SceneGame::Update(float delta_time)
 
 void SceneGame::Draw(sf::RenderWindow& render_window) const
 {
+    render_window.draw(background_);
     gom_.Draw(render_window); //Regular draw - Draw GameObjects in order based on position in the list
     gom_.DelayedDraw(render_window); //draw things after Regular draw is finished, helpful for UI or things that should always be drawn last
 }
