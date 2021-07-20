@@ -58,7 +58,7 @@ void PuzzleManager::Input()
     else if (IP::PressRight())
     {
         emptyPosition.x -= width_;
-        if (emptyPosition.x < 0.0f) return;
+        if (round(emptyPosition.x) < 0.0f) return;
     }
     else if (IP::PressUp())
     {
@@ -68,7 +68,7 @@ void PuzzleManager::Input()
     else if (IP::PressDown())
     {
         emptyPosition.y -= height_;
-        if (emptyPosition.y < 0.0f) return;
+        if (round(emptyPosition.y) < 0.0f) return;
     }
     else if (IP::PressZ())
     {
@@ -109,7 +109,7 @@ void PuzzleManager::Randomizer()
 
             case 1:
             emptyPosition.x -= width_;
-            if (emptyPosition.x < 0.0f) cont = true;
+            if (round(emptyPosition.x) < 0.0f) cont = true;
             break;
 
             case 2:
@@ -119,7 +119,7 @@ void PuzzleManager::Randomizer()
 
             case 3:
             emptyPosition.y -= height_;
-            if (emptyPosition.y < 0.0f) cont = true;
+            if (round(emptyPosition.y) < 0.0f) cont = true;
             break;
         }
         if (cont) continue;
