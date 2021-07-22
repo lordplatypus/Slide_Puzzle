@@ -14,6 +14,7 @@ int main()
 
     Camera camera(&render_window, sf::Vector2f(1920.0f, 1080.0f));
     camera.SetView("Main");
+    camera.SetView("Game"); //for the winning text
     render_window.setView(*camera.GetView("Main"));
 
     TI ti;

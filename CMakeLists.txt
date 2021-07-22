@@ -11,7 +11,7 @@ find_package(SFML 2.4 COMPONENTS graphics window system audio REQUIRED)
 
 # list .cpp files
 set(SOURCES main.cpp LP.cpp Game.cpp SceneGame.cpp LoadAssets.cpp GameObject.cpp GameObjectManager.cpp MP.cpp IP.cpp Camera.cpp Particle.cpp ParticleManager.cpp 
-    TileMap.cpp ExampleObject.cpp PictureBox.cpp EmptyBox.cpp PuzzleManager.cpp Hint.cpp SceneOptions.cpp Button.cpp Counter.cpp Options.cpp TI.cpp)
+    TileMap.cpp ExampleObject.cpp PictureBox.cpp EmptyBox.cpp PuzzleManager.cpp Hint.cpp SceneOptions.cpp Button.cpp Counter.cpp Options.cpp TI.cpp WinText.cpp)
 
 # add the executable
 add_executable(Game ${SOURCES}) 

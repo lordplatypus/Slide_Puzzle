@@ -7,6 +7,11 @@ public:
     Options();
     ~Options();
 
+    void SetDefault();
+
+    void SetRandomEmptyBoxPlacement(const bool randomEmptyBoxPlacement);
+    const bool GetRandomEmptyBoxPlacement() const;
+
     void SetRowNum(const int rowNum);
     const int GetRowNum() const;
     void SetColumnNum(const int columnNum);
@@ -41,10 +46,20 @@ public:
     void SetNumAlpha(const int numAlpha);
     const int GetNumAlpha() const;
 
-    void SetRandomEmptyBoxPlacement(const bool randomEmptyBoxPlacement);
-    const bool GetRandomEmptyBoxPlacement() const;
+    void SetOutlineSize(const int outlineSize);
+    const int GetOutlineSize() const;
+    void SetOutlineRed(const int outlineRed);
+    const int GetOutlineRed() const;
+    void SetOutlineGreen(const int outlineGreen);
+    const int GetOutlineGreen() const;
+    void SetOutlineBlue(const int outlineBlue);
+    const int GetOutlineBlue() const;
+    void SetOutlineAlpha(const int outlineAlpha);
+    const int GetOutlineAlpha() const;
 
 private:
+    //Random empty box placement (difficulty)
+    bool randomEmptyBoxPlacement_{false};
     //Number of boxes
     int rowNum_{0};
     int columnNum_{0};
@@ -64,8 +79,12 @@ private:
     int numGreen_{0};
     int numBlue_{0};
     int numAlpha_{0};
-    //Random empty box placement (difficulty)
-    bool randomEmptyBoxPlacement_{false};
+    //Outline size and color
+    int outlineSize_{0};
+    int outlineRed_{0};
+    int outlineGreen_{0};
+    int outlineBlue_{0};
+    int outlineAlpha_{0};
 };
 
 #endif

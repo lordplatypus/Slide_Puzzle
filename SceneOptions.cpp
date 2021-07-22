@@ -13,57 +13,105 @@ void SceneOptions::Init()
 {
     game_->SetWin(false);
 
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 0.0f), "Start"));
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 32.0f), "Image"));
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 64.0f), "Randomize missing piece location"));
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 96.0f), "Row"));
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 128.0f), "Column"));
+    //Set up the buttons
+    buttons_.push_back(new Button("Start"));
+    buttons_.push_back(new Button("Image"));
+    buttons_.push_back(new Button("Rand Empty"));
+    buttons_.push_back(new Button("Row"));
+    buttons_.push_back(new Button("Column"));
 
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 160.0f), "Hole Red"));
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 192.0f), "Hole Green"));
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 224.0f), "Hole Blue"));
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 256.0f), "Hole Alpha"));
+    buttons_.push_back(new Button("Empty Red"));
+    buttons_.push_back(new Button("Empty Green"));
+    buttons_.push_back(new Button("Empty Blue"));
+    buttons_.push_back(new Button("Empty Alpha"));
 
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 288.0f), "Number Size"));
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 320.0f), "Number Red"));
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 352.0f), "Number Green"));
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 384.0f), "Number Blue"));
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 416.0f), "Number Alpha"));
+    buttons_.push_back(new Button("Number Size"));
+    buttons_.push_back(new Button("Number Red"));
+    buttons_.push_back(new Button("Number Green"));
+    buttons_.push_back(new Button("Number Blue"));
+    buttons_.push_back(new Button("Number Alpha"));
 
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 448.0f), "Background Red"));
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 480.0f), "Background Green"));
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 512.0f), "Background Blue"));
-    buttons_.push_back(new Button(sf::Vector2f(0.0f, 544.0f), "Background Alpha"));
-    for (int i = 1; i < buttons_.size(); i++) buttons_[i]->SetActive(false);
+    buttons_.push_back(new Button("Background Red"));
+    buttons_.push_back(new Button("Background Green"));
+    buttons_.push_back(new Button("Background Blue"));
+    buttons_.push_back(new Button("Background Alpha"));
 
-    counters_.push_back(new Counter(sf::Vector2f(576.0f, 96.0f), 4, 4, 100)); //row
-    counters_.push_back(new Counter(sf::Vector2f(576.0f, 128.0f), 4, 4, 100)); //column
+    buttons_.push_back(new Button("Outline Size"));
+    buttons_.push_back(new Button("Outline Red"));
+    buttons_.push_back(new Button("Outline Green"));
+    buttons_.push_back(new Button("Outline Blue"));
+    buttons_.push_back(new Button("Outline Alpha"));
+    for (int i = 1; i < buttons_.size(); i++) 
+    {
+        buttons_[i]->SetPosition(sf::Vector2f(0.0f, 32.0f * i));
+        buttons_[i]->SetActive(false); //Grey out all buttons
+    }
 
-    counters_.push_back(new Counter(sf::Vector2f(576.0f, 160.0f), 0, 0, 255)); //hole red
-    counters_.push_back(new Counter(sf::Vector2f(576.0f, 192.0f), 0, 0, 255)); //hole green
-    counters_.push_back(new Counter(sf::Vector2f(576.0f, 224.0f), 0, 0, 255)); //hole blue
-    counters_.push_back(new Counter(sf::Vector2f(576.0f, 256.0f), 255, 0, 255)); //hole Alpha
+    //Set up the counters
+    counters_.push_back(new Counter(game_->GetOptions()->GetRowNum(), 4, 100)); //row
+    counters_.push_back(new Counter(game_->GetOptions()->GetColumnNum(), 4, 100)); //column
 
-    counters_.push_back(new Counter(sf::Vector2f(576.0f, 288.0f), 32, 0, 255)); //num size
-    counters_.push_back(new Counter(sf::Vector2f(576.0f, 320.0f), 0, 0, 255)); //num red
-    counters_.push_back(new Counter(sf::Vector2f(576.0f, 352.0f), 0, 0, 255)); //num green
-    counters_.push_back(new Counter(sf::Vector2f(576.0f, 384.0f), 0, 0, 255)); //num blue
-    counters_.push_back(new Counter(sf::Vector2f(576.0f, 416.0f), 255, 0, 255)); //num alpha
+    counters_.push_back(new Counter(game_->GetOptions()->GetBoxRed(), 0, 255)); //hole red
+    counters_.push_back(new Counter(game_->GetOptions()->GetBoxGreen(), 0, 255)); //hole green
+    counters_.push_back(new Counter(game_->GetOptions()->GetBoxBlue(), 0, 255)); //hole blue
+    counters_.push_back(new Counter(game_->GetOptions()->GetBoxAlpha(), 0, 255)); //hole Alpha
 
-    counters_.push_back(new Counter(sf::Vector2f(576.0f, 448.0f), 0, 0, 255)); //background red
-    counters_.push_back(new Counter(sf::Vector2f(576.0f, 480.0f), 0, 0, 255)); //background green
-    counters_.push_back(new Counter(sf::Vector2f(576.0f, 512.0f), 0, 0, 255)); //background blue
-    counters_.push_back(new Counter(sf::Vector2f(576.0f, 544.0f), 255, 0, 255)); //background alpha
-    for (auto i : counters_) i->SetActive(false);
+    counters_.push_back(new Counter(game_->GetOptions()->GetNumSize(), 0, 255)); //num size
+    counters_.push_back(new Counter(game_->GetOptions()->GetNumRed(), 0, 255)); //num red
+    counters_.push_back(new Counter(game_->GetOptions()->GetNumGreen(), 0, 255)); //num green
+    counters_.push_back(new Counter(game_->GetOptions()->GetNumBlue(), 0, 255)); //num blue
+    counters_.push_back(new Counter(game_->GetOptions()->GetNumAlpha(), 0, 255)); //num alpha
 
-    imagePath_ = new Button(sf::Vector2f(576.0f, 32.0f), game_->GetTI()->GetString());
+    counters_.push_back(new Counter(game_->GetOptions()->GetBackgroundRed(), 0, 255)); //background red
+    counters_.push_back(new Counter(game_->GetOptions()->GetBackgroundGreen(), 0, 255)); //background green
+    counters_.push_back(new Counter(game_->GetOptions()->GetBackgroundBlue(), 0, 255)); //background blue
+    counters_.push_back(new Counter(game_->GetOptions()->GetBackgroundAlpha(), 0, 255)); //background alpha
+
+    counters_.push_back(new Counter(game_->GetOptions()->GetOutlineSize(), 0, 255)); //outline size
+    counters_.push_back(new Counter(game_->GetOptions()->GetOutlineRed(), 0, 255)); //outline red
+    counters_.push_back(new Counter(game_->GetOptions()->GetOutlineGreen(), 0, 255)); //outline green
+    counters_.push_back(new Counter(game_->GetOptions()->GetOutlineBlue(), 0, 255)); //outline blue
+    counters_.push_back(new Counter(game_->GetOptions()->GetOutlineAlpha(), 0, 255)); //outline alpha
+    for (int i = 0; i < counters_.size(); i++) 
+    {
+        counters_[i]->SetPosition(sf::Vector2f(576.0f, 32.0f * (i + 3)));
+        counters_[i]->SetActive(false); //Grey out all counters
+    }
+
+    //set up image path button
+    imagePath_ = new Button(game_->GetTI()->GetString(), sf::Vector2f(576.0f, 32.0f));
     imagePath_->SetActive(false);
 
-    randomEmptyBox_ = new Button(sf::Vector2f(1088.0f, 64.0f), "False");
+    //set up rand empty button
+    if (game_->GetOptions()->GetRandomEmptyBoxPlacement()) randomEmptyBox_ = new Button("True", sf::Vector2f(576.0f, 64.0f));
+    else randomEmptyBox_ = new Button("False", sf::Vector2f(576.0f, 64.0f));
     randomEmptyBox_->SetActive(false);
 
-    FindView("Main")->setSize(sf::Vector2f(1920.0f, 1080.0f));
-    FindView("Main")->setCenter(sf::Vector2f(1920.0f / 2, 1080.0f / 2));
+    //Set up instruction text
+    instructionsText_.push_back("Controls:\n>Hold Left Shift for\nreference Picture\n>Press Left Control for\noutline\n>Press Space for\nID numbers");
+    instructionsText_.push_back("Instructions:\n>Backspace to remove\ncharacters\n>Enter to confirm\n>Have to include\nfile type\n>Only png will work");
+    instructionsText_.push_back("Instructions:\n>Randomizes the\nremoved square\n>Default is the\nbottom right square");
+    instructionsText_.push_back("Instructions:\n>Number of Rows\n>Min = 4\n>Max = max int");
+    instructionsText_.push_back("Instructions:\n>Number of Columns\n>Min = 4\n>Max = max int");
+    instructionsText_.push_back("Instructions:\n>Empty square color - Red\n>Min = 0\n>Max = 255");
+    instructionsText_.push_back("Instructions:\n>Empty square color - Green\n>Min = 0\n>Max = 255");
+    instructionsText_.push_back("Instructions:\n>Empty square color - Blue\n>Min = 0\n>Max = 255");
+    instructionsText_.push_back("Instructions:\n>Empty square color - Alpha\n>Min = 0\n>Max = 255");
+    instructionsText_.push_back("Instructions:\n>ID num size\n>Min = 0\n>Max = max int");
+    instructionsText_.push_back("Instructions:\n>ID num color - Red\n>Min = 0\n>Max = 255");
+    instructionsText_.push_back("Instructions:\n>ID num color - Green\n>Min = 0\n>Max = 255");
+    instructionsText_.push_back("Instructions:\n>ID num color - Blue\n>Min = 0\n>Max = 255");
+    instructionsText_.push_back("Instructions:\n>ID num color - Alpha\n>Min = 0\n>Max = 255");
+    instructionsText_.push_back("Instructions:\n>Background color - Red\n>Min = 0\n>Max = 255");
+    instructionsText_.push_back("Instructions:\n>Background color - Green\n>Min = 0\n>Max = 255");
+    instructionsText_.push_back("Instructions:\n>Background color - Blue\n>Min = 0\n>Max = 255");
+    instructionsText_.push_back("Instructions:\n>Background color - Alpha\n>Min = 0\n>Max = 255");
+    instructionsText_.push_back("Instructions:\n>Outline size\n>Min = 0\n>Max = max int\n>0 = default");
+    instructionsText_.push_back("Instructions:\n>Outline color - Red\n>Min = 0\n>Max = 255");
+    instructionsText_.push_back("Instructions:\n>Outline color - Green\n>Min = 0\n>Max = 255");
+    instructionsText_.push_back("Instructions:\n>Outline color - Blue\n>Min = 0\n>Max = 255");
+    instructionsText_.push_back("Instructions:\n>Outline color - Alpha\n>Min = 0\n>Max = 255");
+    instructions_ = LP::SetText(instructionsText_[0], sf::Vector2f(960.0f, 0.0f));
 }
 
 void SceneOptions::Update(float delta_time)
@@ -87,6 +135,7 @@ void SceneOptions::Draw(sf::RenderWindow& render_window) const
     for (int i = 0; i < counters_.size(); i++) counters_[i]->Draw(render_window);
     imagePath_->Draw(render_window);
     randomEmptyBox_->Draw(render_window);
+    render_window.draw(instructions_);
 }
 
 void SceneOptions::AddGameObject(GameObject* gameObject)
@@ -128,21 +177,33 @@ void SceneOptions::End()
     for (auto i : counters_) delete i;
     counters_.clear();
     delete imagePath_;
+    delete randomEmptyBox_;
+    instructionsText_.clear();
 }
 
 void SceneOptions::MainMenu()
 {
-    if (IP::PressUp() && selectedOption_ > 0)
+    if (IP::PressUp())
     {
         selectedOption_--;
+        if (selectedOption_ < 0) 
+        {
+            selectedOption_ = buttons_.size() - 1;
+            buttons_[0]->SetActive(false);
+        }
+        else buttons_[selectedOption_ + 1]->SetActive(false);
         buttons_[selectedOption_]->SetActive(true);
-        buttons_[selectedOption_ + 1]->SetActive(false);
     }
-    if (IP::PressDown() && selectedOption_ < buttons_.size() - 1)
+    if (IP::PressDown())
     {
         selectedOption_++;
-        buttons_[selectedOption_]->SetActive(true);
-        buttons_[selectedOption_ - 1]->SetActive(false);
+        if (selectedOption_ > buttons_.size() - 1) 
+        {
+            selectedOption_ = 0;
+            buttons_[buttons_.size() - 1]->SetActive(false);
+        }
+        else buttons_[selectedOption_ - 1]->SetActive(false);
+        buttons_[selectedOption_]->SetActive(true); 
     }
     if (IP::PressEnter())
     {
@@ -164,6 +225,7 @@ void SceneOptions::MainMenu()
             state_ = Secondary;
             counters_[selectedOption_ - 3]->SetActive(true);
         }
+        instructions_.setString(instructionsText_[selectedOption_]);
     }
 }
 
@@ -290,7 +352,28 @@ void SceneOptions::SetOption()
         case 17:
         game_->GetOptions()->SetBackgroundAlpha(counters_[selectedOption_ - 3]->GetNum());
         break;
+
+        case 18:
+        game_->GetOptions()->SetOutlineSize(counters_[selectedOption_ - 3]->GetNum());
+        break;
+
+        case 19:
+        game_->GetOptions()->SetOutlineRed(counters_[selectedOption_ - 3]->GetNum());
+        break;
+
+        case 20:
+        game_->GetOptions()->SetOutlineGreen(counters_[selectedOption_ - 3]->GetNum());
+        break;
+
+        case 21:
+        game_->GetOptions()->SetOutlineBlue(counters_[selectedOption_ - 3]->GetNum());
+        break;
+
+        case 22:
+        game_->GetOptions()->SetOutlineAlpha(counters_[selectedOption_ - 3]->GetNum());
+        break;
     }
     if (selectedOption_ > 2) counters_[selectedOption_ - 3]->SetActive(false);
+    instructions_.setString(instructionsText_[0]);
     state_ = Main;
 }

@@ -1,7 +1,7 @@
 #include "Button.h"
 #include "LP.h"
 
-Button::Button(const sf::Vector2f& position, const std::string& buttonText)
+Button::Button(const std::string& buttonText, const sf::Vector2f& position)
 {
     SetPosition(position);
     // buttonText_.setString(buttonText);
@@ -34,6 +34,7 @@ bool Button::GetActive() const
 void Button::SetPosition(const sf::Vector2f& position)
 {
     position_ = position;
+    buttonText_.setPosition(position_);
 }
 
 const sf::Vector2f& Button::GetPosition() const

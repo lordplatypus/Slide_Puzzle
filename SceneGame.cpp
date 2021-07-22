@@ -19,21 +19,21 @@ void SceneGame::Init()
 
     sf::Vector2f textureSize = sf::Vector2f(LP::GetTexture(image_texture_).getSize().x, LP::GetTexture(image_texture_).getSize().y);
 
-    if (textureSize.x < textureSize.x * 9 / 16) FindView("Main")->setSize(sf::Vector2f(textureSize.x, textureSize.x * 9 / 16));
-    else if (textureSize.y < textureSize.y * 16 / 9) FindView("Main")->setSize(sf::Vector2f(textureSize.y * 16 / 9, textureSize.y));
+    if (textureSize.x < textureSize.x * 9 / 16) FindView("Game")->setSize(sf::Vector2f(textureSize.x, textureSize.x * 9 / 16));
+    else if (textureSize.y < textureSize.y * 16 / 9) FindView("Game")->setSize(sf::Vector2f(textureSize.y * 16 / 9, textureSize.y));
     else
     {
-        if (textureSize.x > textureSize.y) FindView("Main")->setSize(sf::Vector2f(textureSize.x * 16 / 9, textureSize.y));
-        else FindView("Main")->setSize(sf::Vector2f(textureSize.x, textureSize.y * 9 / 16));
+        if (textureSize.x > textureSize.y) FindView("Game")->setSize(sf::Vector2f(textureSize.x * 16 / 9, textureSize.y));
+        else FindView("Game")->setSize(sf::Vector2f(textureSize.x, textureSize.y * 9 / 16));
     }
-    FindView("Main")->setCenter(sf::Vector2f(textureSize.x / 2, textureSize.y / 2));
+    FindView("Game")->setCenter(sf::Vector2f(textureSize.x / 2, textureSize.y / 2));
 
     AddGameObject(new PuzzleManager(this, game_->GetOptions(), textureSize));
     AddGameObject(new Hint(this));
 
-    background_.setSize(FindView("Main")->getSize());
-    if (textureSize.x < textureSize.x * 9 / 16) background_.setPosition(sf::Vector2f(0.0f, 0.0f - (FindView("Main")->getSize().y / 2 - textureSize.y / 2)));
-    else if (textureSize.y < textureSize.y * 16 / 9) background_.setPosition(sf::Vector2f(0.0f - (FindView("Main")->getSize().x / 2 - textureSize.x / 2), 0.0f));
+    background_.setSize(FindView("Game")->getSize());
+    if (textureSize.x < textureSize.x * 9 / 16) background_.setPosition(sf::Vector2f(0.0f, 0.0f - (FindView("Game")->getSize().y / 2 - textureSize.y / 2)));
+    else if (textureSize.y < textureSize.y * 16 / 9) background_.setPosition(sf::Vector2f(0.0f - (FindView("Game")->getSize().x / 2 - textureSize.x / 2), 0.0f));
     else background_.setPosition(sf::Vector2f(0.0f, 0.0f));
     background_.setFillColor(sf::Color(game_->GetOptions()->GetBackgroundRed(), game_->GetOptions()->GetBackgroundGreen(), 
                                        game_->GetOptions()->GetBackgroundBlue(), game_->GetOptions()->GetBackgroundAlpha()));
@@ -46,6 +46,7 @@ void SceneGame::Update(float delta_time)
     gom_.Remove(); //remove "dead" gameobjects
 
     if (IP::PressX()) ChangeScene("Options");
+    if (changeScene_) ChangeSceneForReal(changeSceneTo_);
 }
 
 void SceneGame::Draw(sf::RenderWindow& render_window) const
@@ -82,10 +83,17 @@ void SceneGame::OnWin()
 
 void SceneGame::ChangeScene(const std::string& sceneName)
 {
-    game_->ChangeScene(sceneName);
+    changeSceneTo_ = sceneName;
+    changeScene_ = true;
 }
 
 void SceneGame::End()
 {
     gom_.Clear();
+}
+
+void SceneGame::ChangeSceneForReal(const std::string& sceneName)
+{
+    changeScene_ = false;
+    game_->ChangeScene(sceneName);
 }

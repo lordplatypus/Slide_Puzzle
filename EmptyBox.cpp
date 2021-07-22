@@ -36,7 +36,7 @@ void EmptyBox::Update(float delta_time)
 void EmptyBox::Draw(sf::RenderWindow& render_window) const
 {
     //Set view (if using multiple views)
-    render_window.setView(*scene_->FindView("Main"));
+    render_window.setView(*scene_->FindView("Game"));
 
     //Draw sprite to render window
     render_window.draw(rect_);

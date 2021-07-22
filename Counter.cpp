@@ -1,7 +1,7 @@
 #include "Counter.h"
 #include "LP.h"
 
-Counter::Counter(const sf::Vector2f& position, const int startNum, const int min, const int max)
+Counter::Counter(const int startNum, const int min, const int max, const sf::Vector2f& position)
 {
     SetPosition(position);
     // numText_.setPosition(position);
@@ -53,6 +53,7 @@ bool Counter::GetActive() const
 void Counter::SetPosition(const sf::Vector2f& position)
 {
     position_ = position;
+    numText_.setPosition(position_);
 }
 
 const sf::Vector2f& Counter::GetPosition() const

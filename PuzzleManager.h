@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "PictureBox.h"
 #include "EmptyBox.h"
+#include "WinText.h"
 #include "Options.h"
 
 class PuzzleManager : public GameObject
@@ -20,12 +21,14 @@ private:
 private:
     std::vector<PictureBox*> pictureBox_;
     EmptyBox* emptyBox_;
+    WinText* winText_;
 
     int rowNum_{0};
     int columnNum_{0};
     float width_{0.0f};
     float height_{0.0f};
     bool numDisplay_{false};
+    bool outlineDisplay_{false};
     sf::Vector2f textureSize_{0.0f, 0.0f};
 };
 

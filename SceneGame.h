@@ -22,11 +22,17 @@ public:
     virtual void End() override;
 
 private:
+    void ChangeSceneForReal(const std::string& sceneName);
+
+private:
     Game* game_{nullptr};
     GameObjectManager gom_;
     ParticleManager pm_;
 
     sf::RectangleShape background_;
+
+    bool changeScene_{false};
+    std::string changeSceneTo_{""};
 };
 
 #endif

@@ -32,8 +32,11 @@ PuzzleManager::PuzzleManager(Scene* scene, Options* options, const sf::Vector2f&
         }
     }
 
+    winText_ = new WinText(scene_, options);
+
     scene_->AddGameObject(emptyBox_);
     for (auto object : pictureBox_) scene_->AddGameObject(object);
+    scene_->AddGameObject(winText_);
 
     Randomizer();
 }
@@ -80,16 +83,31 @@ void PuzzleManager::Input()
         else numDisplay_ = true;
         for (int i = 0; i < pictureBox_.size(); i++) pictureBox_[i]->SetNumDisplay(numDisplay_);
     }
+    else if (IP::PressLCtrl())
+    {
+        if (outlineDisplay_) outlineDisplay_ = false;
+        else outlineDisplay_ = true;
+        for (int i = 0; i < pictureBox_.size(); i++) pictureBox_[i]->SetOutlineDisplay(outlineDisplay_);
+    }
 
     if (emptyPosition == emptyBox_->GetPosition()) return;
 
     int targetID = round(emptyPosition.x / (width_) + emptyPosition.y / (height_) * columnNum_);
 
+    bool isWin = true;
     for (auto i : pictureBox_)
     {
-        if (i->GetID() == targetID) i->SetPosition(emptyBox_->GetPosition(), emptyBox_->GetID());
+        if (i->GetID() == targetID) 
+        {
+            i->SetPosition(emptyBox_->GetPosition(), emptyBox_->GetID());
+            i->IsCorrectPosition();
+        }
+
+        if (!i->GetIsCorrectPosition()) isWin = false;
     }
     emptyBox_->SetPosition(emptyPosition, targetID);
+
+    if (isWin) winText_->SetActive(true);
 }
 
 void PuzzleManager::Randomizer()
@@ -129,6 +147,7 @@ void PuzzleManager::Randomizer()
         for (auto i : pictureBox_)
         {
             if (i->GetID() == targetID) i->SetPosition(emptyBox_->GetPosition(), emptyBox_->GetID());
+            i->IsCorrectPosition();
         }
         emptyBox_->SetPosition(emptyPosition, targetID);
     }

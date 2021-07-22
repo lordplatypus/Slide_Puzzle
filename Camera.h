@@ -16,7 +16,7 @@ public:
     void SetAspectRatio(const sf::Vector2f& aspectRatio);
     //Get the game aspect ratio
     const sf::Vector2f& GetAspectRatio() const;
-    //create a new niew with default size
+    //create a new view with default size
     void SetView(const std::string& viewName);
     //Create a new view
     void SetView(const std::string& viewName, float width, float height);

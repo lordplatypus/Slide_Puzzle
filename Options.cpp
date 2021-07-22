@@ -2,6 +2,16 @@
 
 Options::Options()
 {
+    SetDefault();
+}
+
+Options::~Options()
+{}
+
+void Options::SetDefault()
+{
+    SetRandomEmptyBoxPlacement(false);
+
     SetRowNum(4);
     SetColumnNum(4);
 
@@ -21,11 +31,26 @@ Options::Options()
     SetNumBlue(0);
     SetNumAlpha(255);
 
-    SetRandomEmptyBoxPlacement(false);
+    SetOutlineSize(0);
+    SetOutlineRed(0);
+    SetOutlineGreen(255);
+    SetOutlineBlue(255);
+    SetOutlineAlpha(255);
 }
 
-Options::~Options()
-{}
+
+
+void Options::SetRandomEmptyBoxPlacement(const bool randomEmptyBoxPlacement)
+{
+    randomEmptyBoxPlacement_ = randomEmptyBoxPlacement;
+}
+
+const bool Options::GetRandomEmptyBoxPlacement() const
+{
+    return randomEmptyBoxPlacement_;
+}
+
+
 
 void Options::SetRowNum(const int rowNum)
 {
@@ -186,12 +211,52 @@ const int Options::GetNumAlpha() const
 
 
 
-void Options::SetRandomEmptyBoxPlacement(const bool randomEmptyBoxPlacement)
+void Options::SetOutlineSize(const int outlineSize)
 {
-    randomEmptyBoxPlacement_ = randomEmptyBoxPlacement;
+    outlineSize_ = outlineSize;
 }
 
-const bool Options::GetRandomEmptyBoxPlacement() const
+const int Options::GetOutlineSize() const
 {
-    return randomEmptyBoxPlacement_;
+    return outlineSize_;
+}
+
+void Options::SetOutlineRed(const int outlineRed)
+{
+    outlineRed_ = outlineRed;
+}
+
+const int Options::GetOutlineRed() const
+{
+    return outlineRed_;
+}
+
+void Options::SetOutlineGreen(const int outlineGreen)
+{
+    outlineGreen_ = outlineGreen;
+}
+
+const int Options::GetOutlineGreen() const
+{
+    return outlineGreen_;
+}
+
+void Options::SetOutlineBlue(const int outlineBlue)
+{
+    outlineBlue_ = outlineBlue;
+}
+
+const int Options::GetOutlineBlue() const
+{
+    return outlineBlue_;
+}
+
+void Options::SetOutlineAlpha(const int outlineAlpha)
+{
+    outlineAlpha_ = outlineAlpha;
+}
+
+const int Options::GetOutlineAlpha() const
+{
+    return outlineAlpha_;
 }

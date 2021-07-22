@@ -31,6 +31,7 @@ public:
     static bool PressX();
     static bool PressEnter();
     static bool PressBackspace();
+    static bool PressLCtrl();
 
     //Mouse Stuff
 

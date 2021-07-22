@@ -13,10 +13,21 @@ public:
 
     void SetPosition(const sf::Vector2f& position, const int ID);
     void SetNumDisplay(const bool numDisplay);
+    void SetOutlineDisplay(const bool outlineDisplay);
+
+    void IsCorrectPosition();
+    void SetIsCorrectPosition(const bool correctPosition);
+    const bool GetIsCorrectPosition() const;
 
 private:
+    int truePositionID_{0}; //stores it's beggining ID before randomization (correct location)
+    bool correctPosition_{false};
+    sf::RectangleShape outline_;
+    sf::Vector2f outlineOffset_{0.0f, 0.0f};
+
     sf::Text num_;
     bool numDisplay_{false};
+    bool outlineDisplay_{false};
     sf::Vector2f numOffset_{16.0f, 16.0f};
 };
 

@@ -5,7 +5,7 @@
 class Button
 {
 public:
-    Button(const sf::Vector2f& position, const std::string& buttonText);
+    Button(const std::string& buttonText, const sf::Vector2f& position = sf::Vector2f(0.0f, 0.0f));
     ~Button();
     void Draw(sf::RenderWindow& render_window) const;
     

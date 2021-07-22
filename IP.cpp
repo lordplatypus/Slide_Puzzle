@@ -178,6 +178,18 @@ bool IP::PressBackspace()
     return false;
 }
 
+bool pressedLCtrl_{true};
+bool IP::PressLCtrl()
+{
+    if (!pressedLCtrl_ && sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+    {
+        pressedLCtrl_ = true;
+        return true;
+    }
+
+    return false;
+}
+
 
 //Mouse
 
@@ -239,6 +251,7 @@ void IP::Reset()
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X)) pressedX_ = false;
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) pressedEnter_ = false;
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace)) pressedBackspace_ = false;
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) pressedLCtrl_ = false;
 
     if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) leftClicked_ = false;
     if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) rightClicked_ = false;

@@ -5,7 +5,7 @@
 class Counter
 {
 public:
-    Counter(const sf::Vector2f& position, const int startNum = 0, const int min = 0, const int max = 100);
+    Counter(const int startNum = 0, const int min = 0, const int max = 100, const sf::Vector2f& position = sf::Vector2f(0.0f, 0.0f));
     ~Counter();
     void Draw(sf::RenderWindow& render_window) const;
 

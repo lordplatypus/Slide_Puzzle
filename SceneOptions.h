@@ -48,6 +48,9 @@ private:
 
     Button* randomEmptyBox_{nullptr};
     bool random_{false};
+
+    sf::Text instructions_;
+    std::vector<std::string> instructionsText_;
 };
 
 #endif
