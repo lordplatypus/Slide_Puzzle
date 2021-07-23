@@ -8,12 +8,12 @@
 
 static SceneNull nullScene;
 
-Game::Game(Camera* camera, TI* ti) : camera_{camera}, ti_{ti}, scene_{&nullScene}
+Game::Game(Camera& camera, TI* ti) : ti_{ti}, scene_{&nullScene}
 {
     loadAssets_.Load();
 
     AddScene("Options", new SceneOptions(this));
-    AddScene("Game", new SceneGame(this));
+    AddScene("Game", new SceneGame(this, camera));
 
     scene_ = scenes_["Options"];
     scene_->Init();
@@ -30,14 +30,9 @@ void Game::Update(float delta_time)
     IP::Reset();
 }
 
-void Game::Draw(sf::RenderWindow& render_window)
+void Game::Draw(Camera& camera) const
 {
-    scene_->Draw(render_window);
-}
-
-Camera* Game::GetCamera()
-{
-    return camera_;
+    scene_->Draw(camera);
 }
 
 void Game::AddScene(const std::string& name, Scene* scene)
@@ -81,6 +76,7 @@ bool Game::GetWin() const
 {
     return win_;
 }
+
 
 
 Options* Game::GetOptions()

@@ -126,19 +126,19 @@ void SceneOptions::Update(float delta_time)
     else if (state_ == Secondary) SecondaryMenu();
 }
 
-void SceneOptions::Draw(sf::RenderWindow& render_window) const
+void SceneOptions::Draw(Camera& camera) const
 {
-    gom_.Draw(render_window); //Regular draw - Draw GameObjects in order based on position in the list
+    //gom_.Draw(camera); //Regular draw - Draw GameObjects in order based on position in the list
 
-    render_window.setView(*game_->GetCamera()->GetView("Main")); //Draw using the "Main" view
+    camera.SetCurrentView("Main");
 
     //Drawing the various text, buttons, counters, and example color box things
-    for (int i = 0; i < buttons_.size(); i++) buttons_[i]->Draw(render_window);
-    for (int i = 0; i < counters_.size(); i++) counters_[i]->Draw(render_window);
-    imagePath_->Draw(render_window);
-    randomEmptyBox_->Draw(render_window);
-    render_window.draw(instructions_);
-    if (state_ == Secondary && selectedOption_ > 4 && selectedOption_ != 9 && selectedOption_ != 18) render_window.draw(exampleColorBox_);
+    for (int i = 0; i < buttons_.size(); i++) buttons_[i]->Draw(camera);
+    for (int i = 0; i < counters_.size(); i++) counters_[i]->Draw(camera);
+    imagePath_->Draw(camera);
+    randomEmptyBox_->Draw(camera);
+    camera.Draw(instructions_);
+    if (state_ == Secondary && selectedOption_ > 4 && selectedOption_ != 9 && selectedOption_ != 18) camera.Draw(exampleColorBox_);
 }
 
 void SceneOptions::AddGameObject(GameObject* gameObject)
@@ -154,11 +154,6 @@ GameObject* SceneOptions::FindGameObject(const std::string& string, const bool b
 void SceneOptions::SortGameObjects()
 {
     gom_.SortByLayers();
-}
-
-sf::View* SceneOptions::FindView(const std::string& viewName)
-{
-    return game_->GetCamera()->GetView(viewName);
 }
 
 void SceneOptions::OnWin()

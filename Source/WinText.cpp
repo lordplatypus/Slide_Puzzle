@@ -6,7 +6,7 @@ WinText::WinText(Scene* scene, Options* options)
 {
     scene_ = scene;
 
-    text_ = LP::SetText("You did it!\nGood job I guess.\nPress Enter to\nhide this text.\nPress Enter again to\nreturn to the options menu.", scene_->FindView("Main")->getCenter(), 64);
+    text_ = LP::SetText("You did it!\nGood job I guess.\nPress Enter to\nhide this text.\nPress Enter again to\nreturn to the options menu.", sf::Vector2f(1920.0f/2, 1080.0f/2), 64);
     LP::SetTextOriginCenter(&text_);
     text_.setFillColor(sf::Color(options->GetNumRed(), options->GetNumGreen(), options->GetNumBlue(), options->GetNumAlpha()));
     text_.setOutlineThickness(1.0f);
@@ -32,13 +32,13 @@ void WinText::Update(float delta_time)
     }
 }
 
-void WinText::Draw(sf::RenderWindow& render_window) const
+void WinText::Draw(Camera& camera) const
 {
     if (!active_ || !showText_) return;
 
-    render_window.setView(*scene_->FindView("Main"));
-    render_window.draw(background_);
-    render_window.draw(text_);
+    camera.SetCurrentView("Main");
+    camera.Draw(background_);
+    camera.Draw(text_);
 }
 
 void WinText::SetActive(const bool active)

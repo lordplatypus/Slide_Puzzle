@@ -60,15 +60,15 @@ void PictureBox::Update(float delta_time)
     outline_.setPosition(velocity_ + outlineOffset_);
 }
 
-void PictureBox::Draw(sf::RenderWindow& render_window) const
+void PictureBox::Draw(Camera& camera) const
 {
     //Set view (if using multiple views)
-    render_window.setView(*scene_->FindView("Game"));
+    camera.SetCurrentView("Game");
 
     //Draw sprite to render window
-    render_window.draw(sprite_);
-    if (numDisplay_) render_window.draw(num_);
-    if (outlineDisplay_ && correctPosition_) render_window.draw(outline_);
+    camera.Draw(sprite_);
+    if (numDisplay_) camera.Draw(num_);
+    if (outlineDisplay_ && correctPosition_) camera.Draw(outline_);
 }
 
 void PictureBox::SetPosition(const sf::Vector2f& position, const int ID)

@@ -1,13 +1,14 @@
 #ifndef COUNTER_H_
 #define COUNTER_H_
 #include <SFML/Graphics.hpp>
+#include "Camera.h"
 
 class Counter
 {
 public:
     Counter(const int startNum = 0, const int min = 0, const int max = 100, const sf::Vector2f& position = sf::Vector2f(0.0f, 0.0f));
     ~Counter();
-    void Draw(sf::RenderWindow& render_window) const;
+    void Draw(Camera& camera) const;
 
     void Increment(const int incrementAmount = 1);
     void Decrement(const int decrementAmount = 1);

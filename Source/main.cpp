@@ -10,16 +10,19 @@ int main()
     bool isRunning = true;//bool for main game loop
     sf::RenderWindow render_window(sf::VideoMode(960.0f, 540.0f), "Game"); //game window
 
+    Camera camera{&render_window, sf::Vector2f(1920.0f, 1080.0f)};
+    camera.SetView("Game");
+
     DeltaTime deltaTime;
 
-    Camera camera(&render_window, sf::Vector2f(1920.0f, 1080.0f));
-    camera.SetView("Main");
-    camera.SetView("Game"); //for the winning text
-    render_window.setView(*camera.GetView("Main"));
+    // Camera camera(&render_window, sf::Vector2f(1920.0f, 1080.0f));
+    // camera.SetView("Main");
+    // camera.SetView("Game"); //for the winning text
+    // render_window.setView(*camera.GetView("Main"));
 
     TI ti;
 
-    Game game{&camera, &ti};
+    Game game{camera, &ti};
 
     while (isRunning)
     {//main game loop
@@ -44,10 +47,9 @@ int main()
                     viewport.top = (1.0f - viewport.height) / 2.0f;
                 }
 
-                for (auto view : camera.GetAllViews())
+                for (auto i : camera.GetVectorViewNames())
                 {
-                    view.second->setViewport(viewport);
-                    render_window.setView(*view.second);
+                    camera.SetViewport(i, viewport);
                 }
             }
             else if (event.type == sf::Event::TextEntered && ti.GetActive())
@@ -65,7 +67,7 @@ int main()
         }
         game.Update(deltaTime.GetDeltaTime());
         render_window.clear();
-        game.Draw(render_window);
+        game.Draw(camera);
         render_window.display();
     }
     return EXIT_SUCCESS;

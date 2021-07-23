@@ -8,15 +8,14 @@
 class SceneGame : public Scene
 {
 public:
-    SceneGame(Game* game);
+    SceneGame(Game* game, Camera& camera);
     ~SceneGame();
     virtual void Init() override;
     virtual void Update(float delta_time) override;
-    virtual void Draw(sf::RenderWindow& render_window) const override;
+    virtual void Draw(Camera& camera) const override;
     virtual void AddGameObject(GameObject* gameObject) override;
     virtual GameObject* FindGameObject(const std::string& string, const bool byName = true, const bool byTag = false, const bool byID = false) override;
     virtual void SortGameObjects() override;
-    virtual sf::View* FindView(const std::string& viewName) override;
     virtual void OnWin() override;
     virtual void ChangeScene(const std::string& sceneName) override;
     virtual void End() override;
@@ -26,6 +25,7 @@ private:
 
 private:
     Game* game_{nullptr};
+    Camera* camera_{nullptr};
     GameObjectManager gom_;
     ParticleManager pm_;
 

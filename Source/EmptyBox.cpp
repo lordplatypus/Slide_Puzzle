@@ -33,13 +33,13 @@ void EmptyBox::Update(float delta_time)
     rect_.setPosition(velocity_);
 }
 
-void EmptyBox::Draw(sf::RenderWindow& render_window) const
+void EmptyBox::Draw(Camera& camera) const
 {
     //Set view (if using multiple views)
-    render_window.setView(*scene_->FindView("Game"));
+    camera.SetCurrentView("Game");
 
     //Draw sprite to render window
-    render_window.draw(rect_);
+    camera.Draw(rect_);
 }
 
 void EmptyBox::SetPosition(const sf::Vector2f& position, const int ID)

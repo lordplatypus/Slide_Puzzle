@@ -13,9 +13,9 @@ Button::Button(const std::string& buttonText, const sf::Vector2f& position)
 Button::~Button()
 {}
 
-void Button::Draw(sf::RenderWindow& render_window) const
+void Button::Draw(Camera& camera) const
 {
-    render_window.draw(buttonText_);
+    camera.Draw(buttonText_);
 }
 
 void Button::SetActive(const bool active)

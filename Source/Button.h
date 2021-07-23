@@ -1,13 +1,14 @@
 #ifndef BUTTON_H_
 #define BUTTON_H_
 #include <SFML/Graphics.hpp>
+#include "Camera.h"
 
 class Button
 {
 public:
     Button(const std::string& buttonText, const sf::Vector2f& position = sf::Vector2f(0.0f, 0.0f));
     ~Button();
-    void Draw(sf::RenderWindow& render_window) const;
+    void Draw(Camera& camera) const;
     
     void SetActive(const bool active);
     bool GetActive() const;

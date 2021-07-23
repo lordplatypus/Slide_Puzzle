@@ -16,9 +16,9 @@ Counter::Counter(const int startNum, const int min, const int max, const sf::Vec
 Counter::~Counter()
 {}
 
-void Counter::Draw(sf::RenderWindow& render_window) const
+void Counter::Draw(Camera& camera) const
 {
-    render_window.draw(numText_);
+    camera.Draw(numText_);
 }
 
 

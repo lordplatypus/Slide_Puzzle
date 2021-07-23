@@ -24,11 +24,11 @@ void Hint::Update(float delta_time)
 {
 }
 
-void Hint::Draw(sf::RenderWindow& render_window) const
+void Hint::Draw(Camera& camera) const
 {
     //Set view (if using multiple views)
-    render_window.setView(*scene_->FindView("Game"));
+    camera.SetCurrentView("Game");
 
     //Draw sprite to render window
-    if (IP::GetButton(sf::Keyboard::LShift)) render_window.draw(sprite_);
+    if (IP::GetButton(sf::Keyboard::LShift)) camera.Draw(sprite_);
 }
