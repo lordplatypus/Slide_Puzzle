@@ -28,7 +28,7 @@ private:
     sf::Text num_;
     bool numDisplay_{false};
     bool outlineDisplay_{false};
-    sf::Vector2f numOffset_{16.0f, 16.0f};
+    sf::Vector2f numOffset_{0.0f, 0.0f};
 };
 
 #endif

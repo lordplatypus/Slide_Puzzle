@@ -1,23 +1,17 @@
-#Make the Game directory for the executable and resources
-mkdir Game
-
-#move the resources to the Game directory
-mv Blue\ Sky\ 8x8.ttf ./Game
-
 #Make a build directory and move to it
-mkdir Build && cd ./Build
+mkdir build && cd ./build
 
-#Generate the make files into the Build directory
-cmake -S ../ -B ./
+#Generate the make files into the build directory
+cmake -S ../Source -B ./
 
 #Make
 make
 
 #move the executable to the Game directory
-mv Game ../Game
+mv Game ../
 
-#move out of the Build directory
+#move out of the build directory
 cd ../
 
-#remove the Build directory
-rm -r ./Build
+#remove the build directory
+rm -r ./build

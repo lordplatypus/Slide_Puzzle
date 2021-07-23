@@ -13,7 +13,7 @@ void SceneOptions::Init()
 {
     game_->SetWin(false);
 
-    //Set up the buttons
+    //Setup the buttons
     buttons_.push_back(new Button("Start"));
     buttons_.push_back(new Button("Image"));
     buttons_.push_back(new Button("Rand Empty"));
@@ -41,13 +41,13 @@ void SceneOptions::Init()
     buttons_.push_back(new Button("Outline Green"));
     buttons_.push_back(new Button("Outline Blue"));
     buttons_.push_back(new Button("Outline Alpha"));
-    for (int i = 1; i < buttons_.size(); i++) 
+    for (int i = 0; i < buttons_.size(); i++) 
     {
-        buttons_[i]->SetPosition(sf::Vector2f(0.0f, 32.0f * i));
-        buttons_[i]->SetActive(false); //Grey out all buttons
+        buttons_[i]->SetPosition(sf::Vector2f(16.0f, 36.0f * i + 16.0f));
+        if (i > 0) buttons_[i]->SetActive(false); //Grey out all buttons
     }
 
-    //Set up the counters
+    //Setup the counters
     counters_.push_back(new Counter(game_->GetOptions()->GetRowNum(), 4, 100)); //row
     counters_.push_back(new Counter(game_->GetOptions()->GetColumnNum(), 4, 100)); //column
 
@@ -74,21 +74,21 @@ void SceneOptions::Init()
     counters_.push_back(new Counter(game_->GetOptions()->GetOutlineAlpha(), 0, 255)); //outline alpha
     for (int i = 0; i < counters_.size(); i++) 
     {
-        counters_[i]->SetPosition(sf::Vector2f(576.0f, 32.0f * (i + 3)));
+        counters_[i]->SetPosition(sf::Vector2f(576.0f, 36.0f * (i + 3) + 16.0f));
         counters_[i]->SetActive(false); //Grey out all counters
     }
 
-    //set up image path button
-    imagePath_ = new Button(game_->GetTI()->GetString(), sf::Vector2f(576.0f, 32.0f));
+    //setup image path button
+    imagePath_ = new Button(game_->GetTI()->GetString(), sf::Vector2f(576.0f, 48.0f));
     imagePath_->SetActive(false);
 
-    //set up rand empty button
-    if (game_->GetOptions()->GetRandomEmptyBoxPlacement()) randomEmptyBox_ = new Button("True", sf::Vector2f(576.0f, 64.0f));
-    else randomEmptyBox_ = new Button("False", sf::Vector2f(576.0f, 64.0f));
+    //setup rand empty button
+    if (game_->GetOptions()->GetRandomEmptyBoxPlacement()) randomEmptyBox_ = new Button("True", sf::Vector2f(576.0f, 84.0f));
+    else randomEmptyBox_ = new Button("False", sf::Vector2f(576.0f, 84.0f));
     randomEmptyBox_->SetActive(false);
 
-    //Set up instruction text
-    instructionsText_.push_back("Controls:\n>Hold Left Shift for\nreference Picture\n>Press Left Control for\noutline\n>Press Space for\nID numbers");
+    //Setup instruction text
+    instructionsText_.push_back("Controls:\n>Use the arrow keys to\nnavigate the menu and\nto move the empty square\n>Press Enter to edit\nand confirm options\n>Hold Left Shift for\nreference Picture\n>Press Left Control for\noutline\n>Press Space for\nID numbers\n>Press Z to re-randomize\n>Press X to return to\nthis menu\n>Press Esc to close\nthe game");
     instructionsText_.push_back("Instructions:\n>Backspace to remove\ncharacters\n>Enter to confirm\n>Have to include\nfile type\n>Only png will work");
     instructionsText_.push_back("Instructions:\n>Randomizes the\nremoved square\n>Default is the\nbottom right square");
     instructionsText_.push_back("Instructions:\n>Number of Rows\n>Min = 4\n>Max = max int");
@@ -97,7 +97,7 @@ void SceneOptions::Init()
     instructionsText_.push_back("Instructions:\n>Empty square color - Green\n>Min = 0\n>Max = 255");
     instructionsText_.push_back("Instructions:\n>Empty square color - Blue\n>Min = 0\n>Max = 255");
     instructionsText_.push_back("Instructions:\n>Empty square color - Alpha\n>Min = 0\n>Max = 255");
-    instructionsText_.push_back("Instructions:\n>ID num size\n>Min = 0\n>Max = max int");
+    instructionsText_.push_back("Instructions:\n>ID num size\n>Min = 0\n>Max = max int\n>0 = auto");
     instructionsText_.push_back("Instructions:\n>ID num color - Red\n>Min = 0\n>Max = 255");
     instructionsText_.push_back("Instructions:\n>ID num color - Green\n>Min = 0\n>Max = 255");
     instructionsText_.push_back("Instructions:\n>ID num color - Blue\n>Min = 0\n>Max = 255");
@@ -106,19 +106,21 @@ void SceneOptions::Init()
     instructionsText_.push_back("Instructions:\n>Background color - Green\n>Min = 0\n>Max = 255");
     instructionsText_.push_back("Instructions:\n>Background color - Blue\n>Min = 0\n>Max = 255");
     instructionsText_.push_back("Instructions:\n>Background color - Alpha\n>Min = 0\n>Max = 255");
-    instructionsText_.push_back("Instructions:\n>Outline size\n>Min = 0\n>Max = max int\n>0 = default");
+    instructionsText_.push_back("Instructions:\n>Outline size\n>Min = 0\n>Max = max int\n>0 = auto");
     instructionsText_.push_back("Instructions:\n>Outline color - Red\n>Min = 0\n>Max = 255");
     instructionsText_.push_back("Instructions:\n>Outline color - Green\n>Min = 0\n>Max = 255");
     instructionsText_.push_back("Instructions:\n>Outline color - Blue\n>Min = 0\n>Max = 255");
     instructionsText_.push_back("Instructions:\n>Outline color - Alpha\n>Min = 0\n>Max = 255");
-    instructions_ = LP::SetText(instructionsText_[0], sf::Vector2f(960.0f, 0.0f));
+    instructions_ = LP::SetText(instructionsText_[0], sf::Vector2f(960.0f, 16.0f));
+
+    //Setup color example
+    exampleColorBox_.setSize(sf::Vector2f(100.0f, 100.0f));
+    exampleColorBox_.setPosition(sf::Vector2f(1390.0f, 490.0f));
 }
 
 void SceneOptions::Update(float delta_time)
 {
     gom_.Update(delta_time); //update all gameobjects
-    gom_.Collision(); //check collision between gameobjects
-    gom_.Remove(); //remove "dead" gameobjects
 
     if (state_ == Main) MainMenu();
     else if (state_ == Secondary) SecondaryMenu();
@@ -127,15 +129,16 @@ void SceneOptions::Update(float delta_time)
 void SceneOptions::Draw(sf::RenderWindow& render_window) const
 {
     gom_.Draw(render_window); //Regular draw - Draw GameObjects in order based on position in the list
-    gom_.DelayedDraw(render_window); //draw things after Regular draw is finished, helpful for UI or things that should always be drawn last
 
-    render_window.setView(*game_->GetCamera()->GetView("Main"));
+    render_window.setView(*game_->GetCamera()->GetView("Main")); //Draw using the "Main" view
 
+    //Drawing the various text, buttons, counters, and example color box things
     for (int i = 0; i < buttons_.size(); i++) buttons_[i]->Draw(render_window);
     for (int i = 0; i < counters_.size(); i++) counters_[i]->Draw(render_window);
     imagePath_->Draw(render_window);
     randomEmptyBox_->Draw(render_window);
     render_window.draw(instructions_);
+    if (state_ == Secondary && selectedOption_ > 4 && selectedOption_ != 9 && selectedOption_ != 18) render_window.draw(exampleColorBox_);
 }
 
 void SceneOptions::AddGameObject(GameObject* gameObject)
@@ -169,7 +172,7 @@ void SceneOptions::ChangeScene(const std::string& sceneName)
 }
 
 void SceneOptions::End()
-{
+{//Delete all buttons and counters so that they don't double up when returning to this scene
     gom_.Clear();
 
     for (auto i : buttons_) delete i;
@@ -272,7 +275,16 @@ void SceneOptions::SecondaryMenu()
         {
             counters_[selectedOption_ - 3]->Decrement();
         }
+        if (selectedOption_ != 9 && selectedOption_ != 18) SetColorExample();
     }
+}
+
+void SceneOptions::SetColorExample()
+{
+    if (selectedOption_ < 9) exampleColorBox_.setFillColor(sf::Color(counters_[2]->GetNum(), counters_[3]->GetNum(), counters_[4]->GetNum(), counters_[5]->GetNum()));
+    else if (selectedOption_ < 14) exampleColorBox_.setFillColor(sf::Color(counters_[7]->GetNum(), counters_[8]->GetNum(), counters_[9]->GetNum(), counters_[10]->GetNum()));
+    else if (selectedOption_ < 18) exampleColorBox_.setFillColor(sf::Color(counters_[11]->GetNum(), counters_[12]->GetNum(), counters_[13]->GetNum(), counters_[14]->GetNum()));
+    else exampleColorBox_.setFillColor(sf::Color(counters_[16]->GetNum(), counters_[17]->GetNum(), counters_[18]->GetNum(), counters_[19]->GetNum()));
 }
 
 void SceneOptions::SetOption()

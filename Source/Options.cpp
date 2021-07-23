@@ -25,7 +25,7 @@ void Options::SetDefault()
     SetBackgroundBlue(0);
     SetBackgroundAlpha(255);
 
-    SetNumSize(32);
+    SetNumSize(0);
     SetNumRed(0);
     SetNumGreen(0);
     SetNumBlue(0);

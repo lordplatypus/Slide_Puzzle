@@ -25,8 +25,8 @@ public:
     virtual void End() override;
 
     void MainMenu();
-
     void SecondaryMenu();
+    void SetColorExample();
     void SetOption();
 
 private:
@@ -51,6 +51,8 @@ private:
 
     sf::Text instructions_;
     std::vector<std::string> instructionsText_;
+
+    sf::RectangleShape exampleColorBox_;
 };
 
 #endif
