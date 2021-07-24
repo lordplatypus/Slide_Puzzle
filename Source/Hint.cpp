@@ -1,7 +1,6 @@
 #include "Hint.h"
 #include "ID.h"
 #include "LP.h"
-#include "IP.h"
 #include "Math.h"
 
 Hint::Hint(Scene* scene)
@@ -22,6 +21,9 @@ Hint::~Hint()
 
 void Hint::Update(float delta_time)
 {
+    if (IP_.GetButton(sf::Keyboard::LShift)) active_ = true;
+    else active_ = false;
+    IP_.Update();
 }
 
 void Hint::Draw(Camera& camera) const
@@ -30,5 +32,5 @@ void Hint::Draw(Camera& camera) const
     camera.SetCurrentView("Game");
 
     //Draw sprite to render window
-    if (IP::GetButton(sf::Keyboard::LShift)) camera.Draw(sprite_);
+    if (active_) camera.Draw(sprite_);
 }

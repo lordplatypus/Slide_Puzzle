@@ -7,6 +7,7 @@
 #include "SceneGame.h"
 #include "Button.h"
 #include "Counter.h"
+#include "IP.h"
 
 class SceneOptions : public Scene
 {
@@ -32,6 +33,7 @@ private:
     Game* game_{nullptr};
     GameObjectManager gom_;
     ParticleManager pm_;
+    IP IP_;
 
     enum State{Main, Secondary};
     State state_{Main};

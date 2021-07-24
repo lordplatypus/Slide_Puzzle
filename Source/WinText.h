@@ -2,6 +2,7 @@
 #define WIN_TEXT_H_
 #include "GameObject.h"
 #include "Options.h"
+#include "IP.h"
 
 class WinText : public GameObject
 {
@@ -15,6 +16,7 @@ public:
     const bool GetActive() const;
 
 private:
+    IP IP_;
     sf::Text text_;
     bool active_{false};
     bool showText_{true};

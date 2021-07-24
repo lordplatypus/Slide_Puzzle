@@ -1,6 +1,5 @@
 #include "WinText.h"
 #include "LP.h"
-#include "IP.h"
 
 WinText::WinText(Scene* scene, Options* options)
 {
@@ -25,7 +24,7 @@ void WinText::Update(float delta_time)
 {
     if (!active_) return;
 
-    if (IP::PressEnter())
+    if (IP_.GetButtonDown(sf::Keyboard::Enter))
     {
         if (!showText_) scene_->ChangeScene("Options");
         showText_ = false;

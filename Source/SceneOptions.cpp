@@ -1,7 +1,6 @@
 #include "SceneOptions.h"
 #include "LP.h"
 #include "ID.h"
-#include "IP.h"
 
 SceneOptions::SceneOptions(Game* game) : game_{game}
 {}
@@ -124,6 +123,8 @@ void SceneOptions::Update(float delta_time)
 
     if (state_ == Main) MainMenu();
     else if (state_ == Secondary) SecondaryMenu();
+
+    IP_.Update();
 }
 
 void SceneOptions::Draw(Camera& camera) const
@@ -181,7 +182,7 @@ void SceneOptions::End()
 
 void SceneOptions::MainMenu()
 {
-    if (IP::PressUp())
+    if (IP_.GetButtonDown(sf::Keyboard::Up))
     {
         selectedOption_--;
         if (selectedOption_ < 0) 
@@ -192,7 +193,7 @@ void SceneOptions::MainMenu()
         else buttons_[selectedOption_ + 1]->SetActive(false);
         buttons_[selectedOption_]->SetActive(true);
     }
-    if (IP::PressDown())
+    if (IP_.GetButtonDown(sf::Keyboard::Down))
     {
         selectedOption_++;
         if (selectedOption_ > buttons_.size() - 1) 
@@ -203,7 +204,7 @@ void SceneOptions::MainMenu()
         else buttons_[selectedOption_ - 1]->SetActive(false);
         buttons_[selectedOption_]->SetActive(true); 
     }
-    if (IP::PressEnter())
+    if (IP_.GetButtonDown(sf::Keyboard::Enter))
     {
         if (selectedOption_ == 0) ChangeScene("Game");
         else if (selectedOption_ == 1) 
@@ -229,7 +230,7 @@ void SceneOptions::MainMenu()
 
 void SceneOptions::SecondaryMenu()
 {
-    if (IP::PressEnter())
+    if (IP_.GetButtonDown(sf::Keyboard::Enter))
     {
         SetOption();
     }
@@ -241,12 +242,12 @@ void SceneOptions::SecondaryMenu()
             game_->GetTI()->SetActive(true);
             oldFilePath_ = game_->GetTI()->GetString();
         }
-        if (IP::PressBackspace()) game_->GetTI()->Backspace();
+        if (IP_.GetButtonDown(sf::Keyboard::Backspace)) game_->GetTI()->Backspace();
         imagePath_->SetString(game_->GetTI()->GetString());
     }
     else if (selectedOption_ == 2) 
     {
-        if (IP::PressUp() || IP::PressDown())
+        if (IP_.GetButtonDown(sf::Keyboard::Up) || IP_.GetButtonDown(sf::Keyboard::Down))
         {
             if (random_) 
             {
@@ -262,11 +263,11 @@ void SceneOptions::SecondaryMenu()
     }
     else
     {
-        if (IP::PressUp())
+        if (IP_.GetButtonDown(sf::Keyboard::Up))
         {
             counters_[selectedOption_ - 3]->Increment();
         }
-        if (IP::PressDown())
+        if (IP_.GetButtonDown(sf::Keyboard::Down))
         {
             counters_[selectedOption_ - 3]->Decrement();
         }

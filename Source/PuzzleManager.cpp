@@ -1,5 +1,4 @@
 #include "PuzzleManager.h"
-#include "IP.h"
 #include <math.h>
 
 PuzzleManager::PuzzleManager(Scene* scene, Options* options, const sf::Vector2f& textureSize)
@@ -47,43 +46,44 @@ PuzzleManager::~PuzzleManager()
 void PuzzleManager::Update(float delta_time)
 {
     Input();
+    IP_.Update();
 }
 
 void PuzzleManager::Input()
 {
     sf::Vector2f emptyPosition = emptyBox_->GetPosition();
 
-    if (IP::PressLeft())
+    if (IP_.GetButtonDown(sf::Keyboard::Left))
     {
         emptyPosition.x += width_;
         if (round(emptyPosition.x) > round(textureSize_.x - width_)) return;
     }
-    else if (IP::PressRight())
+    else if (IP_.GetButtonDown(sf::Keyboard::Right))
     {
         emptyPosition.x -= width_;
         if (round(emptyPosition.x) < 0.0f) return;
     }
-    else if (IP::PressUp())
+    else if (IP_.GetButtonDown(sf::Keyboard::Up))
     {
         emptyPosition.y += height_;
         if (round(emptyPosition.y) > round(textureSize_.y - height_)) return;
     }
-    else if (IP::PressDown())
+    else if (IP_.GetButtonDown(sf::Keyboard::Down))
     {
         emptyPosition.y -= height_;
         if (round(emptyPosition.y) < 0.0f) return;
     }
-    else if (IP::PressZ())
+    else if (IP_.GetButtonDown(sf::Keyboard::Z))
     {
         Randomizer();
     }
-    else if (IP::PressSpace())
+    else if (IP_.GetButtonDown(sf::Keyboard::Space))
     {
         if (numDisplay_) numDisplay_ = false;
         else numDisplay_ = true;
         for (int i = 0; i < pictureBox_.size(); i++) pictureBox_[i]->SetNumDisplay(numDisplay_);
     }
-    else if (IP::PressLCtrl())
+    else if (IP_.GetButtonDown(sf::Keyboard::LControl))
     {
         if (outlineDisplay_) outlineDisplay_ = false;
         else outlineDisplay_ = true;

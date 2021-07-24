@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "GameObjectManager.h"
 #include "ParticleManager.h"
+#include "IP.h"
 
 class SceneGame : public Scene
 {
@@ -28,6 +29,7 @@ private:
     Camera* camera_{nullptr};
     GameObjectManager gom_;
     ParticleManager pm_;
+    IP IP_;
 
     sf::RectangleShape background_;
 

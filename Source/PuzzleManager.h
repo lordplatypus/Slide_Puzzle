@@ -5,6 +5,7 @@
 #include "EmptyBox.h"
 #include "WinText.h"
 #include "Options.h"
+#include "IP.h"
 
 class PuzzleManager : public GameObject
 {
@@ -19,6 +20,7 @@ private:
     void Randomizer();
 
 private:
+    IP IP_;
     std::vector<PictureBox*> pictureBox_;
     EmptyBox* emptyBox_;
     WinText* winText_;

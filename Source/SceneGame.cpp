@@ -1,7 +1,6 @@
 #include "SceneGame.h"
 #include "LP.h"
 #include "ID.h"
-#include "IP.h"
 #include "PuzzleManager.h"
 #include "Hint.h"
 
@@ -45,8 +44,10 @@ void SceneGame::Update(float delta_time)
     gom_.Collision(); //check collision between gameobjects
     gom_.Remove(); //remove "dead" gameobjects
 
-    if (IP::PressX()) ChangeScene("Options");
+    if (IP_.GetButtonDown(sf::Keyboard::X)) ChangeScene("Options");
     if (changeScene_) ChangeSceneForReal(changeSceneTo_);
+
+    IP_.Update();
 }
 
 void SceneGame::Draw(Camera& camera) const
