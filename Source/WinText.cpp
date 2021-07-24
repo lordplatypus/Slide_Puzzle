@@ -29,6 +29,8 @@ void WinText::Update(float delta_time)
         if (!showText_) scene_->ChangeScene("Options");
         showText_ = false;
     }
+
+    IP_.Update();
 }
 
 void WinText::Draw(Camera& camera) const
