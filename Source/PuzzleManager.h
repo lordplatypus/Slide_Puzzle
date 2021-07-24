@@ -6,11 +6,12 @@
 #include "WinText.h"
 #include "Options.h"
 #include "IP.h"
+#include "LP.h"
 
 class PuzzleManager : public GameObject
 {
 public:
-    PuzzleManager(Scene* scene, Options* options, const sf::Vector2f& textureSize);
+    PuzzleManager(Scene* scene, Options* options, const sf::Vector2f& textureSize, LP& LP);
     ~PuzzleManager() override;
     void Update(float delta_time) override;
     //void Draw(sf::RenderWindow& render_window) const override;

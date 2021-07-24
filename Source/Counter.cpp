@@ -1,7 +1,7 @@
 #include "Counter.h"
-#include "LP.h"
+#include "ID.h"
 
-Counter::Counter(const int startNum, const int min, const int max, const sf::Vector2f& position)
+Counter::Counter(LP& LP, const int startNum, const int min, const int max, const sf::Vector2f& position)
 {
     SetPosition(position);
     // numText_.setPosition(position);
@@ -10,7 +10,7 @@ Counter::Counter(const int startNum, const int min, const int max, const sf::Vec
     min_ = min;
     max_ = max;
 
-    numText_ = LP::SetText(std::to_string(num_), position);
+    numText_ = LP.SetText(main_font, std::to_string(num_), position);
 }
 
 Counter::~Counter()

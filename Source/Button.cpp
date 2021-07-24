@@ -1,13 +1,13 @@
 #include "Button.h"
-#include "LP.h"
+#include "ID.h"
 
-Button::Button(const std::string& buttonText, const sf::Vector2f& position)
+Button::Button(LP& LP, const std::string& buttonText, const sf::Vector2f& position)
 {
     SetPosition(position);
     // buttonText_.setString(buttonText);
     // buttonText_.setPosition(position);
 
-    buttonText_ = LP::SetText(buttonText, position);
+    buttonText_ = LP.SetText(main_font, buttonText, position);
 }
 
 Button::~Button()
@@ -47,8 +47,10 @@ void Button::SetString(const std::string& string)
     buttonText_.setString(string);
 }
 
-const std::string& Button::GetString()
+std::string Button::GetString()
 {
+    //Note: can't return "const std::string&" without getting the warning: "returning reference to temporary"
+    //thus this function returns "std::string"
     return buttonText_.getString();
 }
 

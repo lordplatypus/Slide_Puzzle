@@ -2,11 +2,12 @@
 #define PICTURE_BOX_H_
 #include "GameObject.h"
 #include "Options.h"
+#include "LP.h"
 
 class PictureBox : public GameObject
 {
 public:
-    PictureBox(Scene* scene, const sf::Vector2f& position, const int ID, Options* options, const sf::Vector2f& textureSize);
+    PictureBox(Scene* scene, const sf::Vector2f& position, const int ID, Options* options, const sf::Vector2f& textureSize, LP& LP);
     ~PictureBox() override;
     void Update(float delta_time) override;
     void Draw(Camera& camera) const override;

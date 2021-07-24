@@ -2,7 +2,8 @@
 #define GAME_H_
 #include <unordered_map>
 #include "Scene.h"
-#include "LoadAssets.h"
+#include "LP.h"
+#include "MP.h"
 #include "Camera.h"
 #include "Options.h"
 #include "TI.h"
@@ -22,18 +23,14 @@ public:
     void ChangeScene(const std::string& newScene);
     //End a scene
     void EndScene();
-    //Called on program shutdown, delete scenes here
-    void Clear();
 
-    //For MiniGames
-    //need to save win status so that the minigame scene has access to the info
-    void SetWin(const bool win);
-    //but this must be reset everytime manually before starting the next minigame
-    bool GetWin() const;
-
+    LP& GetLP();
+    MP& GetMP();
     Options* GetOptions();
     TI* GetTI();
-    const bool AddImage(const std::string& filePath);
+
+    //Called on program shutdown, delete scenes here
+    void Clear();
 
     Game(const Game& other) = delete;
     Game& operator = (const Game& other) = delete;
@@ -44,7 +41,8 @@ private:
     //Current loaded scene
     Scene* scene_ {nullptr};
     //load assets
-    LoadAssets loadAssets_;
+    LP LP_;
+    MP MP_;
 
     //Win status
     bool win_{false};

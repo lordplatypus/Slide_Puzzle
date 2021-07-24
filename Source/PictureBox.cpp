@@ -4,7 +4,7 @@
 #include "IP.h"
 #include "Math.h"
 
-PictureBox::PictureBox(Scene* scene, const sf::Vector2f& position, const int ID, Options* options, const sf::Vector2f& textureSize)
+PictureBox::PictureBox(Scene* scene, const sf::Vector2f& position, const int ID, Options* options, const sf::Vector2f& textureSize, LP& LP)
 {
     scene_ = scene;
     name_ = "PictureBox";
@@ -19,7 +19,7 @@ PictureBox::PictureBox(Scene* scene, const sf::Vector2f& position, const int ID,
     imageHeight_ = textureSize.y / options->GetRowNum();
 
     //Sprite setup
-    sprite_ = LP::SetSprite(image_texture_, imageWidth_, imageHeight_, ID_, position_);
+    sprite_ = LP.SetSprite(image_texture_, imageWidth_, imageHeight_, ID_, position_);
 
     //hint number setup
     float numSize = options->GetNumSize();
@@ -30,7 +30,7 @@ PictureBox::PictureBox(Scene* scene, const sf::Vector2f& position, const int ID,
         else biggerNum = textureSize.y;
         numSize = round(biggerNum / 100 * 1.6f);
     }
-    num_ = LP::SetText(std::to_string(ID_), position_ + numOffset_, numSize);
+    num_ = LP.SetText(main_font, std::to_string(ID_), position_ + numOffset_, numSize);
     num_.setFillColor(sf::Color(options->GetNumRed(), options->GetNumGreen(), options->GetNumBlue(), options->GetNumAlpha()));
     numOffset_ = sf::Vector2f(numSize / 2, numSize / 2);
 

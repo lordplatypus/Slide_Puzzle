@@ -1,7 +1,7 @@
 #include "PuzzleManager.h"
 #include <math.h>
 
-PuzzleManager::PuzzleManager(Scene* scene, Options* options, const sf::Vector2f& textureSize)
+PuzzleManager::PuzzleManager(Scene* scene, Options* options, const sf::Vector2f& textureSize, LP& LP)
 {
     scene_ = scene;
     SetActive(false);
@@ -26,12 +26,12 @@ PuzzleManager::PuzzleManager(Scene* scene, Options* options, const sf::Vector2f&
         for (int x = 0; x < columnNum_; x++)
         {
             if (y == rowNum_ - randomY && x == columnNum_ - randomX) emptyBox_ = new EmptyBox(scene_, sf::Vector2f(width_ * x, height_ * y), i, options, textureSize_);
-            else pictureBox_.push_back(new PictureBox(scene_, sf::Vector2f(width_ * x, height_ * y), i, options, textureSize_));
+            else pictureBox_.push_back(new PictureBox(scene_, sf::Vector2f(width_ * x, height_ * y), i, options, textureSize_, LP));
             i++;
         }
     }
 
-    winText_ = new WinText(scene_, options);
+    winText_ = new WinText(scene_, options, LP);
 
     scene_->AddGameObject(emptyBox_);
     for (auto object : pictureBox_) scene_->AddGameObject(object);

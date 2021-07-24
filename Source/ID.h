@@ -3,10 +3,17 @@
 
 //Commonly used "keys" that need to have the same value across the whole program
 //Ex: texture keys, music keys, render layer keys
+//Texture Keys
 enum
 {
     image_texture_,
     test_texture_,
+};
+
+//Font Keys
+enum
+{
+    main_font
 };
 
 

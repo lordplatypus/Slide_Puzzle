@@ -1,7 +1,5 @@
 #include "EmptyBox.h"
 #include "ID.h"
-#include "LP.h"
-#include "IP.h"
 #include "Math.h"
 
 EmptyBox::EmptyBox(Scene* scene, const sf::Vector2f& position, const int ID, Options* options, const sf::Vector2f& textureSize)

@@ -2,11 +2,12 @@
 #define BUTTON_H_
 #include <SFML/Graphics.hpp>
 #include "Camera.h"
+#include "LP.h"
 
 class Button
 {
 public:
-    Button(const std::string& buttonText, const sf::Vector2f& position = sf::Vector2f(0.0f, 0.0f));
+    Button(LP& LP, const std::string& buttonText, const sf::Vector2f& position = sf::Vector2f(0.0f, 0.0f));
     ~Button();
     void Draw(Camera& camera) const;
     
@@ -15,7 +16,7 @@ public:
     void SetPosition(const sf::Vector2f& position);
     const sf::Vector2f& GetPosition() const;
     void SetString(const std::string& string);
-    const std::string& GetString();
+    std::string GetString();
 
     void Action();
 

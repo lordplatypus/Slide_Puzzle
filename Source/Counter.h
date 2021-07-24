@@ -2,11 +2,12 @@
 #define COUNTER_H_
 #include <SFML/Graphics.hpp>
 #include "Camera.h"
+#include "LP.h"
 
 class Counter
 {
 public:
-    Counter(const int startNum = 0, const int min = 0, const int max = 100, const sf::Vector2f& position = sf::Vector2f(0.0f, 0.0f));
+    Counter(LP& LP, const int startNum = 0, const int min = 0, const int max = 100, const sf::Vector2f& position = sf::Vector2f(0.0f, 0.0f));
     ~Counter();
     void Draw(Camera& camera) const;
 

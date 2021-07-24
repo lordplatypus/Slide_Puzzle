@@ -1,12 +1,12 @@
 #include "WinText.h"
-#include "LP.h"
+#include "ID.h"
 
-WinText::WinText(Scene* scene, Options* options)
+WinText::WinText(Scene* scene, Options* options, LP& LP)
 {
     scene_ = scene;
 
-    text_ = LP::SetText("You did it!\nGood job I guess.\nPress Enter to\nhide this text.\nPress Enter again to\nreturn to the options menu.", sf::Vector2f(1920.0f/2, 1080.0f/2), 64);
-    LP::SetTextOriginCenter(&text_);
+    text_ = LP.SetText(main_font, "You did it!\nGood job I guess.\nPress Enter to\nhide this text.\nPress Enter again to\nreturn to the options menu.", sf::Vector2f(1920.0f/2, 1080.0f/2), 64);
+    LP.SetTextOriginCenter(text_);
     text_.setFillColor(sf::Color(options->GetNumRed(), options->GetNumGreen(), options->GetNumBlue(), options->GetNumAlpha()));
     text_.setOutlineThickness(1.0f);
     text_.setOutlineColor(sf::Color::White);

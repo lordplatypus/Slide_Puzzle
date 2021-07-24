@@ -2,7 +2,6 @@
 #include "DeltaTime.h"
 #include "Camera.h"
 #include "Game.h"
-#include "LP.h"
 #include "TI.h"
 
 int main()

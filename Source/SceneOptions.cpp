@@ -10,36 +10,34 @@ SceneOptions::~SceneOptions()
 
 void SceneOptions::Init()
 {
-    game_->SetWin(false);
-
     //Setup the buttons
-    buttons_.push_back(new Button("Start"));
-    buttons_.push_back(new Button("Image"));
-    buttons_.push_back(new Button("Rand Empty"));
-    buttons_.push_back(new Button("Row"));
-    buttons_.push_back(new Button("Column"));
+    buttons_.push_back(new Button(game_->GetLP(), "Start"));
+    buttons_.push_back(new Button(game_->GetLP(), "Image"));
+    buttons_.push_back(new Button(game_->GetLP(), "Rand Empty"));
+    buttons_.push_back(new Button(game_->GetLP(), "Row"));
+    buttons_.push_back(new Button(game_->GetLP(), "Column"));
 
-    buttons_.push_back(new Button("Empty Red"));
-    buttons_.push_back(new Button("Empty Green"));
-    buttons_.push_back(new Button("Empty Blue"));
-    buttons_.push_back(new Button("Empty Alpha"));
+    buttons_.push_back(new Button(game_->GetLP(), "Empty Red"));
+    buttons_.push_back(new Button(game_->GetLP(), "Empty Green"));
+    buttons_.push_back(new Button(game_->GetLP(), "Empty Blue"));
+    buttons_.push_back(new Button(game_->GetLP(), "Empty Alpha"));
 
-    buttons_.push_back(new Button("Number Size"));
-    buttons_.push_back(new Button("Number Red"));
-    buttons_.push_back(new Button("Number Green"));
-    buttons_.push_back(new Button("Number Blue"));
-    buttons_.push_back(new Button("Number Alpha"));
+    buttons_.push_back(new Button(game_->GetLP(), "Number Size"));
+    buttons_.push_back(new Button(game_->GetLP(), "Number Red"));
+    buttons_.push_back(new Button(game_->GetLP(), "Number Green"));
+    buttons_.push_back(new Button(game_->GetLP(), "Number Blue"));
+    buttons_.push_back(new Button(game_->GetLP(), "Number Alpha"));
 
-    buttons_.push_back(new Button("Background Red"));
-    buttons_.push_back(new Button("Background Green"));
-    buttons_.push_back(new Button("Background Blue"));
-    buttons_.push_back(new Button("Background Alpha"));
+    buttons_.push_back(new Button(game_->GetLP(), "Background Red"));
+    buttons_.push_back(new Button(game_->GetLP(), "Background Green"));
+    buttons_.push_back(new Button(game_->GetLP(), "Background Blue"));
+    buttons_.push_back(new Button(game_->GetLP(), "Background Alpha"));
 
-    buttons_.push_back(new Button("Outline Size"));
-    buttons_.push_back(new Button("Outline Red"));
-    buttons_.push_back(new Button("Outline Green"));
-    buttons_.push_back(new Button("Outline Blue"));
-    buttons_.push_back(new Button("Outline Alpha"));
+    buttons_.push_back(new Button(game_->GetLP(), "Outline Size"));
+    buttons_.push_back(new Button(game_->GetLP(), "Outline Red"));
+    buttons_.push_back(new Button(game_->GetLP(), "Outline Green"));
+    buttons_.push_back(new Button(game_->GetLP(), "Outline Blue"));
+    buttons_.push_back(new Button(game_->GetLP(), "Outline Alpha"));
     for (int i = 0; i < buttons_.size(); i++) 
     {
         buttons_[i]->SetPosition(sf::Vector2f(16.0f, 36.0f * i + 16.0f));
@@ -47,30 +45,30 @@ void SceneOptions::Init()
     }
 
     //Setup the counters
-    counters_.push_back(new Counter(game_->GetOptions()->GetRowNum(), 4, 100)); //row
-    counters_.push_back(new Counter(game_->GetOptions()->GetColumnNum(), 4, 100)); //column
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetRowNum(), 4, 100)); //row
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetColumnNum(), 4, 100)); //column
 
-    counters_.push_back(new Counter(game_->GetOptions()->GetBoxRed(), 0, 255)); //hole red
-    counters_.push_back(new Counter(game_->GetOptions()->GetBoxGreen(), 0, 255)); //hole green
-    counters_.push_back(new Counter(game_->GetOptions()->GetBoxBlue(), 0, 255)); //hole blue
-    counters_.push_back(new Counter(game_->GetOptions()->GetBoxAlpha(), 0, 255)); //hole Alpha
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetBoxRed(), 0, 255)); //hole red
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetBoxGreen(), 0, 255)); //hole green
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetBoxBlue(), 0, 255)); //hole blue
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetBoxAlpha(), 0, 255)); //hole Alpha
 
-    counters_.push_back(new Counter(game_->GetOptions()->GetNumSize(), 0, 255)); //num size
-    counters_.push_back(new Counter(game_->GetOptions()->GetNumRed(), 0, 255)); //num red
-    counters_.push_back(new Counter(game_->GetOptions()->GetNumGreen(), 0, 255)); //num green
-    counters_.push_back(new Counter(game_->GetOptions()->GetNumBlue(), 0, 255)); //num blue
-    counters_.push_back(new Counter(game_->GetOptions()->GetNumAlpha(), 0, 255)); //num alpha
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetNumSize(), 0, 255)); //num size
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetNumRed(), 0, 255)); //num red
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetNumGreen(), 0, 255)); //num green
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetNumBlue(), 0, 255)); //num blue
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetNumAlpha(), 0, 255)); //num alpha
 
-    counters_.push_back(new Counter(game_->GetOptions()->GetBackgroundRed(), 0, 255)); //background red
-    counters_.push_back(new Counter(game_->GetOptions()->GetBackgroundGreen(), 0, 255)); //background green
-    counters_.push_back(new Counter(game_->GetOptions()->GetBackgroundBlue(), 0, 255)); //background blue
-    counters_.push_back(new Counter(game_->GetOptions()->GetBackgroundAlpha(), 0, 255)); //background alpha
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetBackgroundRed(), 0, 255)); //background red
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetBackgroundGreen(), 0, 255)); //background green
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetBackgroundBlue(), 0, 255)); //background blue
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetBackgroundAlpha(), 0, 255)); //background alpha
 
-    counters_.push_back(new Counter(game_->GetOptions()->GetOutlineSize(), 0, 255)); //outline size
-    counters_.push_back(new Counter(game_->GetOptions()->GetOutlineRed(), 0, 255)); //outline red
-    counters_.push_back(new Counter(game_->GetOptions()->GetOutlineGreen(), 0, 255)); //outline green
-    counters_.push_back(new Counter(game_->GetOptions()->GetOutlineBlue(), 0, 255)); //outline blue
-    counters_.push_back(new Counter(game_->GetOptions()->GetOutlineAlpha(), 0, 255)); //outline alpha
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOutlineSize(), 0, 255)); //outline size
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOutlineRed(), 0, 255)); //outline red
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOutlineGreen(), 0, 255)); //outline green
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOutlineBlue(), 0, 255)); //outline blue
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOutlineAlpha(), 0, 255)); //outline alpha
     for (int i = 0; i < counters_.size(); i++) 
     {
         counters_[i]->SetPosition(sf::Vector2f(576.0f, 36.0f * (i + 3) + 16.0f));
@@ -78,12 +76,12 @@ void SceneOptions::Init()
     }
 
     //setup image path button
-    imagePath_ = new Button(game_->GetTI()->GetString(), sf::Vector2f(576.0f, 48.0f));
+    imagePath_ = new Button(game_->GetLP(), game_->GetTI()->GetString(), sf::Vector2f(576.0f, 48.0f));
     imagePath_->SetActive(false);
 
     //setup rand empty button
-    if (game_->GetOptions()->GetRandomEmptyBoxPlacement()) randomEmptyBox_ = new Button("True", sf::Vector2f(576.0f, 84.0f));
-    else randomEmptyBox_ = new Button("False", sf::Vector2f(576.0f, 84.0f));
+    if (game_->GetOptions()->GetRandomEmptyBoxPlacement()) randomEmptyBox_ = new Button(game_->GetLP(), "True", sf::Vector2f(576.0f, 84.0f));
+    else randomEmptyBox_ = new Button(game_->GetLP(), "False", sf::Vector2f(576.0f, 84.0f));
     randomEmptyBox_->SetActive(false);
 
     //Setup instruction text
@@ -110,7 +108,7 @@ void SceneOptions::Init()
     instructionsText_.push_back("Instructions:\n>Outline color - Green\n>Min = 0\n>Max = 255");
     instructionsText_.push_back("Instructions:\n>Outline color - Blue\n>Min = 0\n>Max = 255");
     instructionsText_.push_back("Instructions:\n>Outline color - Alpha\n>Min = 0\n>Max = 255");
-    instructions_ = LP::SetText(instructionsText_[0], sf::Vector2f(960.0f, 16.0f));
+    instructions_ = game_->GetLP().SetText(main_font, instructionsText_[0], sf::Vector2f(960.0f, 16.0f));
 
     //Setup color example
     exampleColorBox_.setSize(sf::Vector2f(100.0f, 100.0f));
@@ -155,11 +153,6 @@ GameObject* SceneOptions::FindGameObject(const std::string& string, const bool b
 void SceneOptions::SortGameObjects()
 {
     gom_.SortByLayers();
-}
-
-void SceneOptions::OnWin()
-{
-    game_->SetWin(true);
 }
 
 void SceneOptions::ChangeScene(const std::string& sceneName)
@@ -293,7 +286,7 @@ void SceneOptions::SetOption()
         case 1:
         game_->GetTI()->SetActive(false);
         imagePath_->SetActive(false);
-        if (!game_->AddImage("./" + game_->GetTI()->GetString())) game_->GetTI()->SetString(oldFilePath_);
+        if (!game_->GetLP().SetTexture(image_texture_, "./" + game_->GetTI()->GetString())) game_->GetTI()->SetString(oldFilePath_);
         break;
 
         case 2:

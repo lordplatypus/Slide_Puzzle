@@ -3,11 +3,12 @@
 #include "GameObject.h"
 #include "Options.h"
 #include "IP.h"
+#include "LP.h"
 
 class WinText : public GameObject
 {
 public:
-    WinText(Scene* scene, Options* options);
+    WinText(Scene* scene, Options* options, LP& LP);
     ~WinText() override;
     void Update(float delta_time) override;
     void Draw(Camera& camera) const override;

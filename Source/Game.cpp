@@ -9,7 +9,8 @@ static SceneNull nullScene;
 
 Game::Game(Camera& camera, TI* ti) : ti_{ti}, scene_{&nullScene}
 {
-    loadAssets_.Load();
+    LP_.Load();
+    MP_.Load();
 
     AddScene("Options", new SceneOptions(this));
     AddScene("Game", new SceneGame(this, camera));
@@ -51,31 +52,15 @@ void Game::EndScene()
     scene_ = &nullScene;
 }
 
-void Game::Clear()
+LP& Game::GetLP()
 {
-    scene_->End();
-
-    for (auto pair : scenes_)
-    {
-        delete pair.second;
-    }
-    scenes_.clear();
+    return LP_;
 }
 
-
-//For MiniGames
-
-void Game::SetWin(const bool win)
+MP& Game::GetMP()
 {
-    win_ = win;
+    return MP_;
 }
-
-bool Game::GetWin() const
-{
-    return win_;
-}
-
-
 
 Options* Game::GetOptions()
 {
@@ -87,7 +72,13 @@ TI* Game::GetTI()
     return ti_;
 }
 
-const bool Game::AddImage(const std::string& filePath)
+void Game::Clear()
 {
-    return loadAssets_.AddImage(filePath);
+    scene_->End();
+
+    for (auto pair : scenes_)
+    {
+        delete pair.second;
+    }
+    scenes_.clear();
 }

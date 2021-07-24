@@ -1,9 +1,8 @@
 #include "Hint.h"
 #include "ID.h"
-#include "LP.h"
 #include "Math.h"
 
-Hint::Hint(Scene* scene)
+Hint::Hint(Scene* scene, LP& LP)
 {
     scene_ = scene;
     name_ = "Hint";
@@ -13,7 +12,7 @@ Hint::Hint(Scene* scene)
     SetActive(false);
 
     //Sprite set up
-    sprite_ = LP::SetSprite(image_texture_, position_);
+    sprite_ = LP.SetSprite(image_texture_, position_);
 }
 
 Hint::~Hint()

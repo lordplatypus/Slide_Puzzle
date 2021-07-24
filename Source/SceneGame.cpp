@@ -12,11 +12,9 @@ SceneGame::~SceneGame()
 
 void SceneGame::Init()
 {
-    game_->SetWin(false);
-
     srand (time(NULL));
 
-    sf::Vector2f textureSize = sf::Vector2f(LP::GetTexture(image_texture_).getSize().x, LP::GetTexture(image_texture_).getSize().y);
+    sf::Vector2f textureSize = sf::Vector2f(game_->GetLP().GetTexture(image_texture_).getSize().x, game_->GetLP().GetTexture(image_texture_).getSize().y);
 
     if (textureSize.x < textureSize.x * 9 / 16) camera_->SetViewport("Game", sf::Vector2f(textureSize.x, textureSize.x * 9 / 16));
     else if (textureSize.y < textureSize.y * 16 / 9) camera_->SetViewport("Game", sf::Vector2f(textureSize.y * 16 / 9, textureSize.y));
@@ -27,8 +25,8 @@ void SceneGame::Init()
     }
     camera_->SetViewCenter("Game", sf::Vector2f(textureSize.x / 2, textureSize.y / 2));
 
-    AddGameObject(new PuzzleManager(this, game_->GetOptions(), textureSize));
-    AddGameObject(new Hint(this));
+    AddGameObject(new PuzzleManager(this, game_->GetOptions(), textureSize, game_->GetLP()));
+    AddGameObject(new Hint(this, game_->GetLP()));
 
     background_.setSize(camera_->GetView("Game").getSize());
     if (textureSize.x < textureSize.x * 9 / 16) background_.setPosition(sf::Vector2f(0.0f, 0.0f - (camera_->GetView("Game").getSize().y / 2 - textureSize.y / 2)));
@@ -70,11 +68,6 @@ GameObject* SceneGame::FindGameObject(const std::string& string, const bool byNa
 void SceneGame::SortGameObjects()
 {
     gom_.SortByLayers();
-}
-
-void SceneGame::OnWin()
-{
-    game_->SetWin(true);
 }
 
 void SceneGame::ChangeScene(const std::string& sceneName)

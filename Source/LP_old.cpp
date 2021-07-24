@@ -1,29 +1,10 @@
 #include "LP.h"
-#include "ID.h"
+#include "LoadAssets.h"
 
-//initial
+std::unordered_map<int, sf::Texture> LP::textureMap_;
+sf::Font LP::font_;
 
-void LP::Load()
-{
-    LoadTexture();
-    LoadFont();
-}
-
-void LP::LoadTexture()
-{
-    // SetTexture(Texture Key, "Path to texture", Optional: size of texture);
-    SetTexture(image_texture_, "./image.png");
-}
-
-void LP::LoadFont()
-{
-    // SetFont(Font Key, "Path to Font");
-    SetFont(main_font, "./Blue Sky 8x8.ttf");
-}
-
-
-//Set && Get
-
+//SPRITE
 bool LP::SetTexture(const int textureKey, const std::string& filePath)
 {
     return textureMap_[textureKey].loadFromFile(filePath);
@@ -34,33 +15,10 @@ bool LP::SetTexture(const int textureKey, const std::string& filePath, int width
     return textureMap_[textureKey].loadFromFile(filePath, sf::IntRect(0, 0, width, height));
 }
 
-bool LP::SetTexture(const int textureKey, const std::string& filePath, const sf::Vector2i& size)
-{
-    return textureMap_[textureKey].loadFromFile(filePath, sf::IntRect(0, 0, size.x, size.y));
-}
-
-bool LP::SetTexture(const int textureKey, const std::string& filePath, const sf::IntRect& size)
-{
-    return textureMap_[textureKey].loadFromFile(filePath, size);
-}
-
-const sf::Texture& LP::GetTexture(const int textureKey)
+sf::Texture LP::GetTexture(const int textureKey)
 {
     return textureMap_[textureKey];
 }
-
-void LP::SetFont(const int fontKey, const std::string& filePath)
-{
-    fontMap_[fontKey].loadFromFile(filePath);
-}
-
-const sf::Font& LP::GetFont(const int fontKey)
-{
-    return fontMap_[fontKey];
-}
-
-
-//Helpful functions - I think
 
 sf::Sprite LP::SetSprite(const int textureKey, const sf::Vector2f& position)
 {
@@ -97,29 +55,36 @@ std::vector<sf::Sprite> LP::SetMultiFrameSprite(const int textureKey, const int 
     return spriteArray;
 }
 
-void LP::SetSpriteHorizontalFlip(sf::Sprite& sprite, const bool flip)
+void LP::SetSpriteHorizontalFlip(sf::Sprite* sprite, const bool flip)
 {
-    if (flip && sprite.getScale().x > 0)
+    if (flip && sprite->getScale().x > 0)
     {
-        sprite.scale(-1.0f, 1.0f);
-        sprite.setOrigin(sprite.getLocalBounds().width, sprite.getOrigin().y);
+        sprite->scale(-1.0f, 1.0f);
+        sprite->setOrigin(sprite->getLocalBounds().width, sprite->getOrigin().y);
     }
-    else if (!flip && sprite.getScale().x < 0)
+    else if (!flip && sprite->getScale().x < 0)
     {
-        sprite.scale(-1.0f, 1.0f);
-        sprite.setOrigin(0, sprite.getOrigin().y);
+        sprite->scale(-1.0f, 1.0f);
+        sprite->setOrigin(0, sprite->getOrigin().y);
     }
 }
 
-void LP::SetSpriteOriginCenter(sf::Sprite& sprite)
+void LP::SetSpriteOriginCenter(sf::Sprite* sprite)
 {
-    sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
+    sprite->setOrigin(sprite->getLocalBounds().width / 2, sprite->getLocalBounds().height / 2);
 }
 
-sf::Text LP::SetText(const int fontKey, const std::string& string, const sf::Vector2f& position, const int textSize, const sf::Vector2f& scale)
+
+//TEXT
+void LP::SetFont(const std::string& filePath)
+{
+    font_.loadFromFile(filePath);
+}
+
+sf::Text LP::SetText(const std::string& string, const sf::Vector2f& position, const int textSize, const sf::Vector2f& scale)
 {
     sf::Text text;
-    text.setFont(fontMap_[fontKey]);
+    text.setFont(font_);
     text.setCharacterSize(textSize);
     text.setPosition(position);
     text.setFillColor(sf::Color::White);
@@ -128,11 +93,13 @@ sf::Text LP::SetText(const int fontKey, const std::string& string, const sf::Vec
     return text;
 }
 
-void LP::SetTextOriginCenter(sf::Text& text)
+void LP::SetTextOriginCenter(sf::Text* text)
 {
-    text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
+    text->setOrigin(text->getLocalBounds().width / 2, text->getLocalBounds().height / 2);
 }
 
+
+//TILEMAP
 TileMap LP::SetTileMap(const int textureKey, sf::Vector2u tileSize, const std::vector<std::vector<int>> map, sf::Vector2f position, int width, int height)
 {
     TileMap temp;
