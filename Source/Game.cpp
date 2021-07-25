@@ -7,12 +7,12 @@
 
 static SceneNull nullScene;
 
-Game::Game(Camera& camera, TI* ti) : ti_{ti}, scene_{&nullScene}
+Game::Game(Camera& camera, EL& EL) : scene_{&nullScene}
 {
     LP_.Load();
     MP_.Load();
 
-    AddScene("Options", new SceneOptions(this));
+    AddScene("Options", new SceneOptions(this, EL));
     AddScene("Game", new SceneGame(this, camera));
 
     scene_ = scenes_["Options"];
@@ -65,11 +65,6 @@ MP& Game::GetMP()
 Options* Game::GetOptions()
 {
     return &options_;
-}
-
-TI* Game::GetTI()
-{
-    return ti_;
 }
 
 void Game::Clear()

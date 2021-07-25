@@ -8,11 +8,12 @@
 #include "Button.h"
 #include "Counter.h"
 #include "IP.h"
+#include "EL.h"
 
 class SceneOptions : public Scene
 {
 public:
-    SceneOptions(Game* game);
+    SceneOptions(Game* game, EL& EL);
     ~SceneOptions();
     virtual void Init() override;
     virtual void Update(float delta_time) override;
@@ -33,6 +34,7 @@ private:
     GameObjectManager gom_;
     ParticleManager pm_;
     IP IP_;
+    EL* EL_{nullptr};
 
     enum State{Main, Secondary};
     State state_{Main};
@@ -44,7 +46,7 @@ private:
     std::vector<Counter*> counters_;
 
     Button* imagePath_{nullptr};
-    std::string oldFilePath_{""};
+    std::string oldFilePath_{"image.png"};
 
     Button* randomEmptyBox_{nullptr};
     bool random_{false};

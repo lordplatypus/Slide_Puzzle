@@ -6,12 +6,12 @@
 #include "MP.h"
 #include "Camera.h"
 #include "Options.h"
-#include "TI.h"
+#include "EL.h"
 
 class Game
 {
 public:
-    Game(Camera& camera, TI* ti);
+    Game(Camera& camera, EL& EL);
     ~Game();
     //Update Game
     void Update(float delta_time);
@@ -27,7 +27,6 @@ public:
     LP& GetLP();
     MP& GetMP();
     Options* GetOptions();
-    TI* GetTI();
 
     //Called on program shutdown, delete scenes here
     void Clear();
@@ -49,9 +48,6 @@ private:
 
     //Options
     Options options_;
-
-    //Text Input
-    TI* ti_{nullptr};
 };
 
 #endif

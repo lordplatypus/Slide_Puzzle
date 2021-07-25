@@ -2,7 +2,7 @@
 #include "LP.h"
 #include "ID.h"
 
-SceneOptions::SceneOptions(Game* game) : game_{game}
+SceneOptions::SceneOptions(Game* game, EL& EL) : game_{game}, EL_{&EL}
 {}
 
 SceneOptions::~SceneOptions()
@@ -76,7 +76,7 @@ void SceneOptions::Init()
     }
 
     //setup image path button
-    imagePath_ = new Button(game_->GetLP(), game_->GetTI()->GetString(), sf::Vector2f(576.0f, 48.0f));
+    imagePath_ = new Button(game_->GetLP(), oldFilePath_, sf::Vector2f(576.0f, 48.0f));
     imagePath_->SetActive(false);
 
     //setup rand empty button
@@ -224,22 +224,20 @@ void SceneOptions::MainMenu()
 void SceneOptions::SecondaryMenu()
 {
     if (IP_.GetButtonDown(sf::Keyboard::Enter))
-    {
+    {//Press Enter to confirm the option
         SetOption();
     }
-
-    if (selectedOption_ == 1) 
-    {
-        if (!game_->GetTI()->GetActive())
-        {
-            game_->GetTI()->SetActive(true);
-            oldFilePath_ = game_->GetTI()->GetString();
+    else if (selectedOption_ == 1) 
+    {//Type in a file path
+        if (!EL_->GetTextEnteredActive())
+        {//Activate once 
+            EL_->SetTextEnteredActive(true); //Allow for typing
+            oldFilePath_ = EL_->GetTextEntered(); //Save the old filepath in case the new path is wrong
         }
-        if (IP_.GetButtonDown(sf::Keyboard::Backspace)) game_->GetTI()->Backspace();
-        imagePath_->SetString(game_->GetTI()->GetString());
+        imagePath_->SetString(EL_->GetTextEntered()); //Display what is being typed
     }
     else if (selectedOption_ == 2) 
-    {
+    {//True or False
         if (IP_.GetButtonDown(sf::Keyboard::Up) || IP_.GetButtonDown(sf::Keyboard::Down))
         {
             if (random_) 
@@ -255,7 +253,7 @@ void SceneOptions::SecondaryMenu()
         }
     }
     else
-    {
+    {//Increases or decreases the counter for the many options that use counters
         if (IP_.GetButtonDown(sf::Keyboard::Up))
         {
             counters_[selectedOption_ - 3]->Increment();
@@ -264,7 +262,7 @@ void SceneOptions::SecondaryMenu()
         {
             counters_[selectedOption_ - 3]->Decrement();
         }
-        if (selectedOption_ != 9 && selectedOption_ != 18) SetColorExample();
+        if (selectedOption_ != 9 && selectedOption_ != 18) SetColorExample(); //change the color of the sample box
     }
 }
 
@@ -284,9 +282,9 @@ void SceneOptions::SetOption()
         break;
 
         case 1:
-        game_->GetTI()->SetActive(false);
-        imagePath_->SetActive(false);
-        if (!game_->GetLP().SetTexture(image_texture_, "./" + game_->GetTI()->GetString())) game_->GetTI()->SetString(oldFilePath_);
+        EL_->SetTextEnteredActive(false); //deactive typing
+        imagePath_->SetActive(false); //grey out button
+        if (!game_->GetLP().SetTexture(image_texture_, "./" +  EL_->GetTextEntered()))  EL_->SetTextEntered(oldFilePath_); //set new filepath or revert back to old filepath
         break;
 
         case 2:
@@ -375,6 +373,6 @@ void SceneOptions::SetOption()
         break;
     }
     if (selectedOption_ > 2) counters_[selectedOption_ - 3]->SetActive(false);
-    instructions_.setString(instructionsText_[0]);
+    instructions_.setString(instructionsText_[0]); //go back to default instructions
     state_ = Main;
 }

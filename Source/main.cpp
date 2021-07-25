@@ -1,8 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include "DeltaTime.h"
+#include "EL.h"
 #include "Camera.h"
 #include "Game.h"
-#include "TI.h"
 
 int main()
 {
@@ -12,58 +12,16 @@ int main()
     Camera camera{&render_window, sf::Vector2f(1920.0f, 1080.0f)};
     camera.SetView("Game");
 
+    EL EL{camera};
+    EL.SetTextEntered("image.png"); //ease for later
+
     DeltaTime deltaTime;
 
-    // Camera camera(&render_window, sf::Vector2f(1920.0f, 1080.0f));
-    // camera.SetView("Main");
-    // camera.SetView("Game"); //for the winning text
-    // render_window.setView(*camera.GetView("Main"));
+    Game game{camera, EL};
 
-    TI ti;
-
-    Game game{camera, &ti};
-
-    while (isRunning)
+    while (EL.IsRunning())
     {//main game loop
-        sf::Event event; //events
-        while (render_window.pollEvent(event))
-        {//
-            if (event.type == sf::Event::Resized)
-            {
-                sf::FloatRect viewport(0.0f, 0.0f, 1.0f, 1.0f);
-
-                float screenwidth = event.size.width / camera.GetAspectRatio().x;
-                float screenheight = event.size.height / camera.GetAspectRatio().y;
-
-                if(screenwidth > screenheight)
-                {
-                    viewport.width = screenheight / screenwidth;
-                    viewport.left = (1.0f - viewport.width) / 2.0f;
-                }
-                else if(screenwidth < screenheight)
-                {
-                    viewport.height = screenwidth / screenheight;
-                    viewport.top = (1.0f - viewport.height) / 2.0f;
-                }
-
-                for (auto i : camera.GetVectorViewNames())
-                {
-                    camera.SetViewport(i, viewport);
-                }
-            }
-            else if (event.type == sf::Event::TextEntered && ti.GetActive())
-            {
-                if (event.text.unicode != '\b' && event.text.unicode != '\r') ti.AddToString(event.text.unicode);
-            }
-            else if (event.type == sf::Event::Closed)
-            {
-                isRunning = false;
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-            {
-                isRunning = false;
-            }
-        }
+        EL.PollEvent(render_window);
         game.Update(deltaTime.GetDeltaTime());
         render_window.clear();
         game.Draw(camera);
