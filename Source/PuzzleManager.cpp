@@ -46,6 +46,7 @@ PuzzleManager::~PuzzleManager()
 void PuzzleManager::Update(float delta_time)
 {
     Input();
+    MouseInput();
     IP_.Update();
 }
 
@@ -88,6 +89,81 @@ void PuzzleManager::Input()
         if (outlineDisplay_) outlineDisplay_ = false;
         else outlineDisplay_ = true;
         for (int i = 0; i < pictureBox_.size(); i++) pictureBox_[i]->SetOutlineDisplay(outlineDisplay_);
+    }
+
+    if (emptyPosition == emptyBox_->GetPosition()) return;
+
+    int targetID = round(emptyPosition.x / (width_) + emptyPosition.y / (height_) * columnNum_);
+
+    bool isWin = true;
+    for (auto i : pictureBox_)
+    {
+        if (i->GetID() == targetID) 
+        {
+            i->SetPosition(emptyBox_->GetPosition(), emptyBox_->GetID());
+            i->IsCorrectPosition();
+        }
+
+        if (!i->GetIsCorrectPosition()) isWin = false;
+    }
+    emptyBox_->SetPosition(emptyPosition, targetID);
+
+    if (isWin) winText_->SetActive(true);
+}
+
+void PuzzleManager::MouseInput()
+{
+    if (IP_.GetButtonDown(sf::Mouse::Left)) 
+    {
+        mouseStart_ = sf::Mouse::getPosition();
+        clicked_ = true;
+    }
+
+    if (!clicked_) return;
+
+    if (clicked_ && !sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        mouseEnd_ = sf::Mouse::getPosition();
+        clicked_ = false;
+    }
+    else return;
+
+    int start = 0;
+    int end = 0;
+    if (abs(mouseStart_.x - mouseEnd_.x) >= abs(mouseStart_.y - mouseEnd_.y))
+    {
+        start = mouseStart_.x;
+        end = mouseEnd_.x;
+        xaxis_ = true;
+    }
+    else
+    {
+        start = mouseStart_.y;
+        end = mouseEnd_.y;
+        xaxis_ = false;
+    }
+
+    sf::Vector2f emptyPosition = emptyBox_->GetPosition();
+
+    if (xaxis_ && start > end)
+    {
+        emptyPosition.x += width_;
+        if (round(emptyPosition.x) > round(textureSize_.x - width_)) return;
+    }
+    else if (xaxis_ &&start < end)
+    {
+        emptyPosition.x -= width_;
+        if (round(emptyPosition.x) < 0.0f) return;
+    }
+    else if (!xaxis_ && start > end)
+    {
+        emptyPosition.y += height_;
+        if (round(emptyPosition.y) > round(textureSize_.y - height_)) return;
+    }
+    else if (!xaxis_ &&start < end)
+    {
+        emptyPosition.y -= height_;
+        if (round(emptyPosition.y) < 0.0f) return;
     }
 
     if (emptyPosition == emptyBox_->GetPosition()) return;

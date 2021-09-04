@@ -18,6 +18,7 @@ public:
 
 private:
     void Input();
+    void MouseInput();
     void Randomizer();
 
 private:
@@ -33,6 +34,12 @@ private:
     bool numDisplay_{false};
     bool outlineDisplay_{false};
     sf::Vector2f textureSize_{0.0f, 0.0f};
+
+    //TEST
+    sf::Vector2i mouseStart_;
+    sf::Vector2i mouseEnd_;
+    bool clicked_{false};
+    bool xaxis_{false};
 };
 
 #endif
