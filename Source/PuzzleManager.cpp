@@ -5,8 +5,8 @@ PuzzleManager::PuzzleManager(Scene* scene, Options* options, const sf::Vector2f&
 {
     scene_ = scene;
     SetActive(false);
-    rowNum_ = options->GetRowNum();
-    columnNum_ = options->GetColumnNum();
+    rowNum_ = options->GetOption("Row");
+    columnNum_ = options->GetOption("Column");
     textureSize_ = textureSize;
     width_ = textureSize_.x / columnNum_;
     height_ = textureSize_.y / rowNum_;
@@ -14,7 +14,7 @@ PuzzleManager::PuzzleManager(Scene* scene, Options* options, const sf::Vector2f&
     //this is to radomize the empty box, 1 / 1 is the default bottom right corner
     int randomX = 1;
     int randomY = 1;
-    if (options->GetRandomEmptyBoxPlacement())
+    if (options->GetOption("Rand Empty") > 0)
     {
         randomX = rand() % columnNum_ + 1; //these can't be 0, hence the +1
         randomY = rand() % rowNum_ + 1; //otherwise the empty box wouldn't be created

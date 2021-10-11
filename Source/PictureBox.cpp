@@ -15,15 +15,15 @@ PictureBox::PictureBox(Scene* scene, const sf::Vector2f& position, const int ID,
     ID_ = ID; //stores the current position of the square
     truePositionID_ = ID; //stores the initial position of the square before it is randomized
     SetActive(false); 
-    imageWidth_ = textureSize.x / options->GetColumnNum();
-    imageHeight_ = textureSize.y / options->GetRowNum();
+    imageWidth_ = textureSize.x / options->GetOption("Column");
+    imageHeight_ = textureSize.y / options->GetOption("Row");
 
     //Sprite setup
     sprite_ = LP.SetSprite(image_texture_, imageWidth_, imageHeight_, ID_, position_);
 
     //hint number setup
-    float numSize = options->GetNumSize();
-    if (options->GetNumSize() == 0)
+    float numSize = options->GetOption("Number Size");
+    if (options->GetOption("Number Size") == 0)
     {//attempt to automaticaly change the size of the numbers depending on the size of the image
         float biggerNum = 0.0f;
         if (textureSize.x > textureSize.y) biggerNum = textureSize.x;
@@ -31,22 +31,24 @@ PictureBox::PictureBox(Scene* scene, const sf::Vector2f& position, const int ID,
         numSize = round(biggerNum / 100 * 1.6f);
     }
     num_ = LP.SetText(main_font, std::to_string(ID_), position_ + numOffset_, numSize);
-    num_.setFillColor(sf::Color(options->GetNumRed(), options->GetNumGreen(), options->GetNumBlue(), options->GetNumAlpha()));
+    num_.setFillColor(sf::Color(options->GetOption("Number Red"), options->GetOption("Number Green"), 
+                                options->GetOption("Number Blue"), options->GetOption("Number Alpha")));
     numOffset_ = sf::Vector2f(numSize / 2, numSize / 2);
 
     //hint outline setup
-    if (options->GetOutlineSize() == 0)
+    if (options->GetOption("Outline Size") == 0)
     {//attempt to automaticaly change the size of the outline depending on the size of the image
         float biggerNum = 0.0f;
         if (textureSize.x > textureSize.y) biggerNum = textureSize.x;
         else biggerNum = textureSize.y;
         outlineOffset_ = sf::Vector2f{(biggerNum / 300), (biggerNum / 300)};
     }
-    else outlineOffset_ = sf::Vector2f{(float)options->GetOutlineSize(), (float)options->GetOutlineSize()}; //or just use the outline size that was set in the options
+    else outlineOffset_ = sf::Vector2f{(float)options->GetOption("Outline Size"), options->GetOption("Outline Size")}; //or just use the outline size that was set in the options
     outline_.setSize(sf::Vector2f(imageWidth_ - 2 * outlineOffset_.x, imageHeight_ - 2 * outlineOffset_.y));
     outline_.setFillColor(sf::Color::Transparent);
     outline_.setOutlineThickness(outlineOffset_.x);
-    outline_.setOutlineColor(sf::Color(options->GetOutlineRed(), options->GetOutlineGreen(), options->GetOutlineBlue(), options->GetOutlineAlpha()));
+    outline_.setOutlineColor(sf::Color(options->GetOption("Outline Red"), options->GetOption("Outline Green"), 
+                                       options->GetOption("Outline Blue"), options->GetOption("Outline Alpha")));
 }
 
 PictureBox::~PictureBox()

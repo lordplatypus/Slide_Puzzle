@@ -32,8 +32,8 @@ void SceneGame::Init()
     if (textureSize.x < textureSize.x * 9 / 16) background_.setPosition(sf::Vector2f(0.0f, 0.0f - (camera_->GetView("Game").getSize().y / 2 - textureSize.y / 2)));
     else if (textureSize.y < textureSize.y * 16 / 9) background_.setPosition(sf::Vector2f(0.0f - (camera_->GetView("Game").getSize().x / 2 - textureSize.x / 2), 0.0f));
     else background_.setPosition(sf::Vector2f(0.0f, 0.0f));
-    background_.setFillColor(sf::Color(game_->GetOptions()->GetBackgroundRed(), game_->GetOptions()->GetBackgroundGreen(), 
-                                       game_->GetOptions()->GetBackgroundBlue(), game_->GetOptions()->GetBackgroundAlpha()));
+    background_.setFillColor(sf::Color(game_->GetOptions()->GetOption("Background Red"), game_->GetOptions()->GetOption("Background Green"), 
+                                       game_->GetOptions()->GetOption("Background Blue"), game_->GetOptions()->GetOption("Background Alpha")));
 }
 
 void SceneGame::Update(float delta_time)

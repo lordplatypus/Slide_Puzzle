@@ -10,6 +10,16 @@ SceneOptions::~SceneOptions()
 
 void SceneOptions::Init()
 {
+    //Find Images in image directory
+    std::vector<std::string> imageNames;
+    imageNames = FM_.SearchDirectory(game_->GetOptions()->GetImageDirectory(), ".png");
+    for (int i = 0; i < imageNames.size(); i++)
+    {
+        imageText_.push_back(new Button(game_->GetLP(), imageNames[i], sf::Vector2f(576.0f, 36.0f + 16.0f)));
+        imageText_[i]->SetActive(false);
+    }
+    game_->GetLP().SetTexture(image_texture_, game_->GetOptions()->GetImageDirectory() + imageNames[imageSelect_]);
+
     //Setup the buttons
     buttons_.push_back(new Button(game_->GetLP(), "Start"));
     buttons_.push_back(new Button(game_->GetLP(), "Image"));
@@ -38,6 +48,8 @@ void SceneOptions::Init()
     buttons_.push_back(new Button(game_->GetLP(), "Outline Green"));
     buttons_.push_back(new Button(game_->GetLP(), "Outline Blue"));
     buttons_.push_back(new Button(game_->GetLP(), "Outline Alpha"));
+
+    buttons_.push_back(new Button(game_->GetLP(), "Image Directory"));
     for (int i = 0; i < buttons_.size(); i++) 
     {
         buttons_[i]->SetPosition(sf::Vector2f(16.0f, 36.0f * i + 16.0f));
@@ -45,30 +57,30 @@ void SceneOptions::Init()
     }
 
     //Setup the counters
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetRowNum(), 4, 100)); //row
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetColumnNum(), 4, 100)); //column
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Row"), 4, 100)); //row
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Column"), 4, 100)); //column
 
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetBoxRed(), 0, 255)); //hole red
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetBoxGreen(), 0, 255)); //hole green
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetBoxBlue(), 0, 255)); //hole blue
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetBoxAlpha(), 0, 255)); //hole Alpha
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Empty Red"), 0, 255)); //Empty box red
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Empty Green"), 0, 255)); //Empty box green
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Empty Blue"), 0, 255)); //Empty box blue
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Empty Alpha"), 0, 255)); //Empty box Alpha
 
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetNumSize(), 0, 255)); //num size
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetNumRed(), 0, 255)); //num red
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetNumGreen(), 0, 255)); //num green
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetNumBlue(), 0, 255)); //num blue
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetNumAlpha(), 0, 255)); //num alpha
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Number Size"), 0, 255)); //num size
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Number Red"), 0, 255)); //num red
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Number Green"), 0, 255)); //num green
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Number Blue"), 0, 255)); //num blue
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Number Alpha"), 0, 255)); //num alpha
 
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetBackgroundRed(), 0, 255)); //background red
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetBackgroundGreen(), 0, 255)); //background green
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetBackgroundBlue(), 0, 255)); //background blue
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetBackgroundAlpha(), 0, 255)); //background alpha
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Background Red"), 0, 255)); //background red
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Background Green"), 0, 255)); //background green
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Background Blue"), 0, 255)); //background blue
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Background Alpha"), 0, 255)); //background alpha
 
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOutlineSize(), 0, 255)); //outline size
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOutlineRed(), 0, 255)); //outline red
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOutlineGreen(), 0, 255)); //outline green
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOutlineBlue(), 0, 255)); //outline blue
-    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOutlineAlpha(), 0, 255)); //outline alpha
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Outline Size"), 0, 255)); //outline size
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Outline Red"), 0, 255)); //outline red
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Outline Green"), 0, 255)); //outline green
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Outline Blue"), 0, 255)); //outline blue
+    counters_.push_back(new Counter(game_->GetLP(), game_->GetOptions()->GetOption("Outline Alpha"), 0, 255)); //outline alpha
     for (int i = 0; i < counters_.size(); i++) 
     {
         counters_[i]->SetPosition(sf::Vector2f(576.0f, 36.0f * (i + 3) + 16.0f));
@@ -76,11 +88,15 @@ void SceneOptions::Init()
     }
 
     //setup image path button
-    imagePath_ = new Button(game_->GetLP(), oldFilePath_, sf::Vector2f(576.0f, 48.0f));
+    // imagePath_ = new Button(game_->GetLP(), oldFilePath_, sf::Vector2f(576.0f, 48.0f));
+    // imagePath_->SetActive(false);
+    //setup image directory path button
+    oldFilePath_ = game_->GetOptions()->GetOption("Image Directory");
+    imagePath_ = new Button(game_->GetLP(), oldFilePath_, sf::Vector2f(576.0f, 36.0f * (counters_.size() + 3) + 16.0f));
     imagePath_->SetActive(false);
 
     //setup rand empty button
-    if (game_->GetOptions()->GetRandomEmptyBoxPlacement()) randomEmptyBox_ = new Button(game_->GetLP(), "True", sf::Vector2f(576.0f, 84.0f));
+    if (game_->GetOptions()->GetOption("Rand Empty") > 0) randomEmptyBox_ = new Button(game_->GetLP(), "True", sf::Vector2f(576.0f, 84.0f));
     else randomEmptyBox_ = new Button(game_->GetLP(), "False", sf::Vector2f(576.0f, 84.0f));
     randomEmptyBox_->SetActive(false);
 
@@ -136,6 +152,7 @@ void SceneOptions::Draw(Camera& camera) const
     for (int i = 0; i < counters_.size(); i++) counters_[i]->Draw(camera);
     imagePath_->Draw(camera);
     randomEmptyBox_->Draw(camera);
+    imageText_[imageSelect_]->Draw(camera);
     camera.Draw(instructions_);
     if (state_ == Secondary && selectedOption_ > 4 && selectedOption_ != 9 && selectedOption_ != 18) camera.Draw(exampleColorBox_);
 }
@@ -168,6 +185,8 @@ void SceneOptions::End()
     buttons_.clear();
     for (auto i : counters_) delete i;
     counters_.clear();
+    for (auto i : imageText_) delete i;
+    imageText_.clear();
     delete imagePath_;
     delete randomEmptyBox_;
     instructionsText_.clear();
@@ -202,15 +221,20 @@ void SceneOptions::MainMenu()
         if (selectedOption_ == 0) ChangeScene("Game");
         else if (selectedOption_ == 1) 
         {
-            //state_ = Image;
             state_ = Secondary;
-            imagePath_->SetActive(true);
+            for (auto text :imageText_) text->SetActive(true);
         }
         else if (selectedOption_ == 2) 
         {
             //state_ = Row;
             state_ = Secondary;
             randomEmptyBox_->SetActive(true);
+        }
+        else if (selectedOption_ = buttons_.size() - 1)
+        {
+            //state_ = Image;
+            state_ = Secondary;
+            imagePath_->SetActive(true);
         }
         else
         {
@@ -228,13 +252,23 @@ void SceneOptions::SecondaryMenu()
         SetOption();
     }
     else if (selectedOption_ == 1) 
-    {//Type in a file path
-        if (!EL_->GetTextEnteredActive())
-        {//Activate once 
-            EL_->SetTextEnteredActive(true); //Allow for typing
-            oldFilePath_ = EL_->GetTextEntered(); //Save the old filepath in case the new path is wrong
+    {
+        if (IP_.GetButtonDown(sf::Keyboard::Up))
+        {
+            imageSelect_--;
+            if (imageSelect_ < 0) 
+            {
+                imageSelect_ = imageText_.size() - 1;
+            }
         }
-        imagePath_->SetString(EL_->GetTextEntered()); //Display what is being typed
+        if (IP_.GetButtonDown(sf::Keyboard::Down))
+        {
+            imageSelect_++;
+            if (imageSelect_ > imageText_.size() - 1) 
+            {
+                imageSelect_ = 0;
+            }
+        }
     }
     else if (selectedOption_ == 2) 
     {//True or False
@@ -251,6 +285,15 @@ void SceneOptions::SecondaryMenu()
                 random_ = true;
             }
         }
+    }
+    else if (selectedOption_ = buttons_.size() - 1)
+    {//Type in a file path
+        if (!EL_->GetTextEnteredActive())
+        {//Activate once 
+            EL_->SetTextEnteredActive(true); //Allow for typing
+            oldFilePath_ = EL_->GetTextEntered(); //Save the old filepath in case the new path is wrong
+        }
+        imagePath_->SetString(EL_->GetTextEntered()); //Display what is being typed
     }
     else
     {//Increases or decreases the counter for the many options that use counters
@@ -282,97 +325,126 @@ void SceneOptions::SetOption()
         break;
 
         case 1:
-        EL_->SetTextEnteredActive(false); //deactive typing
-        imagePath_->SetActive(false); //grey out button
-        if (!game_->GetLP().SetTexture(image_texture_, "./" +  EL_->GetTextEntered()))  EL_->SetTextEntered(oldFilePath_); //set new filepath or revert back to old filepath
+        // EL_->SetTextEnteredActive(false); //deactive typing
+        // imagePath_->SetActive(false); //grey out button
+        // if (!game_->GetLP().SetTexture(image_texture_, "./" +  EL_->GetTextEntered()))  EL_->SetTextEntered(oldFilePath_); //set new filepath or revert back to old filepath
+        for (auto text :imageText_) text->SetActive(false);
+        game_->GetLP().SetTexture(image_texture_, game_->GetOptions()->GetImageDirectory() + imageText_[imageSelect_]->GetString());
         break;
 
         case 2:
         randomEmptyBox_->SetActive(false);
-        game_->GetOptions()->SetRandomEmptyBoxPlacement(random_);
+        //game_->GetOptions()->SetRandomEmptyBoxPlacement(random_);
+        game_->GetOptions()->SetOption("Rand Empty", random_);
         break;
 
         case 3:
-        game_->GetOptions()->SetRowNum(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetRowNum(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Row", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 4:
-        game_->GetOptions()->SetColumnNum(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetColumnNum(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Column", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 5:
-        game_->GetOptions()->SetBoxRed(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetBoxRed(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Empty Red", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 6:
-        game_->GetOptions()->SetBoxGreen(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetBoxGreen(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Empty Green", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 7:
-        game_->GetOptions()->SetBoxBlue(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetBoxBlue(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Empty Blue", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 8:
-        game_->GetOptions()->SetBoxAlpha(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetBoxAlpha(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Empty Alpha", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 9:
-        game_->GetOptions()->SetNumSize(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetNumSize(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Number Size", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 10:
-        game_->GetOptions()->SetNumRed(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetNumRed(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Number Red", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 11:
-        game_->GetOptions()->SetNumGreen(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetNumGreen(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Number Green", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 12:
-        game_->GetOptions()->SetNumBlue(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetNumBlue(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Number Blue", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 13:
-        game_->GetOptions()->SetNumAlpha(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetNumAlpha(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Number Alpha", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 14:
-        game_->GetOptions()->SetBackgroundRed(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetBackgroundRed(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Background Red", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 15:
-        game_->GetOptions()->SetBackgroundGreen(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetBackgroundGreen(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Background Green", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 16:
-        game_->GetOptions()->SetBackgroundBlue(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetBackgroundBlue(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Background Blue", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 17:
-        game_->GetOptions()->SetBackgroundAlpha(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetBackgroundAlpha(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Background Alpha", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 18:
-        game_->GetOptions()->SetOutlineSize(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetOutlineSize(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Outline Size", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 19:
-        game_->GetOptions()->SetOutlineRed(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetOutlineRed(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Outline Red", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 20:
-        game_->GetOptions()->SetOutlineGreen(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetOutlineGreen(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Outline Green", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 21:
-        game_->GetOptions()->SetOutlineBlue(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetOutlineBlue(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Outline Blue", counters_[selectedOption_ - 3]->GetNum());
         break;
 
         case 22:
-        game_->GetOptions()->SetOutlineAlpha(counters_[selectedOption_ - 3]->GetNum());
+        //game_->GetOptions()->SetOutlineAlpha(counters_[selectedOption_ - 3]->GetNum());
+        game_->GetOptions()->SetOption("Outline Alpha", counters_[selectedOption_ - 3]->GetNum());
+        break;
+
+        case 23:
+        EL_->SetTextEnteredActive(false); //deactive typing
+        imagePath_->SetActive(false); //grey out button
+        if (!game_->GetLP().SetTexture(image_texture_, "./" +  EL_->GetTextEntered()))  EL_->SetTextEntered(oldFilePath_); //set new filepath or revert back to old filepath
         break;
     }
-    if (selectedOption_ > 2) counters_[selectedOption_ - 3]->SetActive(false);
+    if (selectedOption_ > 2 && selectedOption_ < 23) counters_[selectedOption_ - 3]->SetActive(false);
     instructions_.setString(instructionsText_[0]); //go back to default instructions
     state_ = Main;
 }

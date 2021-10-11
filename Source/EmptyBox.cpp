@@ -11,15 +11,16 @@ EmptyBox::EmptyBox(Scene* scene, const sf::Vector2f& position, const int ID, Opt
     velocity_ = position_;
     layerID_ = layer_main_;
     ID_ = ID;
-    imageWidth_ = textureSize.x / options->GetColumnNum();
-    imageHeight_ = textureSize.y / options->GetRowNum();
+    imageWidth_ = textureSize.x / options->GetOption("Column");
+    imageHeight_ = textureSize.y / options->GetOption("Row");
     SetActive(false);
 
     //Sprite set up
     //sprite_ = LP::SetSprite("texture id", position_);
     rect_.setSize(sf::Vector2f(imageWidth_, imageHeight_));
     rect_.setPosition(position_);
-    rect_.setFillColor(sf::Color(options->GetBoxRed(), options->GetBoxGreen(), options->GetBoxBlue(), options->GetBoxAlpha()));
+    rect_.setFillColor(sf::Color(options->GetOption("Empty Red"), options->GetOption("Empty Green"), 
+                                 options->GetOption("Empty Blue"), options->GetOption("Empty Alpha")));
 }
 
 EmptyBox::~EmptyBox()

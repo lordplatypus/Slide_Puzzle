@@ -1,0 +1,69 @@
+#This is the config file for the Slide Puzzle game
+#The '#' char denotes a comment and the program will skip lines that start with '#'
+#The order of data is important
+
+Image Directory:
+./
+
+Rand Empty:
+0
+
+Row:
+4
+
+Column:
+4
+
+Empty Red:
+0
+
+Empty Green:
+0
+
+Empty Blue:
+0
+
+Empty Alpha:
+255
+
+Number Size:
+0
+
+Number Red:
+0
+
+Number Green:
+0
+
+Number Blue:
+0
+
+Number Alpha:
+255
+
+Background Red:
+0
+
+Background Green:
+0
+
+Background Blue:
+0
+
+Background Alpha:
+255
+
+Outline Size:
+0
+
+Outline Red:
+0
+
+Outline Green:
+255
+
+Outline Blue:
+255
+
+Outline Alpha:
+255

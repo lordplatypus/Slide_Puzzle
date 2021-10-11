@@ -9,6 +9,7 @@
 #include "Counter.h"
 #include "IP.h"
 #include "EL.h"
+#include "FileManager.h"
 
 class SceneOptions : public Scene
 {
@@ -35,6 +36,7 @@ private:
     ParticleManager pm_;
     IP IP_;
     EL* EL_{nullptr};
+    FileManager FM_;
 
     enum State{Main, Secondary};
     State state_{Main};
@@ -55,6 +57,10 @@ private:
     std::vector<std::string> instructionsText_;
 
     sf::RectangleShape exampleColorBox_;
+
+    //For the Image select menu
+    std::vector<Button*> imageText_;
+    int imageSelect_{0};
 };
 
 #endif
