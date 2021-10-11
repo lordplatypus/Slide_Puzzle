@@ -2,68 +2,68 @@
 #The '#' char denotes a comment and the program will skip lines that start with '#'
 #The order of data is important
 
-Image Directory:
+Image Directory
 ./
 
-Rand Empty:
+Rand Empty
 0
 
-Row:
+Row
 4
 
-Column:
+Column
 4
 
-Empty Red:
+Empty Red
 0
 
-Empty Green:
+Empty Green
 0
 
-Empty Blue:
+Empty Blue
 0
 
-Empty Alpha:
+Empty Alpha
 255
 
-Number Size:
+Number Size
 0
 
-Number Red:
+Number Red
 0
 
-Number Green:
+Number Green
 0
 
-Number Blue:
+Number Blue
 0
 
-Number Alpha:
+Number Alpha
 255
 
-Background Red:
+Background Red
 0
 
-Background Green:
+Background Green
 0
 
-Background Blue:
+Background Blue
 0
 
-Background Alpha:
+Background Alpha
 255
 
-Outline Size:
+Outline Size
 0
 
-Outline Red:
+Outline Red
 0
 
-Outline Green:
+Outline Green
 255
 
-Outline Blue:
+Outline Blue
 255
 
-Outline Alpha:
+Outline Alpha
 255

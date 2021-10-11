@@ -90,7 +90,7 @@ void EL::TextEntered(const sf::Event::TextEvent& textEvent)
 
 void EL::Backspace()
 {
-    textEntered_.erase(textEntered_.getSize() - 1);
+    if (textEntered_.getSize() > 0) textEntered_.erase(textEntered_.getSize() - 1);
 }
 
 void EL::KeyPressed(const sf::Event::KeyEvent& keyEvent)

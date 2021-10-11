@@ -13,7 +13,7 @@ int main()
     camera.SetView("Game");
 
     EL EL{camera};
-    EL.SetTextEntered("image.png"); //ease for later
+    EL.SetTextEntered("");
 
     DeltaTime deltaTime;
 

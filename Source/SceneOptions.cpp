@@ -11,14 +11,7 @@ SceneOptions::~SceneOptions()
 void SceneOptions::Init()
 {
     //Find Images in image directory
-    std::vector<std::string> imageNames;
-    imageNames = FM_.SearchDirectory(game_->GetOptions()->GetImageDirectory(), ".png");
-    for (int i = 0; i < imageNames.size(); i++)
-    {
-        imageText_.push_back(new Button(game_->GetLP(), imageNames[i], sf::Vector2f(576.0f, 36.0f + 16.0f)));
-        imageText_[i]->SetActive(false);
-    }
-    game_->GetLP().SetTexture(image_texture_, game_->GetOptions()->GetImageDirectory() + imageNames[imageSelect_]);
+    SetImages();
 
     //Setup the buttons
     buttons_.push_back(new Button(game_->GetLP(), "Start"));
@@ -50,6 +43,7 @@ void SceneOptions::Init()
     buttons_.push_back(new Button(game_->GetLP(), "Outline Alpha"));
 
     buttons_.push_back(new Button(game_->GetLP(), "Image Directory"));
+    buttons_.push_back(new Button(game_->GetLP(), "Save Settings"));
     for (int i = 0; i < buttons_.size(); i++) 
     {
         buttons_[i]->SetPosition(sf::Vector2f(16.0f, 36.0f * i + 16.0f));
@@ -91,8 +85,9 @@ void SceneOptions::Init()
     // imagePath_ = new Button(game_->GetLP(), oldFilePath_, sf::Vector2f(576.0f, 48.0f));
     // imagePath_->SetActive(false);
     //setup image directory path button
-    oldFilePath_ = game_->GetOptions()->GetOption("Image Directory");
-    imagePath_ = new Button(game_->GetLP(), oldFilePath_, sf::Vector2f(576.0f, 36.0f * (counters_.size() + 3) + 16.0f));
+    oldImagePath_ = game_->GetOptions()->GetImageDirectory();
+    EL_->SetTextEntered(oldImagePath_);
+    imagePath_ = new Button(game_->GetLP(), oldImagePath_, sf::Vector2f(576.0f, 36.0f * (counters_.size() + 3) + 16.0f));
     imagePath_->SetActive(false);
 
     //setup rand empty button
@@ -101,8 +96,8 @@ void SceneOptions::Init()
     randomEmptyBox_->SetActive(false);
 
     //Setup instruction text
-    instructionsText_.push_back("Controls:\n>Use the arrow keys to\nnavigate the menu and\nto move the empty square\n>Press Enter to edit\nand confirm options\n>Hold Left Shift for\nreference Picture\n>Press Left Control for\noutline\n>Press Space for\nID numbers\n>Press Z to re-randomize\n>Press X to return to\nthis menu\n>Press Esc to close\nthe game");
-    instructionsText_.push_back("Instructions:\n>Backspace to remove\ncharacters\n>Enter to confirm\n>Have to include\nfile type\n>Only png will work");
+    instructionsText_.push_back("Controls:\n>Use the arrow keys to\nnavigate the menu and\nto move the empty square\n>Press Enter to edit\nand confirm options\n>'Save Settings' to\nsave to the config file\n>Hold Left Shift for\nreference Picture\n>Press Left Control for\noutline\n>Press Space for\nID numbers\n>Press Z to re-randomize\n>Press X to return to\nthis menu\n>Press Esc to close\nthe game");
+    instructionsText_.push_back("Instructions:\n>Up and Down to\n>cycle through\n>available images\n>Enter to confirm");
     instructionsText_.push_back("Instructions:\n>Randomizes the\nremoved square\n>Default is the\nbottom right square");
     instructionsText_.push_back("Instructions:\n>Number of Rows\n>Min = 4\n>Max = max int");
     instructionsText_.push_back("Instructions:\n>Number of Columns\n>Min = 4\n>Max = max int");
@@ -124,6 +119,7 @@ void SceneOptions::Init()
     instructionsText_.push_back("Instructions:\n>Outline color - Green\n>Min = 0\n>Max = 255");
     instructionsText_.push_back("Instructions:\n>Outline color - Blue\n>Min = 0\n>Max = 255");
     instructionsText_.push_back("Instructions:\n>Outline color - Alpha\n>Min = 0\n>Max = 255");
+    instructionsText_.push_back("Instructions:\n>Backspace to remove\ncharacters\n>Enter to confirm\n>Remember to end\nwith a '/'");
     instructions_ = game_->GetLP().SetText(main_font, instructionsText_[0], sf::Vector2f(960.0f, 16.0f));
 
     //Setup color example
@@ -138,13 +134,11 @@ void SceneOptions::Update(float delta_time)
     if (state_ == Main) MainMenu();
     else if (state_ == Secondary) SecondaryMenu();
 
-    IP_.Update();
+    IP_.Update(delta_time);
 }
 
 void SceneOptions::Draw(Camera& camera) const
 {
-    //gom_.Draw(camera); //Regular draw - Draw GameObjects in order based on position in the list
-
     camera.SetCurrentView("Main");
 
     //Drawing the various text, buttons, counters, and example color box things
@@ -154,7 +148,7 @@ void SceneOptions::Draw(Camera& camera) const
     randomEmptyBox_->Draw(camera);
     imageText_[imageSelect_]->Draw(camera);
     camera.Draw(instructions_);
-    if (state_ == Secondary && selectedOption_ > 4 && selectedOption_ != 9 && selectedOption_ != 18) camera.Draw(exampleColorBox_);
+    if (state_ == Secondary && selectedOption_ > 4 &&  selectedOption_ < 23 && selectedOption_ != 9 && selectedOption_ != 18) camera.Draw(exampleColorBox_);
 }
 
 void SceneOptions::AddGameObject(GameObject* gameObject)
@@ -226,22 +220,24 @@ void SceneOptions::MainMenu()
         }
         else if (selectedOption_ == 2) 
         {
-            //state_ = Row;
             state_ = Secondary;
             randomEmptyBox_->SetActive(true);
         }
-        else if (selectedOption_ = buttons_.size() - 1)
+        else if (selectedOption_ == buttons_.size() - 2)
         {
-            //state_ = Image;
             state_ = Secondary;
             imagePath_->SetActive(true);
+        }
+        else if (selectedOption_ == buttons_.size() - 1)
+        {
+            game_->GetOptions()->SaveConfig();
         }
         else
         {
             state_ = Secondary;
             counters_[selectedOption_ - 3]->SetActive(true);
         }
-        instructions_.setString(instructionsText_[selectedOption_]);
+        if (selectedOption_ < instructionsText_.size()) instructions_.setString(instructionsText_[selectedOption_]);
     }
 }
 
@@ -286,12 +282,12 @@ void SceneOptions::SecondaryMenu()
             }
         }
     }
-    else if (selectedOption_ = buttons_.size() - 1)
+    else if (selectedOption_ == buttons_.size() - 2)
     {//Type in a file path
         if (!EL_->GetTextEnteredActive())
         {//Activate once 
             EL_->SetTextEnteredActive(true); //Allow for typing
-            oldFilePath_ = EL_->GetTextEntered(); //Save the old filepath in case the new path is wrong
+            oldImagePath_ = EL_->GetTextEntered(); //Save the old filepath in case the new path is wrong
         }
         imagePath_->SetString(EL_->GetTextEntered()); //Display what is being typed
     }
@@ -304,6 +300,14 @@ void SceneOptions::SecondaryMenu()
         if (IP_.GetButtonDown(sf::Keyboard::Down))
         {
             counters_[selectedOption_ - 3]->Decrement();
+        }
+        if (IP_.GetButtonDown(sf::Keyboard::Right))
+        {
+            counters_[selectedOption_ - 3]->Increment(10);
+        }
+        if (IP_.GetButtonDown(sf::Keyboard::Left))
+        {
+            counters_[selectedOption_ - 3]->Decrement(10);
         }
         if (selectedOption_ != 9 && selectedOption_ != 18) SetColorExample(); //change the color of the sample box
     }
@@ -441,10 +445,41 @@ void SceneOptions::SetOption()
         case 23:
         EL_->SetTextEnteredActive(false); //deactive typing
         imagePath_->SetActive(false); //grey out button
-        if (!game_->GetLP().SetTexture(image_texture_, "./" +  EL_->GetTextEntered()))  EL_->SetTextEntered(oldFilePath_); //set new filepath or revert back to old filepath
+        if (!FM_.CheckDirectory(EL_->GetTextEntered())) 
+        {//If the new image directory path fails
+            EL_->SetTextEntered(oldImagePath_); //revert to old file path
+            imagePath_->SetString(oldImagePath_); //display old file path
+            game_->GetOptions()->SetImageDirectory(oldImagePath_); //options are also reverted
+        }
+        else game_->GetOptions()->SetImageDirectory(EL_->GetTextEntered()); //options is updated
+        //Find Images in image directory
+        SetImages();
+        break;
+
+        default:
         break;
     }
     if (selectedOption_ > 2 && selectedOption_ < 23) counters_[selectedOption_ - 3]->SetActive(false);
     instructions_.setString(instructionsText_[0]); //go back to default instructions
     state_ = Main;
+}
+
+void SceneOptions::SetImages()
+{
+    //Find Images in image directory
+    std::vector<std::string> imageNames;
+    imageNames = FM_.SearchDirectory(game_->GetOptions()->GetImageDirectory(), ".png");
+    for (auto i : imageText_) delete i;
+    imageText_.clear();
+
+    if (imageNames.size() == 0) imageText_.push_back(new Button(game_->GetLP(), "No Images", sf::Vector2f(576.0f, 36.0f + 16.0f)));
+    else 
+    {
+        for (int i = 0; i < imageNames.size(); i++)
+        {
+            imageText_.push_back(new Button(game_->GetLP(), imageNames[i], sf::Vector2f(576.0f, 36.0f + 16.0f)));
+            imageText_[i]->SetActive(false);
+        }
+        game_->GetLP().SetTexture(image_texture_, game_->GetOptions()->GetImageDirectory() + imageNames[imageSelect_]);
+    }
 }

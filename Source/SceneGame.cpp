@@ -45,7 +45,7 @@ void SceneGame::Update(float delta_time)
     if (IP_.GetButtonDown(sf::Keyboard::X)) ChangeScene("Options");
     if (changeScene_) ChangeSceneForReal(changeSceneTo_);
 
-    IP_.Update();
+    IP_.Update(delta_time);
 }
 
 void SceneGame::Draw(Camera& camera) const

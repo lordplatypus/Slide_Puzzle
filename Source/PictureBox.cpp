@@ -43,7 +43,7 @@ PictureBox::PictureBox(Scene* scene, const sf::Vector2f& position, const int ID,
         else biggerNum = textureSize.y;
         outlineOffset_ = sf::Vector2f{(biggerNum / 300), (biggerNum / 300)};
     }
-    else outlineOffset_ = sf::Vector2f{(float)options->GetOption("Outline Size"), options->GetOption("Outline Size")}; //or just use the outline size that was set in the options
+    else outlineOffset_ = sf::Vector2f{(float)options->GetOption("Outline Size"), (float)options->GetOption("Outline Size")}; //or just use the outline size that was set in the options
     outline_.setSize(sf::Vector2f(imageWidth_ - 2 * outlineOffset_.x, imageHeight_ - 2 * outlineOffset_.y));
     outline_.setFillColor(sf::Color::Transparent);
     outline_.setOutlineThickness(outlineOffset_.x);

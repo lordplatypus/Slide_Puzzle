@@ -6,16 +6,37 @@ IP::IP()
 IP::~IP()
 {}
 
-void IP::Update()
+void IP::Update(float delta_time)
 {
+    bool keyPressed = false;
     for (auto key : pressedKeys_)
     {
         if (!sf::Keyboard::isKeyPressed(key.first)) pressedKeys_[key.first] = false;
+        else keyPressed = true;
     }
+    if (rapidFlag_)
+    {
+        if (keyPressed)
+        {
+            if ((rapidTimer_ += delta_time) >= holdTimeForRapid_) rapidActive_ = true;
+        }
+        else
+        {
+            rapidActive_ = false;
+            rapidTimer_ = 0.0f;
+        }
+    }
+
+
     for (auto button : pressedButtons_)
     {
         if (!sf::Mouse::isButtonPressed(button.first)) pressedButtons_[button.first] = false;
     }
+}
+
+void IP::SetRapidFlag(const bool rapidFlag)
+{
+    rapidFlag_ = rapidFlag;
 }
 
 bool IP::GetButton(sf::Keyboard::Key buttonID)
@@ -30,6 +51,7 @@ bool IP::GetButton(sf::Mouse::Button buttonID)
 
 bool IP::GetButtonDown(sf::Keyboard::Key buttonID)
 {
+    if (sf::Keyboard::isKeyPressed(buttonID) && rapidActive_) return true;
     if (!sf::Keyboard::isKeyPressed(buttonID) || pressedKeys_[buttonID]) return false;
     pressedKeys_[buttonID] = true;
     return true;

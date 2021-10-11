@@ -46,7 +46,7 @@ PuzzleManager::~PuzzleManager()
 void PuzzleManager::Update(float delta_time)
 {
     Input();
-    IP_.Update();
+    IP_.Update(delta_time);
 }
 
 void PuzzleManager::Input()

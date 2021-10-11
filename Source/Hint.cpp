@@ -22,7 +22,7 @@ void Hint::Update(float delta_time)
 {
     if (IP_.GetButton(sf::Keyboard::LShift)) active_ = true;
     else active_ = false;
-    IP_.Update();
+    IP_.Update(delta_time);
 }
 
 void Hint::Draw(Camera& camera) const

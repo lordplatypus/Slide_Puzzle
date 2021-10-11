@@ -31,7 +31,7 @@ void WinText::Update(float delta_time)
         showText_ = false;
     }
 
-    IP_.Update();
+    IP_.Update(delta_time);
 }
 
 void WinText::Draw(Camera& camera) const

@@ -29,6 +29,7 @@ public:
     void SecondaryMenu();
     void SetColorExample();
     void SetOption();
+    void SetImages();
 
 private:
     Game* game_{nullptr};
@@ -48,7 +49,7 @@ private:
     std::vector<Counter*> counters_;
 
     Button* imagePath_{nullptr};
-    std::string oldFilePath_{"image.png"};
+    std::string oldImagePath_{""};
 
     Button* randomEmptyBox_{nullptr};
     bool random_{false};
