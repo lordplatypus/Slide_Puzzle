@@ -1,6 +1,7 @@
 #include "SceneOptions.h"
 #include "LP.h"
 #include "ID.h"
+#include "FadeOutText.h"
 
 SceneOptions::SceneOptions(Game* game, EL& EL) : game_{game}, EL_{&EL}
 {}
@@ -130,6 +131,7 @@ void SceneOptions::Init()
 void SceneOptions::Update(float delta_time)
 {
     gom_.Update(delta_time); //update all gameobjects
+    gom_.Remove(); //remove "dead" gameobjects
 
     if (state_ == Main) MainMenu();
     else if (state_ == Secondary) SecondaryMenu();
@@ -140,6 +142,8 @@ void SceneOptions::Update(float delta_time)
 void SceneOptions::Draw(Camera& camera) const
 {
     camera.SetCurrentView("Main");
+
+    gom_.Draw(camera);
 
     //Drawing the various text, buttons, counters, and example color box things
     for (int i = 0; i < buttons_.size(); i++) buttons_[i]->Draw(camera);
@@ -231,6 +235,7 @@ void SceneOptions::MainMenu()
         else if (selectedOption_ == buttons_.size() - 1)
         {
             game_->GetOptions()->SaveConfig();
+            AddGameObject(new FadeOutText(game_->GetLP().SetText(main_font, "Saved"), sf::Vector2f(576.0f, 36.0f * (buttons_.size() - 1) + 16.0f)));
         }
         else
         {
